@@ -1,0 +1,484 @@
+/* Background pattern from subtlepatterns.com */
+
+html {
+    min-height: 100%;
+}
+
+body {
+    background: #353536 url(../img/background.png);
+    min-height: 100%;
+    text-align: center;
+
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    color: #2f2f2f;
+}
+
+a {
+    color: #3373c7;
+    text-decoration: none;
+    transition: color 0.2s;
+    font-weight: 700;
+}
+
+a:hover {
+    color: #0295ff;
+    transition: color 0.2s;
+}
+
+br {
+    border-bottom: 1px solid darkgray;
+}
+
+h1, p {
+    margin: 0;
+}
+
+span {
+    display: inline-block;
+}
+
+table {
+    border-collapse: collapse
+}
+
+/*region Checkbox*/
+.checkbox {
+    width: 24px;
+    height: 24px;
+    background: #fcfff4;
+
+    background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: -moz-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfff4', endColorstr='#b3bead', GradientType=0);
+
+    border-radius: 5px;
+    border: 1px solid darkgray;
+
+    position: relative;
+}
+
+.checkbox label {
+    cursor: pointer;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    left: 4px;
+    top: 4px;
+
+    background: -webkit-linear-gradient(top, #222 0%, #45484d 100%);
+    background: -moz-linear-gradient(top, #222 0%, #45484d 100%);
+    background: -o-linear-gradient(top, #222 0%, #45484d 100%);
+    background: -ms-linear-gradient(top, #222 0%, #45484d 100%);
+    background: linear-gradient(top, #222 0%, #45484d 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#222', endColorstr='#45484d', GradientType=0);
+}
+
+.checkbox label:after {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    opacity: 0;
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 3px;
+    background: transparent;
+    top: 4px;
+    left: 4px;
+    border: 3px solid #fcfff4;
+    border-top: none;
+    border-right: none;
+
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+.checkbox input[type=checkbox] {
+    display: none;
+}
+
+.checkbox input[type=checkbox]:checked + label:after {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity: 1;
+}
+
+/*endregion*/
+
+.bold {
+    font-weight: 800;
+}
+
+#header {
+    padding-top: 20px;
+    margin-bottom: 25px;
+    color: white;
+}
+
+#logo {
+    width: 90%;
+    min-width: 600px;
+    max-width: 850px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+#content {
+    width: 90%;
+    min-width: 600px;
+    max-width: 850px;
+    height: auto;
+
+    right: 0;
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* region Top */
+#top {
+    background: #bfbfc3;
+    height: 70px;
+    width: 100%;
+    border-bottom: 2px solid #bfbfc3;
+}
+
+#top * {
+    height: 70px;
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+    border: none;
+}
+
+#name-container {
+    height: 70px;
+    width: 60%;
+    min-width: 380px;
+    max-width: 450px;
+    display: table-cell;
+    background: #f8f8fc;
+    font-weight: 700;
+}
+
+#names {
+    overflow: hidden;
+}
+
+.name {
+    line-height: 70px;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 30px;
+}
+
+.team-button {
+    font-family: 'Catamaran', Impact, sans-serif;
+    padding-top: 5px;
+    font-weight: 800;
+    font-size: 35px;
+    display: table-cell;
+    height: 50px;
+    line-height: 70px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+
+    transition: background 0.25s;
+}
+
+.team-button:hover {
+    background: #aaaaae;
+    transition: background 0.125s;
+}
+
+/*endregion*/
+
+/*region Gamemode selection*/
+#gamemode-selection {
+    border-bottom: 2px solid #bfbfc3;
+    background: #f3f3f7;
+    height: 35px;
+    line-height: 35px;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+.gamemode-container {
+    margin: auto 10px;
+    cursor: pointer;
+}
+
+.gamemode-container > p {
+    font-size: 18px;
+}
+
+.gamemode-container > .checkbox {
+    margin-top: 4px;
+    margin-left: 8px;
+}
+
+/*endregion*/
+
+/*region Center*/
+#center {
+    padding: 15px 70px 15px 70px;
+    background: #dadade;
+    min-height: 150px;
+}
+
+#desc {
+    text-align: left;
+    font-size: 24px;
+    overflow: hidden;
+    vertical-align: bottom;
+}
+
+@media only screen and (max-device-width: 760px) {
+    #desc {
+        font-size: 30px;
+    }
+}
+
+/*endregion*/
+
+/*region Actionbar*/
+#action-bar {
+    height: 55px;
+    overflow: auto;
+    border-top: 2px solid #bfbfc3;
+    border-bottom: 2px solid #bfbfc3;
+    background: #f3f3f7;
+    line-height: 55px;
+}
+
+#author {
+    float: left;
+    font-size: 25px;
+    color: #727275;
+    font-weight: 200;
+    margin-left: 20px;
+}
+
+#strat-options {
+    float: right;
+    overflow: hidden;
+    line-height: 50px;
+    height: 100%;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+.strat-button {
+    height: 45px;
+    width: 45px;
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 18px;
+    vertical-align: middle;
+}
+
+#like-counter {
+    vertical-align: inherit;
+    margin-right: 12px;
+    font-weight: 900;
+    font-size: 35px;
+    cursor: default;
+    color: #329537;
+    width: auto;
+}
+
+.button-describer {
+    height: 16px;
+    width: 50px;
+    position: absolute;
+    background: #f8f8fd;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 3px;
+    margin-left: -10px;
+    margin-top: -24px;
+    border-radius: 5px;
+    cursor: default;
+    display: none;
+}
+
+/*endregion*/
+
+.code-box {
+    border: 1px solid gray;
+    background: #ccccd1;
+    border-radius: 2px;
+    font-family: monospace;
+    font-size: 15px;
+    padding: 5px 25px 5px 25px;
+}
+
+#bottom {
+    background: #dadade;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    vertical-align: middle;
+    padding: 5px;
+    line-height: 100%;
+}
+
+.bottom-container {
+    display: block;
+    padding: 2px 0;
+    height: 15px;
+    line-height: 100%;
+    vertical-align: middle;
+}
+
+.bottom-container p {
+    display: inline-block;
+    font-size: 12px;
+    margin: 0 2px;
+}
+
+.bottom-container img {
+    display: inline-block;
+    height: 15px;
+    margin: 0 2px;
+}
+
+#donate-button {
+    display: inline-block;
+}
+
+#donate-button input[type="image"] {
+    height: 15px;
+}
+
+#github-button {
+    height: 21px;
+    width: 21px;
+}
+
+#fader {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    background: black;
+    opacity: 0.65;
+    z-index: 1;
+}
+
+/* region Dialogue */
+.dialogue {
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    margin-left: -125px;
+    width: 350px;
+    min-height: 125px; /*300*/
+    background: #dadade;
+    z-index: 2;
+    border-radius: 15px;
+    padding: 10px 0 15px 0;
+    font-size: 15px;
+}
+
+.d-title {
+    font-family: 'Catamaran', sans-serif;
+    font-weight: 400;
+    font-size: 35px;
+    height: 45px;
+}
+
+.d-info {
+    font-size: 12px;
+    margin-top: 6px;
+    margin-bottom: 5px;
+}
+
+.d-textinput {
+    font-size: 14px;
+    width: 85%;
+    display: inline-block;
+    outline: none;
+}
+
+.d-textarea {
+    resize: vertical;
+    font-size: 14px;
+    width: 85%;
+    display: inline-block;
+    outline: none;
+    max-height: 150px;
+}
+
+.d-button {
+    font-size: 15px;
+    border: 1px solid #898989;
+    border-radius: 2px;
+    padding: 2px 6px 2px 6px;
+    background: #ceced2;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    margin-top: 10px;
+
+    -webkit-transition: background 0.15s;
+    -moz-transition: background 0.15s;
+    -ms-transition: background 0.15s;
+    -o-transition: background 0.15s;
+    transition: background 0.15s;
+}
+
+.d-button:hover {
+    background: #dadade;
+}
+
+.d-loader {
+    display: inline-block;
+    height: 25px;
+}
+
+.d-error {
+    margin-top: 5px;
+    color: #ea0000;
+}
+
+.d-success {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -75px;
+    height: 150px;
+}
+
+.d-combobox {
+
+}
+
+.d-checkbox {
+    float: right;
+    margin: 0;
+}
+
+.d-checkbox-wrapper {
+    height: 25px;
+    margin-bottom: 5px;
+}
+
+.d-wrapper {
+    display: inline-block;
+    width: 150px;
+}
+
+/*endregion*/

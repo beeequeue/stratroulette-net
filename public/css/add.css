@@ -1,0 +1,32 @@
+form * {
+    font-size: 15px;
+    height: 18px;
+    float: right;
+}
+
+select {
+    height: auto;
+    float: left;
+}
+
+button {
+    height: auto;
+    clear: both;
+    margin-top: 10px;
+}
+
+textarea {
+    font-size: 12px;
+    clear: both;
+    height: 100px;
+    width: 200px;
+    float: right;
+    padding: 5px 5px 5px 5px;
+}
+
+p {
+    font-size: 14px;
+    display: inline-block;
+    float: left;
+    margin: 0 10px 0 0;
+}

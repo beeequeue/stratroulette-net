@@ -1,0 +1,119 @@
+//
+   Created by bq on 2016-04-04.
+   Background pattern from subtlepatterns.com
+
+-var teams = ['ATK', 'DEF', 'BOTH'];
+-var gamemodes = ['Bombs', 'Hostage', 'Capture Site'];
+
+doctype html
+html(lang="en-US")
+    head
+        block title
+            title R6|S Stratroulette
+
+        include ./dist.jade
+        link(rel="stylesheet" href="/css/style.css")
+
+        block head
+            script(src="/js/autosize.min.js")
+            script(src="/js/stratpage.js")
+
+    body
+        #header
+            img(src="/img/logo.png" alt="R6|S" id="logo")
+
+        #content
+            block content
+                table(id="top" role="presentation")
+                    td.team-button ATK
+                    td#name-container
+                        div#names
+                            p.name(class="1") &#8592; Click on a team to begin! &#8594;
+                            img.name(class="2", src="/img/load.gif")
+                            p.name(class="3") empty
+                    td.team-button DEF
+
+                #gamemode-selection
+                    each val in gamemodes
+                        -var lowerVal = val.toLowerCase().replace(' ', '');
+                        span.gamemode-container
+                            p(style="float:left")=val
+                            .checkbox(style="float:right")
+                                input.gm-checkbox(id='gm-checkbox-' + lowerVal type='checkbox')
+                                label(for='gm-checkbox-' + lowerVal)
+
+                #center
+                    block center
+                        #desc
+
+                #action-bar
+                    block bottom
+                        span#author Author
+                        span#strat-options
+                            span.strat-button#like-counter +0
+                            span.button-describer.like like
+                            img.strat-button.like(src="img/icons/like.png")
+                            span.button-describer.submit submit
+                            img.strat-button.submit(src="img/icons/suggest.png")
+                            span.button-describer.report report
+                            img.strat-button.report(src="img/icons/feedback.png")
+
+                #bottom
+                    .bottom-container.
+                        Please only play strats as a five man group. Don't ruin other people's games
+                    .bottom-container
+                        p Source code available on 
+                        a(href="https://github.com/BeeeQueue/stratroulette-net" target="_blank") 
+                            p GitHub
+                            img(src="img/github-logo.png")
+                        p &#9830; Help keep the server running 
+                        form#donate-button(action='https://www.paypal.com/cgi-bin/webscr', method='post', target='_top')
+                            input(type='hidden', name='cmd', value='_s-xclick')
+                            input(type='hidden', name='hosted_button_id', value='CTA5MGM5L7HSE')
+                            input(type='image', src='https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif', name='submit', alt='PayPal - The safer, easier way to pay online!')
+
+
+        #fader(style="display:none")
+        #report-window.dialogue(style="display:none")
+            h1.d-title Report
+
+            p.d-info Your IP will be recorded along with your message
+            input.d-textinput#report-msg(type="text")
+
+            span.d-button#report-submit Submit
+            p.d-error#report-error(style="display:none") Error message
+            img.d-success(src="/img/check.png" style="display:none")
+
+        #submission-window.dialogue(style="display:none")
+            h1.d-title Submit a Strat
+            p.d-info All fields except description follow the following rules:
+            p.d-info 3 to 16 alphanumerical characters and - _ /
+
+            p.d-info.bold Author
+            input.d-textinput#submission-author(type="text" maxlength="16")
+
+            p.d-info.bold Strat Name
+            input.d-textinput#submission-name(type="text" maxlength="16")
+
+            p.d-info.bold Description
+            textarea.d-textarea#submission-msg
+
+            p.d-info.bold Team
+            select.d-combobox#submission-team
+                each val in teams
+                    option(value=val.toLowerCase())=val
+
+            p.d-info.bold Gamemodes
+            .d-wrapper#submission-gamemodes
+                each val in gamemodes
+                    -var lowerVal = val.toLowerCase().replace(' ', '');
+                    .d-checkbox-wrapper
+                        p.d-info(style="float:left")=val
+                        .checkbox.d-checkbox
+                            input(id='submission-checkbox-' + lowerVal type='checkbox')
+                            label(for='submission-checkbox-' + lowerVal)
+
+            br
+            span.d-button#submission-submit Submit
+            p.d-error#submission-error(style="display:none") Error message
+            img.d-success(src="/img/check.png" style="display:none")
