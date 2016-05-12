@@ -13,9 +13,9 @@ var express      = require('express'),
     mongo        = require('mongodb').MongoClient;
 
 var databaseString = "mongodb://{host}:{port}/{database}"
-    .replace("{host}", global.config.databases.strats.host)
-    .replace("{port}", global.config.databases.strats.port)
-    .replace("{database}", global.config.databases.strats.database);
+    .replace("{host}", process.env.DBHOST)
+    .replace("{port}", process.env.DBPORT)
+    .replace("{database}", process.env.DBNAME);
 
 mongo.connect(databaseString, function (err, db) {
     if (!err) {
