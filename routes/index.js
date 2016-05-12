@@ -122,7 +122,7 @@ router.post('/submit', function (req, res) {
     for (var i = 0; i < valuesToCheck.length; i++) {
         var value = data[valuesToCheck[i]];
 
-        if (!regexp.test(value) || value.length < 3 || value.length > 16) {
+        if (!regexp.test(value) || value.length < 3 || value.length > 20) {
             res.status(400).json({message: 'Invalid ' + valuesToCheck[i] + '!'});
             return;
         }

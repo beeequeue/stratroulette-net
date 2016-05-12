@@ -30,8 +30,6 @@ mongo.connect(databaseString, function (err, db) {
         global.db = db;
         global.db.strats = db.collection('strats');
         global.db.submissions = db.collection('submissions');
-
-        resetDatabase();
     }
     else {
         console.error(err);
@@ -53,7 +51,7 @@ app.use(logger('dev'));                                             // Bad logge
 app.use(compress({level: 4}));                                      // Enable gzip
 app.use(minify());                                                  // Enable minifying
 app.use(express.static(path.join(__dirname, 'public')));            // Serve files
-app.use(session({secret: process.env.SECRET}));                          // Enable sessions
+app.use(session({secret: process.env.SECRET}));                     // Enable sessions
 app.use(bodyParser.json());                                         // Enable parser
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());                                            // Enable cookies
@@ -99,17 +97,5 @@ app.use(function (err, req, res) {
     });
 });
 //endregion
-
-function resetDatabase() {
-    fs.readFile('newStrats.json', function (err, res) {
-        if (!err) {
-            global.db.strats.deleteMany({});
-            global.db.strats.insertMany(JSON.parse(res));
-        }
-        else {
-            console.error(err);
-        }
-    });
-}
 
 module.exports = app;
