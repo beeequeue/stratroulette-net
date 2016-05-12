@@ -72,30 +72,35 @@ router.post('/unlike', function (req, res) {
 
 router.post('/report', function (req, res) {
     if (req.body.message != null && req.body.message.length > 5) {
-        var ip = req.ip;
-        var findQ = {
-            uid: req.body.uid
-        };
-        var updateQ = {
-            $push: {
-                reports: {
-                    ip:        ip,
-                    sessionID: req.session.id,
-                    message:   req.body.message
+        if (req.body.message.length < 35) {
+            var ip = req.ip;
+            var findQ = {
+                uid: req.body.uid
+            };
+            var updateQ = {
+                $push: {
+                    reports: {
+                        ip:        ip,
+                        sessionID: req.session.id,
+                        message:   req.body.message
+                    }
                 }
-            }
-        };
+            };
 
-        global.db.strats.findOneAndUpdate(findQ, updateQ, function (err, doc) {
-            if (!err) {
-                res.end();
-            }
-            else {
-                
-                console.error(err);
-                res.statusCode(504).json({message: "Couldn't submit report."});
-            }
-        });
+            global.db.strats.findOneAndUpdate(findQ, updateQ, function (err, doc) {
+                if (!err) {
+                    res.end();
+                }
+                else {
+
+                    console.error(err);
+                    res.statusCode(504).json({message: "Couldn't submit report."});
+                }
+            });
+        }
+        else {
+            res.status(400).json({message: "Report message too long"});
+        }
     }
     else {
         res.status(400).json({message: "Report message too short"});
@@ -139,13 +144,13 @@ router.post('/submit', function (req, res) {
 
     // Team validation
     if (validTeams.indexOf(data.team) === -1) {
-        res.statusCode(400).json({message: 'Invalid team.'});
+        res.status(400).json({message: 'Invalid team.'});
         return;
     }
     
     // Description validation
     if (data.desc.length > 450) {
-        res.statusCode(400).json({message: 'Please enter a description shorter than 450 characters.'});
+        res.status(400).json({message: 'Please enter a description shorter than 450 characters.'});
         return;
     }
 
@@ -156,7 +161,7 @@ router.post('/submit', function (req, res) {
         }
         else {
             console.error(err);
-            res.statusCode(504).json({message: 'Server error. Try again later'});
+            res.status(504).json({message: 'Server error. Try again later'});
         }
     });
 });

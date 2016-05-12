@@ -113,14 +113,16 @@ $(document).ready(function () {
                 giveSuccess('submission');
             }
             else {
-                giveErrorMessage('submission', err.message);
+                giveErrorMessage('submission', err.responseJSON.message);
             }
         });
 
     });
 
     $('.report').click(function () {
-        openDialogue('#report-window');
+        if (!$(this).hasClass("disabled")) {
+            openDialogue('#report-window');
+        }
     });
 
     $('#report-submit').click(function () {
@@ -141,7 +143,7 @@ $(document).ready(function () {
                     }, 1125);
                 }
                 else {
-                    giveErrorMessage('report', err.message);
+                    giveErrorMessage('report', err.responseJSON.message);
                 }
             });
         }
@@ -313,6 +315,8 @@ var newStrat = function (strat) {
         }, 700, function () {
             canGetStrat = true;
         });
+    
+    $('.strat-button').removeClass("disabled");
 };
 
 var oneLetterAtATime = function (target, text, interval, index) {

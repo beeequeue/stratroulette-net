@@ -119,6 +119,12 @@ table {
     font-weight: 800;
 }
 
+.disabled {
+    opacity: 0.6;
+    cursor:default !important;
+    transition: opacity 0.75s;
+}
+
 #header {
     padding-top: 20px;
     margin-bottom: 25px;

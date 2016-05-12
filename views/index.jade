@@ -50,13 +50,13 @@ html(lang="en-US")
                     block bottom
                         span#author Author
                         span#strat-options
-                            span.strat-button#like-counter +0
+                            span.strat-button.disabled#like-counter +0
                             span.button-describer.like like
-                            img.strat-button.like(src="img/icons/like.png")
+                            img.strat-button.disabled.like(src="img/icons/like.png")
+                            span.button-describer.report report
+                            img.strat-button.disabled.report(src="img/icons/feedback.png")
                             span.button-describer.submit submit
                             img.strat-button.submit(src="img/icons/suggest.png")
-                            span.button-describer.report report
-                            img.strat-button.report(src="img/icons/feedback.png")
 
                 #bottom
                     .bottom-container.
@@ -69,7 +69,7 @@ html(lang="en-US")
                         p &#9830; Help keep the server running 
                         form#donate-button(action='https://www.paypal.com/cgi-bin/webscr', method='post', target='_top')
                             input(type='hidden', name='cmd', value='_s-xclick')
-                            input(type='hidden', name='hosted_button_id', value='CTA5MGM5L7HSE')
+                            input(type='hidden', name='hosted_button_id', value='T6GN3VHNAS4RJ')
                             input(type='image', src='https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif', name='submit', alt='PayPal - The safer, easier way to pay online!')
 
 

@@ -12,34 +12,31 @@ var express      = require('express'),
     fs           = require('fs'),
     mongo        = require('mongodb').MongoClient;
 
-var config = {};
-loadConfig(function () {
-    var databaseString = "mongodb://{host}:{port}/{database}"
-        .replace("{host}", config.databases.strats.host)
-        .replace("{port}", config.databases.strats.port)
-        .replace("{database}", config.databases.strats.database);
+var databaseString = "mongodb://{host}:{port}/{database}"
+    .replace("{host}", global.config.databases.strats.host)
+    .replace("{port}", global.config.databases.strats.port)
+    .replace("{database}", global.config.databases.strats.database);
 
-    mongo.connect(databaseString, function (err, db) {
-        if (!err) {
-            console.log('Global DB connected');
+mongo.connect(databaseString, function (err, db) {
+    if (!err) {
+        console.log('Global DB connected');
 
-            /*
-             *  Globals are bad, but I'm having troubles getting
-             *  cross-script database access to work in any other way.
-             *  I'm open to pull requests that fix it!
-             */
+        /*
+         *  Globals are bad, but I'm having troubles getting
+         *  cross-script database access to work in any other way.
+         *  I'm open to pull requests that fix it!
+         */
 
-            global.db = db;
-            global.db.strats = db.collection('strats');
-            global.db.submissions = db.collection('submissions');
+        global.db = db;
+        global.db.strats = db.collection('strats');
+        global.db.submissions = db.collection('submissions');
 
-            resetDatabase();
-        }
-        else {
-            console.error(err);
-            throw new Error("DatabaseConnectionException");
-        }
-    });
+        resetDatabase();
+    }
+    else {
+        console.error(err);
+        throw new Error("DatabaseConnectionException");
+    }
 });
 
 var routes = require('./routes/index');
@@ -56,7 +53,7 @@ app.use(logger('dev'));                                             // Bad logge
 app.use(compress({level: 4}));                                      // Enable gzip
 app.use(minify());                                                  // Enable minifying
 app.use(express.static(path.join(__dirname, 'public')));            // Serve files
-app.use(session({secret: config.secret}));                          // Enable sessions
+app.use(session({secret: global.config.secret}));                          // Enable sessions
 app.use(bodyParser.json());                                         // Enable parser
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());                                            // Enable cookies
@@ -102,24 +99,6 @@ app.use(function (err, req, res) {
     });
 });
 //endregion
-
-function loadConfig(next) {
-    fs.readFile('config.json', function (err, data) {
-        if (!err) {
-            try {
-                config = JSON.parse(data);
-                next();
-            } catch (e) {
-                console.error(err);
-                throw new Error("ErrorNotLoadedException");
-            }
-        }
-        else {
-            console.error(err);
-            throw new Error("ErrorNotLoadedException");
-        }
-    });
-}
 
 function resetDatabase() {
     fs.readFile('newStrats.json', function (err, res) {
