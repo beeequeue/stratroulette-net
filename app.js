@@ -53,7 +53,7 @@ app.use(logger('dev'));                                             // Bad logge
 app.use(compress({level: 4}));                                      // Enable gzip
 app.use(minify());                                                  // Enable minifying
 app.use(express.static(path.join(__dirname, 'public')));            // Serve files
-app.use(session({secret: global.config.secret}));                          // Enable sessions
+app.use(session({secret: process.env.SECRET}));                          // Enable sessions
 app.use(bodyParser.json());                                         // Enable parser
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());                                            // Enable cookies
