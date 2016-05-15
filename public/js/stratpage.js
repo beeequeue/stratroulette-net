@@ -1,6 +1,6 @@
 //Created by bq on 2016-04-08.
-
 "use strict";
+
 var canGetStrat = true;
 var currentStrat = {};
 var gamemodesToSearch = [];
@@ -75,7 +75,7 @@ $(document).ready(function () {
     $('#submission-submit').click(function () {
         var data = {
             author:    $('#submission-author').val(),
-            name:      $('#submission-name').val(),
+            name:      $('#submission-stratname').val(),
             desc:      $('#submission-msg').val(),
             team:      $('#submission-team').val(),
             gamemodes: []
@@ -233,7 +233,9 @@ var resetPage = function (speed) {
             scrollTop: 70
         }, speed);
 
-    removeOneLetterAtATime('#author', 20);
+    $('#author').find('img:not(".hidden")').addClass("hidden").parents("a").attr("href", "javascript:");
+
+    removeOneLetterAtATime('#author p', 20);
 
     setLikedStatus(false);
 
@@ -300,8 +302,14 @@ var newStrat = function (strat) {
             $('#names').scrollTop(0);
         });
 
+    $('.' + strat.author.type).removeClass("hidden").parents("a").attr("href", strat.author.link);
 
-    oneLetterAtATime('#author', strat.author, 25);
+    // If Reddit author add /u/
+    if (strat.author.type === "reddit") {
+        strat.author.name = "/u/" + strat.author.name;
+    }
+
+    oneLetterAtATime('#author p', strat.author.name, 25);
 
     setLikeCounter(strat.voteCount, 750, 'easeInOutQuad');
 
@@ -315,7 +323,7 @@ var newStrat = function (strat) {
         }, 700, function () {
             canGetStrat = true;
         });
-    
+
     $('.strat-button').removeClass("disabled");
 };
 

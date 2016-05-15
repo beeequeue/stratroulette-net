@@ -121,8 +121,13 @@ table {
 
 .disabled {
     opacity: 0.6;
-    cursor:default !important;
+    cursor: default !important;
     transition: opacity 0.75s;
+}
+
+.hidden {
+    opacity: 0;
+    transition: opacity 1s;
 }
 
 #header {
@@ -262,19 +267,37 @@ table {
 /*region Actionbar*/
 #action-bar {
     height: 55px;
-    overflow: auto;
+    overflow: hidden;
     border-top: 2px solid #bfbfc3;
     border-bottom: 2px solid #bfbfc3;
     background: #f3f3f7;
     line-height: 55px;
+    transition: opacity 0.7s;
 }
 
 #author {
+    position: relative;
     float: left;
     font-size: 25px;
     color: #727275;
     font-weight: 200;
     margin-left: 20px;
+    line-height: 50px;
+}
+
+#author > p {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 60px;
+}
+
+#author img {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    transition: opacity 0.7s;
 }
 
 #strat-options {
@@ -332,6 +355,7 @@ table {
     padding: 5px 25px 5px 25px;
 }
 
+/*region Bottom */
 #bottom {
     background: #dadade;
     border-bottom-right-radius: 15px;
@@ -339,6 +363,8 @@ table {
     vertical-align: middle;
     padding: 5px;
     line-height: 100%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
 }
 
 .bottom-container {
@@ -373,6 +399,8 @@ table {
     height: 21px;
     width: 21px;
 }
+
+/*endregion*/
 
 #fader {
     position: fixed;

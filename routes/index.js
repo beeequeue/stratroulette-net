@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', function (req, res) {
     res.render('index');
 });
 
@@ -66,7 +66,7 @@ router.post('/unlike', function (req, res) {
         });
     }
     else {
-        res.json({error: 'Did not recieve uid'});
+        res.statusCode(400).json({error: 'Did not recieve uid'});
     }
 });
 
@@ -87,7 +87,7 @@ router.post('/report', function (req, res) {
                 }
             };
 
-            global.db.strats.findOneAndUpdate(findQ, updateQ, function (err, doc) {
+            global.db.strats.findOneAndUpdate(findQ, updateQ, function (err) {
                 if (!err) {
                     res.end();
                 }

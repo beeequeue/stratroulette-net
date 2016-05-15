@@ -1,46 +1,24 @@
 "use strict";
-// TODO: Make all of gamemode selectors clickable
-var express      = require('express'),
-    path         = require('path'),
-    favicon      = require('serve-favicon'),
-    logger       = require('morgan'),
-    cookieParser = require('cookie-parser'),
-    bodyParser   = require('body-parser'),
-    session      = require('express-session'),
-    minify       = require('express-minify'),
-    compress     = require('compression'),
-    fs           = require('fs'),
-    mongo        = require('mongodb').MongoClient;
 
-var databaseString = "mongodb://{host}:{port}/{database}"
-    .replace("{host}", process.env.DBHOST)
-    .replace("{port}", process.env.DBPORT)
-    .replace("{database}", process.env.DBNAME);
+// Requires
+const express      = require('express'),
+      path         = require('path'),
+      favicon      = require('serve-favicon'),
+      logger       = require('morgan'),
+      cookieParser = require('cookie-parser'),
+      bodyParser   = require('body-parser'),
+      session      = require('express-session'),
+      minify       = require('express-minify'),
+      compress     = require('compression'),
+      MongoStore   = require('connect-mongo')(session),
+      fs           = require('fs');
 
-mongo.connect(databaseString, function (err, db) {
-    if (!err) {
-        console.log('Global DB connected');
 
-        /*
-         *  Globals are bad, but I'm having troubles getting
-         *  cross-script database access to work in any other way.
-         *  I'm open to pull requests that fix it!
-         */
-
-        global.db = db;
-        global.db.strats = db.collection('strats');
-        global.db.submissions = db.collection('submissions');
-    }
-    else {
-        console.error(err);
-        throw new Error("DatabaseConnectionException");
-    }
-});
-
-var routes = require('./routes/index');
-var getPage = require('./routes/get');
+var routes  = require('./routes/index'),
+    getPage = require('./routes/get');
 
 var app = express();
+
 
 //region Express setup
 app.set('views', path.join(__dirname, 'views'));
@@ -51,7 +29,14 @@ app.use(logger('dev'));                                             // Bad logge
 app.use(compress({level: 4}));                                      // Enable gzip
 app.use(minify());                                                  // Enable minifying
 app.use(express.static(path.join(__dirname, 'public')));            // Serve files
-app.use(session({secret: process.env.SECRET}));                     // Enable sessions
+app.use(session({                                                   // Enable sessions
+    secret: process.env.SECRET,
+    store:  new MongoStore({db: global.db}),                        // Powered by our MongoDB database
+    cookie: {
+        secure:  false,
+        expires: 3600000 * 24 * 356 * 5 // 5 years
+    }
+}));
 app.use(bodyParser.json());                                         // Enable parser
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());                                            // Enable cookies
@@ -62,6 +47,7 @@ app.use('/', routes);
 app.use('/get', getPage);
 
 //region Error catching
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('Not Found');

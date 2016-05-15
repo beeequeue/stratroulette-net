@@ -10,10 +10,11 @@ html(lang="en-US")
     head
         block title
             title R6|S Stratroulette
-        
+
         meta(name="description" content="Get fun 'strategies' to use in games!")
         meta(name="keywords" content="strat, strategy, game, gaming, rainbow, six, siege, generator")
         meta(name='google-site-verification', content='Uf8v3vnOhD7yveO0SjnF0ARJJ7NTu79txVZzn56QMy8')
+        meta(name="viewport" content="width=device-width, initial-scale=1")
 
         include ./dist.jade
         link(rel="stylesheet" href="/css/style.css")
@@ -52,7 +53,14 @@ html(lang="en-US")
 
                 #action-bar
                     block bottom
-                        span#author Author
+                        a(href="javascript:" target="_blank")
+                            span#author
+                                img.strat-button.submission(src="/img/icons/submission.png")
+                                img.strat-button.reddit.hidden(src="/img/icons/redditsnoo.png")
+                                img.strat-button.youtube.hidden(src="/img/icons/youtube.png")
+                                img.strat-button.twitch.hidden(src="/img/icons/twitch.png")
+                                p Author
+
                         span#strat-options
                             span.strat-button.disabled#like-counter +0
                             span.button-describer.like like
@@ -66,16 +74,16 @@ html(lang="en-US")
                     .bottom-container.
                         Please only play strats as a five man group. Don't ruin other people's games
                     .bottom-container
-                        p Source code available on 
-                        a(href="https://github.com/BeeeQueue/stratroulette-net" target="_blank") 
-                            p GitHub
-                            img(src="img/github-logo.png")
-                        p &#9830; Help keep the server running 
+                        p Help keep the server running 
                         form#donate-button(action='https://www.paypal.com/cgi-bin/webscr', method='post', target='_top')
                             input(type='hidden', name='cmd', value='_s-xclick')
                             input(type='hidden', name='hosted_button_id', value='T6GN3VHNAS4RJ')
                             input(type='image', src='https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif', name='submit', alt='PayPal - The safer, easier way to pay online!')
-
+                        p &#9830; Source code available on 
+                        a(href="https://github.com/BeeeQueue/stratroulette-net" target="_blank")
+                            p GitHub
+                            img(src="img/github-logo.png")
+                        p &#9830; Contact: contact@stratroulette.net
 
         #fader(style="display:none")
         #report-window.dialogue(style="display:none")
@@ -94,10 +102,12 @@ html(lang="en-US")
             p.d-info 3 to 20 alphanumerical characters and - _ /
 
             p.d-info.bold Author
+            p.d-info(style="margin-top:-6px;") Add a "/u/" prefix to link your submission to a reddit user
+            p.d-info(style="margin-top:-6px;") e.g.  "/u/username"
             input.d-textinput#submission-author(type="text" maxlength="16")
 
             p.d-info.bold Strat Name
-            input.d-textinput#submission-name(type="text" maxlength="16")
+            input.d-textinput#submission-stratname(type="text" maxlength="16")
 
             p.d-info.bold Description
             textarea.d-textarea#submission-msg
