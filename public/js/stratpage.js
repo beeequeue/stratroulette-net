@@ -3,6 +3,8 @@
 
 var canGetStrat = true;
 var currentStrat = {};
+var lastStrats = [];
+var lastStratsAmount = 6;
 var gamemodesToSearch = [];
 
 $(document).ready(function () {
@@ -250,13 +252,14 @@ var getStrat = function (type, next) {
                 $.post({
                     url:         '/get/' + type.toLowerCase(),
                     data:        JSON.stringify({
-                        not:       [currentStrat.uid],
+                        not:       lastStrats,
                         gamemodes: gamemodesToSearch
                     }),
                     dataType:    'json',
                     contentType: 'application/json',
                     success:     function (data) {
                         currentStrat = data;
+                        updateLatestStrats(data.uid);
                         next(null, data);
                     },
                     error:       function (err) {
@@ -297,8 +300,6 @@ var newStrat = function (strat) {
         .animate({
             scrollTop: 140
         }, function () {
-            var tempName = $('.name.' + 1).html();
-
             $('#names').scrollTop(0);
         });
 
@@ -325,6 +326,17 @@ var newStrat = function (strat) {
         });
 
     $('.strat-button').removeClass("disabled");
+};
+
+var updateLatestStrats = function (newID) {
+    var tempLastStrats = [newID];
+    for (var i = 0; i < lastStrats.length; i++) {
+        if (i < lastStratsAmount - 1) {
+            tempLastStrats[i + 1] = lastStrats[i];
+        }
+    }
+    console.log(tempLastStrats);
+    lastStrats = tempLastStrats;
 };
 
 var oneLetterAtATime = function (target, text, interval, index) {
@@ -379,6 +391,7 @@ var setLikedStatus = function (val) {
     });
 
     function getRotationDegrees(obj) {
+        var angle = 0;
         var matrix = obj.css("-webkit-transform") ||
             obj.css("-moz-transform") ||
             obj.css("-ms-transform") ||
@@ -388,10 +401,10 @@ var setLikedStatus = function (val) {
             var values = matrix.split('(')[1].split(')')[0].split(',');
             var a = values[0];
             var b = values[1];
-            var angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+            angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
         }
         else {
-            var angle = 0;
+            angle = 0;
         }
         return (angle < 0) ? angle + 360 : angle;
     }
