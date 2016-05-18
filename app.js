@@ -42,6 +42,39 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());                                            // Enable cookies
 //endregion
 
+app.use('/', function (req, res, next) {
+    if (req.originalUrl.indexOf('/get/') < 0) {
+        var session = req.session;
+
+        incViewCount('total');
+        
+        if (!session.views) {
+            session.views = 1;
+            incViewCount('unique');
+        }
+        else {
+            session.views++;
+        }
+    }
+
+    next();
+});
+
+app.use("/get*", function (req, res, next) {
+    var session = req.session;
+    
+    if (!session.stratsGotten) {
+        session.stratsGotten = 1;
+        incViewCount('strats');
+    }
+    else {
+        session.stratsGotten++;
+        incViewCount('strats');
+    }
+    
+    next();
+});
+
 // Routes
 app.use('/', routes);
 app.use('/get', getPage);
@@ -83,5 +116,15 @@ app.use(function (err, req, res) {
     });
 });
 //endregion
+
+var incViewCount = function (type) {
+    var updateQ = JSON.parse('{"$inc": {"' + type + '": 1}}');
+
+    global.db.stats.findOneAndUpdate({total: {$exists: true}}, updateQ, function (err, docs) {
+        if (err) {
+            console.error(err);
+        }
+    });
+};
 
 module.exports = app;

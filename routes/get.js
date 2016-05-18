@@ -51,7 +51,7 @@ var handleRequest = function (req, res) {
                         
                         do {
                             // Generate a random uid until we get one not in the array
-                            strat = docs[randomNumber(0, docs.length - 1)];
+                            strat = docs[randomNum(0, docs.length)];
                         } while (notWanted.indexOf(strat.uid) > -1);
 
                         strat.liked = strat.votes.indexOf(req.session.id) > -1;
@@ -117,7 +117,7 @@ var handleRequest = function (req, res) {
     }
 };
 
-function randomNumber(min, max) {
+function randomNum(min, max) {
     return Math.floor((Math.random() * max) + min);
 }
 

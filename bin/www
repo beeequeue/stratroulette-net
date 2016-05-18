@@ -27,6 +27,8 @@ mongo.connect(databaseString, function (err, db) {
         global.db = db;
         global.db.strats = db.collection('strats');
         global.db.submissions = db.collection('submissions');
+        global.db.stats = db.collection('stats');
+        global.db.sessions = db.collection('sessions');
 
         startApp();
     }
