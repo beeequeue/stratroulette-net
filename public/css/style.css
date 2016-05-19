@@ -329,21 +329,6 @@ table {
     width: auto;
 }
 
-.button-describer {
-    height: 16px;
-    width: 50px;
-    position: absolute;
-    background: #f8f8fd;
-    font-size: 14px;
-    line-height: 16px;
-    padding: 3px;
-    margin-left: -10px;
-    margin-top: -24px;
-    border-radius: 5px;
-    cursor: default;
-    display: none;
-}
-
 /*endregion*/
 
 .code-box {

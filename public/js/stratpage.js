@@ -1,31 +1,44 @@
 //Created by bq on 2016-04-08.
 "use strict";
 
-var canGetStrat = true;
-var currentStrat = {};
-var lastStrats = [];
-var lastStratsAmount = 6;
-var gamemodesToSearch = [];
+var canGetStrat       = true,
+    currentStrat      = {},
+    lastStrats        = [],
+    lastStratsAmount  = 6,
+    gamemodesToSearch = [];
 
 $(document).ready(function () {
     autosize($('.d-textarea'));
 
-    var cookieGM = tryJSONParse(Cookies.get("gamemodes"));
+    // Tooltipster setup
+    $.fn.tooltipster('setDefaults', {
+        delay: 0,
+        speed: 175
+    });
+
+    $('.tooltip').tooltipster();
+    $('.d-textinput, .d-textarea')
+        .tooltipster({
+            delay:         0,
+            speed:         175,
+            trigger:       'none',
+            position:      'right',
+            contentAsHTML: true
+        })
+        .on('focus click', function () {
+            $(this).tooltipster('show');
+        })
+        .on('focusout', function () {
+            $(this).tooltipster('hide');
+        });
+
+    var cookieGM = tryJSONParse(Cookies.get('gamemodes'));
     if (cookieGM !== undefined) {
         for (var i = 0; i < cookieGM.length; i++) {
             gamemodesToSearch.push(cookieGM[i]);
             $('#gm-checkbox-' + cookieGM[i]).prop('checked', true);
         }
     }
-
-    // Hover-over descriptions
-    $('.strat-button').mouseenter(function () {
-        $('.button-describer.' + $(this).attr('class').split(' ')[1])
-            .stop().fadeIn(50).css("display", "inline-block");
-    }).mouseleave(function () {
-        $('.button-describer.' + $(this).attr('class').split(' ')[1])
-            .stop().fadeOut(100);
-    });
 
     $('.team-button').click(function () {
         if (canGetStrat && gamemodesToSearch.length > 0) {
@@ -121,17 +134,17 @@ $(document).ready(function () {
 
     });
 
-    $('.report').click(function () {
+    $('.feedback').click(function () {
         if (!$(this).hasClass("disabled")) {
-            openDialogue('#report-window');
+            openDialogue('#feedback-window');
         }
     });
 
-    $('#report-submit').click(function () {
-        var selec = '#report-window';
+    $('#feedback-submit').click(function () {
+        var selec = '#feedback-window';
 
-        if ($('#report-msg').val().length > 5) {
-            reportStrat(currentStrat.uid, $('#report-msg').val(), function (err, res) {
+        if ($('#feedback-msg').val().length > 5) {
+            feedbackStrat(currentStrat.uid, $('#feedback-msg').val(), function (err, res) {
                 if (!err) {
                     $(selec + ' .d-success').fadeIn(250);
 
@@ -140,22 +153,22 @@ $(document).ready(function () {
                     }, 1000);
 
                     setTimeout(function () {
-                        $('#report-msg').val('');
+                        $('#feedback-msg').val('');
                         $(selec + ' .d-success').fadeOut(250);
                     }, 1125);
                 }
                 else {
-                    giveErrorMessage('report', err.responseJSON.message);
+                    giveErrorMessage('feedback', err.responseJSON.message);
                 }
             });
         }
         else {
-            giveErrorMessage('report', "Please enter a message longer than 5 characters!");
+            giveErrorMessage('feedback', "Please enter a message longer than 5 characters!");
         }
     });
 
     $('#fader').click(function () {
-        var elementsToFade = ['#fader', '#report-window', '#submission-window'];
+        var elementsToFade = ['#fader', '#feedback-window', '#submission-window'];
 
         elementsToFade.forEach(function (elem) {
             $(elem).stop().fadeOut(150);
@@ -325,7 +338,8 @@ var newStrat = function (strat) {
             canGetStrat = true;
         });
 
-    $('.strat-button').removeClass("disabled");
+    // Enable buttons and add tooltips
+    $('.strat-button').removeClass("disabled").tooltipster();
 };
 
 var updateLatestStrats = function (newID) {
@@ -335,7 +349,6 @@ var updateLatestStrats = function (newID) {
             tempLastStrats[i + 1] = lastStrats[i];
         }
     }
-    console.log(tempLastStrats);
     lastStrats = tempLastStrats;
 };
 
@@ -426,8 +439,7 @@ var giveOpinion = function (uid, toLike, next) {
     });
 };
 
-// TODO: Change to "give feedback"
-var reportStrat = function (uid, message, next) {
+var feedbackStrat = function (uid, message, next) {
     var data = {
         uid:     uid,
         message: message

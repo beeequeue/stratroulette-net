@@ -63,12 +63,9 @@ html(lang="en-US")
 
                         span#strat-options
                             span.strat-button.disabled#like-counter +0
-                            span.button-describer.like like
-                            img.strat-button.disabled.like(src="img/icons/like.png")
-                            span.button-describer.report report
-                            img.strat-button.disabled.report(src="img/icons/feedback.png")
-                            span.button-describer.submit submit
-                            img.strat-button.submit(src="img/icons/suggest.png")
+                            img.strat-button.disabled.like(title="like" src="img/icons/like.png")
+                            img.strat-button.disabled.feedback(title="feedback" src="img/icons/feedback.png")
+                            img.strat-button.submit.tooltip(title="submit" src="img/icons/suggest.png")
 
                 #bottom
                     .bottom-container.
@@ -86,31 +83,29 @@ html(lang="en-US")
                         p &#9830; Contact: contact@stratroulette.net
 
         #fader(style="display:none")
-        #report-window.dialogue(style="display:none")
-            h1.d-title Report
+        #feedback-window.dialogue(style="display:none")
+            h1.d-title Give Feedback
 
             p.d-info Your IP will be recorded along with your message
-            input.d-textinput#report-msg(type="text")
+            input.d-textinput#feedback-msg(type="text" title="Req. length: 5 to 35")
 
-            span.d-button#report-submit Submit
-            p.d-error#report-error(style="display:none") Error message
+            span.d-button#feedback-submit Submit
+            p.d-error#feedback-error(style="display:none") Error message
             img.d-success(src="/img/check.png" style="display:none")
 
         #submission-window.dialogue(style="display:none")
             h1.d-title Submit a Strat
-            p.d-info All fields except description follow the following rules:
-            p.d-info 3 to 20 alphanumerical characters and - _ /
+            p.d-info Author and Strat Name follow the following rules:
+            p.d-info(style="margin-top:-5px;") 3 to 20 alphanumerical characters and - _ /
 
             p.d-info.bold Author
-            p.d-info(style="margin-top:-6px;") Add a "/u/" prefix to link your submission to a reddit user
-            p.d-info(style="margin-top:-6px;") e.g.  "/u/username"
-            input.d-textinput#submission-author(type="text" maxlength="16")
+            input.d-textinput#submission-author(title='"/u/[username]" to link to reddit user' type="text" maxlength="16")
 
             p.d-info.bold Strat Name
             input.d-textinput#submission-stratname(type="text" maxlength="16")
 
             p.d-info.bold Description
-            textarea.d-textarea#submission-msg
+            textarea.d-textarea#submission-msg(title="Max length: 450")
 
             p.d-info.bold Team
             select.d-combobox#submission-team

@@ -71,7 +71,7 @@ router.post('/unlike', function (req, res) {
 });
 
 router.post('/report', function (req, res) {
-    if (req.body.message != null && req.body.message.length > 5) {
+    if (req.body.message != null) {
         if (req.body.message.length < 35) {
             var ip = req.ip;
             var findQ = {
