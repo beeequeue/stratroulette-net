@@ -128,16 +128,30 @@ router.post('/submit', function (req, res) {
         }
     }
 
-    // Gamemode validation #1
+    data.author = {
+        name: data.author
+    };
+
+    // Check if author has reddit prefix
+    if (data.author.name.indexOf("/u/") == 0) {
+        data.author.type = "reddit";
+        data.author.link = "http://reddit.com" + data.author.name;
+    }
+    else {
+        data.author.type = "submission";
+        data.author.link = "javascript: void(0)";
+    }
+
+    // Gamemode validation #1 (Amount)
     if (data.gamemodes.length < 1) {
         res.status(400).json({message: 'Please select at least one gamemode'});
         return;
     }
 
-    // Gamemode validation #2
-    for (var i = 0; i < data.gamemodes.length; i++) {
-        if (validGamemodes.indexOf(data.gamemodes[i]) === -1) {
-            res.statusCode(400).json({message: 'Invalid gamemode "' + data.gamemodes[i] + '". Allowed gamemodes are bombs,hostage,capturesite'});
+    // Gamemode validation #2 ()
+    for (var j = 0; j < data.gamemodes.length; j++) {
+        if (validGamemodes.indexOf(data.gamemodes[j]) === -1) {
+            res.statusCode(400).json({message: 'Invalid gamemode "' + data.gamemodes[j] + '". Allowed gamemodes are bombs,hostage,capturesite'});
             return;
         }
     }
@@ -147,7 +161,7 @@ router.post('/submit', function (req, res) {
         res.status(400).json({message: 'Invalid team.'});
         return;
     }
-    
+
     // Description validation
     if (data.desc.length > 450) {
         res.status(400).json({message: 'Please enter a description shorter than 450 characters.'});
@@ -155,7 +169,7 @@ router.post('/submit', function (req, res) {
     }
 
 
-    global.db.submissions.insertOne(data, function (err) {
+    global.db.submissions.insertMany([data], function (err) {
         if (!err) {
             res.end();
         }

@@ -53,10 +53,10 @@ $(document).ready(function () {
                 }
                 else {
                     var errorStrat = {
-                        desc:   "Error Code: " + err.status + "<br>" + err.statusText,
-                        author: "",
+                        desc:   err.statusText + "<br>" + err.responseJSON.message,
+                        author: "Error",
                         votes:  0,
-                        name:   "Error"
+                        name:   err.status.toString()
                     };
 
                     setTimeout(function () {
@@ -318,19 +318,19 @@ var newStrat = function (strat) {
 
     $('.' + strat.author.type).removeClass("hidden").parents("a").attr("href", strat.author.link);
 
-    // If Reddit author add /u/
-    if (strat.author.type === "reddit") {
+    // If Reddit author prefix is missing then add /u/
+    if (strat.author.type === "reddit" && strat.author.name.indexOf('/u/') < 0) {
         strat.author.name = "/u/" + strat.author.name;
     }
 
-    oneLetterAtATime('#author p', strat.author.name, 25);
+    oneLetterAtATime('#author p', strat.author.name || strat.author, 25);
 
     setLikeCounter(strat.voteCount, 750, 'easeInOutQuad');
 
     setLikedStatus(strat.liked);
 
     $('#desc')
-        .html(strat.desc.replace('\\n', '<br>'))
+        .html(strat.desc.replace('\\n', '<br>').replace('\n', '<br>'))
         .stop()
         .animate({
             height: $("#desc").get(0).scrollHeight
@@ -339,7 +339,9 @@ var newStrat = function (strat) {
         });
 
     // Enable buttons and add tooltips
-    $('.strat-button').removeClass("disabled").tooltipster();
+    if ($('.feedback').hasClass("disabled")) {
+        $('.strat-button:not(.submit)').removeClass("disabled").tooltipster();
+    }
 };
 
 var updateLatestStrats = function (newID) {

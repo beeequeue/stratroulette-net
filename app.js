@@ -14,8 +14,9 @@ const express      = require('express'),
       fs           = require('fs');
 
 
-var routes  = require('./routes/index'),
-    getPage = require('./routes/get');
+var routes       = require('./routes/index-router'),
+    getPage      = require('./routes/get-router.js'),
+    controlPanel = require('./routes/cp-router.js');
 
 var app = express();
 
@@ -25,9 +26,13 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');                                     // Set up jade view engine
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));    // Website icon
-app.use(logger('dev'));                                             // Bad logger TODO: Add better logging (Winston)
 app.use(compress({level: 4}));                                      // Enable gzip
-app.use(minify());                                                  // Enable minifying
+if (app.get('env') === 'production') {
+    app.use(minify());                                              // Enable minifying
+}
+else {
+    app.use(logger('dev'));                                         // Bad logger TODO: Add better logging (Winston)
+}
 app.use(express.static(path.join(__dirname, 'public')));            // Serve files
 app.use(session({                                                   // Enable sessions
     secret: process.env.SECRET,
@@ -42,12 +47,13 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());                                            // Enable cookies
 //endregion
 
+//region View counting
 app.use('/', function (req, res, next) {
     if (req.originalUrl.indexOf('/get/') < 0) {
         var session = req.session;
 
         incViewCount('total');
-        
+
         if (!session.views) {
             session.views = 1;
             incViewCount('unique');
@@ -62,7 +68,7 @@ app.use('/', function (req, res, next) {
 
 app.use("/get*", function (req, res, next) {
     var session = req.session;
-    
+
     if (!session.stratsGotten) {
         session.stratsGotten = 1;
         incViewCount('strats');
@@ -71,13 +77,15 @@ app.use("/get*", function (req, res, next) {
         session.stratsGotten++;
         incViewCount('strats');
     }
-    
+
     next();
 });
+//endregion
 
 // Routes
 app.use('/', routes);
 app.use('/get', getPage);
+app.use('/controlpanel', controlPanel);
 
 //region Error catching
 
@@ -107,8 +115,6 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function (err, req, res) {
-    console.error(err);
-
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
@@ -128,3 +134,6 @@ var incViewCount = function (type) {
 };
 
 module.exports = app;
+
+// TODO: fix keys gotten in get
+// Help I've completely lost what I wanted from myself with that to-do
