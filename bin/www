@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-var debug = require('debug')('R6S Stratroulette:server'),
-    http  = require('http'),
-    mongo = require('mongodb').MongoClient,
+var debug    = require('debug')('R6S Stratroulette:server'),
+    http     = require('http'),
+    mongo    = require('mongodb').MongoClient,
     server;
 
 /**
@@ -16,7 +16,7 @@ var databaseString = "mongodb://{host}:{port}/{database}"
 
 mongo.connect(databaseString, function (err, db) {
     if (!err) {
-        console.log('Global DB connected');
+        console.log('Connected to ' + process.env.DBNAME);
 
         /*
          *  Globals are bad, but I'm having troubles getting
@@ -27,6 +27,7 @@ mongo.connect(databaseString, function (err, db) {
         global.db = db;
         global.db.strats = db.collection('strats');
         global.db.submissions = db.collection('submissions');
+        global.db.moderators = db.collection('moderators');
         global.db.stats = db.collection('stats');
         global.db.sessions = db.collection('sessions');
 
@@ -62,7 +63,7 @@ var startApp = function () {
      * Listen on provided port, on all network interfaces.
      */
 
-    server.listen(port, '0.0.0.0');
+    server.listen(port);
     server.on('error', onError);
     server.on('listening', onListening);
 };

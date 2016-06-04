@@ -1,0 +1,79 @@
+// Created by adam.haglund on 2016-05-20.
+
+-var teams = ['ATK', 'DEF', 'BOTH'];
+-var gamemodes = ['Bombs', 'Hostage', 'Capture Site'];
+
+doctype html
+html(lang="en-US")
+    head
+        title Siege Control Panel
+
+        include ./dist.jade
+        link(rel="stylesheet" href="/css/style.css")
+        link(rel="stylesheet" href="/css/control-panel.css")
+        link(rel="stylesheet" href="/css/jquery-ui.css")
+        
+        script.
+            var submissions = !{submissions};
+
+        script(src="/js/jquery-ui.js")
+        script(src="/js/autosize.min.js")
+        script(src="/js/control-panel.js")
+
+
+    body
+        #container
+            #strats.panel
+                #accordion
+                    p.strat-header BeeQueue - A bad strat name
+                    .strat-container
+                        table(id="top" role="presentation")
+                            td.team-button.disabled.atk ATK
+                            td#name-container
+                                div#names
+                                    input.strat-name(type='text' maxlength=20)
+                            td.team-button.disabled.def DEF
+
+                        #gamemode-selection
+                            each val in gamemodes
+                                -var lowerVal = val.toLowerCase().replace(' ', '');
+                                span.gamemode-container
+                                    p(style="float:left")=val
+                                    .checkbox(style="float:right")
+                                        input.gm-checkbox(class='gm-checkbox-' + lowerVal type='checkbox')
+                                        label(for='gm-checkbox-' + lowerVal)
+
+                        #center
+                            textarea.strat-desc(maxlength='450')
+
+                        #action-bar
+                            span#author
+                                a(href="")
+                                    img.strat-button.submission.hidden(src="/img/icons/submission.png")
+                                    img.strat-button.reddit.hidden(src="/img/icons/redditsnoo.png")
+                                    img.strat-button.youtube.hidden(src="/img/icons/youtube.png")
+                                    img.strat-button.twitch.hidden(src="/img/icons/twitch.png")
+                                input.tooltip.author-name(type='text' maxlength=20
+                                title="Don't edit the author name unless you really have to.")
+
+                            span#strat-options
+                                span.strat-button.disabled#like-counter +0
+                                img.strat-button.disabled(title="like" src="img/icons/like.png")
+                                img.strat-button.disabled(title="feedback" src="img/icons/feedback.png")
+                                img.strat-button.disabled(title="submit" src="img/icons/suggest.png")
+            #actions.panel
+                .button.accept Accept
+
+                br
+                .button.reject Reject
+
+                br
+                input.reject-message(type="text" placeholder="Reject note")
+                
+                br
+                br
+                p.
+                    • Make sure there are no spelling/grammar mistakes.<br><br>
+                    • Make sure the name is not messed up (e.g. /u7namehere)<br><br>
+                    • Make sure the correct team(s) is selected.<br><br>
+                    • Make sure the strat is doable in the selected gamemodes.<br><br>

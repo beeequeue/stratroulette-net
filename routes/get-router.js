@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var fieldFilter = {
-    _id:     false,
-    reports: false
+    _id:       false,
+    reports:   false,
+    original:  false,
+    moderator: false
 };
 
 
@@ -15,11 +17,12 @@ router.get('/:type', function (req, res) {
 });
 
 var handleRequest = function (req, res) {
-    var team      = req.params.type,
-        gamemodes = req.body.gamemodes,
-        notWanted = req.body.not,
-        query     = {},
-        strat     = {};
+    var team          = req.params.type,
+        gamemodes     = req.body.gamemodes,
+        notWanted     = req.body.not,
+        query         = {},
+        strat         = {},
+        removedStrats = [];
 
     switch (team) {
         /* 
@@ -41,26 +44,45 @@ var handleRequest = function (req, res) {
             };
 
             global.db.strats.find(query, fieldFilter)
-                .toArray(function (err, docs) {
-                    if (!err) {
-                        // If the array of not wanted strats is there
-                        if (notWanted == null && notWanted.length < 1) {
+                .toArray(function (err, strats) {
+                    if (!err && strats.length > 0) {
+                        // If the array of not wanted strats isn't there
+                        if (notWanted == null || !Array.isArray(notWanted) || notWanted.length < 1) {
                             // Set unwanted strat uid to a non-existent uid
                             notWanted = [-1];
                         }
-                        
-                        do {
-                            // Generate a random uid until we get one not in the array
-                            strat = docs[randomNum(0, docs.length)];
-                        } while (notWanted.indexOf(strat.uid) > -1);
 
-                        strat.liked = strat.votes.indexOf(req.session.id) > -1;
-                        delete strat.votes;
+                        // Separate not wanted strats into their own array
+                        for (var i = 0; i < strats.length; i++) {
+                            if (notWanted.indexOf(strats[i].uid) > -1) {
+                                removedStrats.push(strats[i]);
+                                strats.splice(i, 1);
+                            }
+                        }
 
-                        res.json(strat);
+                        if (strats.length > 0) {
+                            strat = strats[randomNum(0, strats.length)];
+
+                            strat.liked = strat.votes.indexOf(req.session.id) > -1;
+                            delete strat.votes;
+
+                            res.json(strat);
+                        }
+                        else {
+                            // If the only choice is to pick one of the not wanted strats do it
+                            strat = removedStrats[randomNum(0, removedStrats.length)];
+
+                            strat.liked = strat.votes.indexOf(req.session.id) > -1;
+                            delete strat.votes;
+
+                            res.json(strat);
+                        }
+                    }
+                    else if (!err) {
+                        respondJSON("Couldn't get any strats matching your filters", 400);
                     }
                     else {
-                        res.status(500).json({message: "Couldn't get strat"});
+                        respondJSON("Couldn't get any strats", 500);
                     }
                 });
 
@@ -82,7 +104,7 @@ var handleRequest = function (req, res) {
                         res.json(allStrats);
                     }
                     else {
-                        res.status(500).json({message: "Couldn't get strat"});
+                        respondJSON("Couldn't get any strats", 500);
                     }
                 });
             break;
@@ -107,7 +129,7 @@ var handleRequest = function (req, res) {
                             }
                         }
                         else {
-                            res.status(500).json({message: "Couldn't get strat"});
+                            respondJSON("Couldn't get any strats", 500);
                         }
                     });
             }
@@ -115,6 +137,10 @@ var handleRequest = function (req, res) {
                 next(); // 404
             }
     }
+
+    var respondJSON = function (message, code) {
+        res.status(code || 200).json({code: code || 200, message: message});
+    };
 };
 
 function randomNum(min, max) {
