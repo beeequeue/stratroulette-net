@@ -20,12 +20,15 @@ html(lang="en-US")
         link(rel="stylesheet" href="/css/style.css")
 
         block head
+            script.
+                var clientIP = '!{ip}';
+            
             script(src="/js/autosize.min.js")
             script(src="/js/stratpage.js")
 
     body
         #header
-            img(src="/img/logo.png" alt="R6|S" id="logo")
+            img(src="/img/logo.png" alt="Rainbow 6 Siege" id="logo")
 
         #content
             block content
@@ -49,7 +52,8 @@ html(lang="en-US")
 
                 #center
                     block center
-                        #desc
+                        #desc.
+                            Get funny strats to use in Rainbow Six Siege!
 
                 #action-bar
                     block bottom
@@ -87,7 +91,7 @@ html(lang="en-US")
             h1.d-title Give Feedback
 
             p.d-info Your IP will be recorded along with your message
-            input.d-textinput#feedback-msg(type="text" title="Req. length: 5 to 35")
+            input.d-textinput#feedback-msg(type="text" title="Req. length: 6 to 35")
 
             span.d-button#feedback-submit Submit
             p.d-error#feedback-error(style="display:none") Error message

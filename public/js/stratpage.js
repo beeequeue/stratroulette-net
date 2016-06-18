@@ -121,6 +121,8 @@ $(document).ready(function () {
             giveErrorMessage('submission', 'Please select at least one gamemode');
             return;
         }
+        
+        data.ip = clientIP;
 
 
         submitStrat(data, function (err) {
@@ -444,7 +446,8 @@ var giveOpinion = function (uid, toLike, next) {
 var feedbackStrat = function (uid, message, next) {
     var data = {
         uid:     uid,
-        message: message
+        message: message,
+        ip: clientIP
     };
 
     $.post({
