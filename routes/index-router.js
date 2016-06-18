@@ -3,7 +3,8 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res) {
-    res.render('index');
+    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    res.render('index', {ip: ip.substr(7, ip.length)});
 });
 
 router.post('/like', function (req, res) {
@@ -80,7 +81,7 @@ router.post('/report', function (req, res) {
             var updateQ = {
                 $push: {
                     reports: {
-                        ip:        ip,
+                        ip:        req.body.ip,
                         sessionID: req.session.id,
                         message:   req.body.message
                     }
@@ -113,8 +114,7 @@ router.post('/submit', function (req, res) {
         valuesToCheck  = ['author', 'name'],
         validGamemodes = ['bombs', 'hostage', 'capturesite'],
         validTeams     = ['atk', 'def', 'both'];
-
-    data.ip = req.ip;
+    
     data.sessionID = req.session.id;
 
 
