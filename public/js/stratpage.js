@@ -175,6 +175,20 @@ $(document).ready(function () {
     $('.checkbox label').click(function (e) {
         e.stopPropagation();
     });
+    
+    //region Specific strat getting
+    
+    $(window).bind('hashchange', function () {
+        setStrat(window.location.hash.substr(1));
+    });
+
+    var idAskedFor = window.location.hash.substr(1);
+
+    if (idAskedFor && !isNaN(idAskedFor)) {
+        setStrat(idAskedFor);
+    }
+    
+    //endregion
 });
 
 var giveErrorMessage = function (window, msg) {

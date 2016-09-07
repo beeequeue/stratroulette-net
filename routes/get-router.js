@@ -125,7 +125,7 @@ var handleRequest = function (req, res) {
                                 res.json(doc[0]);
                             }
                             else {
-                                res.json({});
+                                res.status(404).json({message:""});
                             }
                         }
                         else {
