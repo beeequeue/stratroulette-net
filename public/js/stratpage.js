@@ -428,7 +428,7 @@ var setLikedStatus = function (val) {
 };
 
 var giveOpinion = function (uid, toLike, next) {
-    var url  = toLike ? 'like' : 'unlike',
+    var url  = toLike ? 'like' : 'unlike', // To like or not to like, that is the question.
         data = {uid: uid};
 
     $.post({
