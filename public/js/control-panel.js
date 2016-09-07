@@ -38,7 +38,7 @@ var fillList = function () {
         sub.author = validateAuthor(sub.author);
 
         $newStrat.find('.strat-name').attr('value', sub.name);
-        $newStrat.find('.strat-desc').html(sub.desc);
+        $newStrat.find('.strat-desc').text(sub.desc);
         $newStrat.find('.author-name').data('type', sub.author.type).attr('value', sub.author.name);
         $newStrat.find('.' + sub.author.type).removeClass('hidden');
         $newStrat.find('a').attr('href', sub.author.link);

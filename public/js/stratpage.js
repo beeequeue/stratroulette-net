@@ -9,6 +9,7 @@ var canGetStrat       = true,
 
 $(document).ready(function () {
     autosize($('.d-textarea'));
+    new Clipboard('.share');
 
     // Tooltipster setup
     $.fn.tooltipster('setDefaults', {
@@ -41,30 +42,7 @@ $(document).ready(function () {
     }
 
     $('.team-button').click(function () {
-        if (canGetStrat && gamemodesToSearch.length > 0) {
-            canGetStrat = false;
-            resetPage(700);
-
-            getStrat($(this).html(), function (err, strat) {
-                if (!err) {
-                    setTimeout(function () {
-                        newStrat(strat);
-                    }, 700);
-                }
-                else {
-                    var errorStrat = {
-                        desc:   err.statusText + "<br>" + err.responseJSON.message,
-                        author: "Error",
-                        votes:  0,
-                        name:   err.status.toString()
-                    };
-
-                    setTimeout(function () {
-                        newStrat(errorStrat);
-                    }, 700);
-                }
-            });
-        }
+        setStrat($(this).html());
     });
 
     $('.like').click(function () {
@@ -198,6 +176,20 @@ $(document).ready(function () {
     $('.checkbox label').click(function (e) {
         e.stopPropagation();
     });
+    
+    //region Specific strat getting
+    
+    $(window).bind('hashchange', function () {
+        setStrat(window.location.hash.substr(1));
+    });
+
+    var idAskedFor = window.location.hash.substr(1);
+
+    if (idAskedFor && !isNaN(idAskedFor)) {
+        setStrat(idAskedFor);
+    }
+    
+    //endregion
 });
 
 var giveErrorMessage = function (window, msg) {
@@ -259,55 +251,44 @@ var resetPage = function (speed) {
     setLikeCounter(0, speed);
 };
 
-var getStrat = function (type, next) {
+var getStratData = function (type, next) {
+    var data;
+
     if (isNaN(type)) {
         switch (type.toLowerCase()) {
             case 'def':
             case 'atk':
-                $.post({
-                    url:         '/get/' + type.toLowerCase(),
-                    data:        JSON.stringify({
-                        not:       lastStrats,
-                        gamemodes: gamemodesToSearch
-                    }),
-                    dataType:    'json',
-                    contentType: 'application/json',
-                    success:     function (data) {
-                        currentStrat = data;
-                        updateLatestStrats(data.uid);
-                        next(null, data);
-                    },
-                    error:       function (err) {
-                        next(err);
-                    }
-                });
+                data = {
+                    not:       lastStrats,
+                    gamemodes: gamemodesToSearch
+                };
                 break;
 
             default:
-                next(new Error('Invalid team'));
+                next(new Error('Invalid type'));
         }
     }
     else {
-        $.post({
-            url:         '/get/' + type,
-            data:        JSON.stringify({
-                not: [currentStrat.uid]
-            }),
-            dataType:    'json',
-            contentType: 'application/json',
-            success:     function (data) {
-                currentStrat = data;
-                console.dir(data);
-                next(null, data);
-            },
-            error:       function (err) {
-                next(err);
-            }
-        });
+        data = {not: [currentStrat.uid]};
     }
+
+    $.post({
+        url:         '/get/' + type.toLowerCase(),
+        data:        JSON.stringify(data),
+        dataType:    'json',
+        contentType: 'application/json',
+        success:     function (data) {
+            currentStrat = data;
+            updateLatestStrats(data.uid);
+            next(null, data);
+        },
+        error:       function (err) {
+            next(err);
+        }
+    });
 };
 
-var newStrat = function (strat) {
+var fillPage = function (strat) {
     $('.name:not(div)').html(strat.name);
 
     $('#names')
@@ -339,10 +320,39 @@ var newStrat = function (strat) {
         }, 700, function () {
             canGetStrat = true;
         });
+    
+    $('.share').attr('data-clipboard-text', 'http://stratroulette.net#' + strat.uid);
 
     // Enable buttons and add tooltips
     if ($('.feedback').hasClass("disabled")) {
         $('.strat-button:not(.submit)').removeClass("disabled").tooltipster();
+    }
+};
+
+var setStrat = function (type) {
+    if (canGetStrat && gamemodesToSearch.length > 0) {
+        canGetStrat = false;
+        resetPage(700);
+
+        getStratData(type, function (err, strat) {
+            if (!err) {
+                setTimeout(function () {
+                    fillPage(strat);
+                }, 700);
+            }
+            else {
+                var errorStrat = {
+                    desc:   err.statusText + "<br>" + err.responseJSON.message,
+                    author: "Error",
+                    votes:  0,
+                    name:   err.status.toString()
+                };
+
+                setTimeout(function () {
+                    fillPage(errorStrat);
+                }, 700);
+            }
+        });
     }
 };
 
@@ -428,7 +438,7 @@ var setLikedStatus = function (val) {
 };
 
 var giveOpinion = function (uid, toLike, next) {
-    var url  = toLike ? 'like' : 'unlike',
+    var url  = toLike ? 'like' : 'unlike', // To like or not to like, that is the question.
         data = {uid: uid};
 
     $.post({
@@ -447,7 +457,7 @@ var feedbackStrat = function (uid, message, next) {
     var data = {
         uid:     uid,
         message: message,
-        ip: clientIP
+        ip:      clientIP
     };
 
     $.post({

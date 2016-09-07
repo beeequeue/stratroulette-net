@@ -4,7 +4,7 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function (req, res) {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    res.render('index', {ip: ip.substr(7, ip.length)});
+    res.render('index', {ip: ip});
 });
 
 router.post('/like', function (req, res) {
