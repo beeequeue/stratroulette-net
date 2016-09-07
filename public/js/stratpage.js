@@ -9,6 +9,7 @@ var canGetStrat       = true,
 
 $(document).ready(function () {
     autosize($('.d-textarea'));
+    new Clipboard('.share');
 
     // Tooltipster setup
     $.fn.tooltipster('setDefaults', {
@@ -319,6 +320,8 @@ var fillPage = function (strat) {
         }, 700, function () {
             canGetStrat = true;
         });
+    
+    $('.share').attr('data-clipboard-text', 'http://stratroulette.net#' + strat.uid);
 
     // Enable buttons and add tooltips
     if ($('.feedback').hasClass("disabled")) {
