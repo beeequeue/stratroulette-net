@@ -136,27 +136,26 @@ var rejectSubmission = function (submissionID, moderatorID, message, res) {
     global.db.submissions.find({_id: new ObjectID(submissionID)})
         .toArray(function (err, originalSub) {
             submission = originalSub[0];
-        });
 
+            global.db.submissions.deleteOne({_id: new ObjectID(submissionID)}, function (err, docs) {
+                if (!err && docs.deletedCount > 0) {
+                    addToModLog(moderatorID, submission || submissionID, 'reject', message);
 
-    global.db.submissions.deleteOne({_id: new ObjectID(submissionID)}, function (err, docs) {
-        if (!err && docs.deletedCount > 0) {
-            addToModLog(moderatorID, submission, 'reject', message);
+                    res.json({message: 'Success!'});
+                }
+                else if (docs.deletedCount === 0) {
+                    res.status(400).json({
+                        message: 'Submission has already been processed!',
+                        action:  'remove'
+                    });
+                }
+                else {
+                    console.error(err);
 
-            res.json({message: 'Success!'});
-        }
-        else if (docs.deletedCount === 0) {
-            res.status(400).json({
-                message: 'Submission has already been processed!',
-                action:  'remove'
+                    res.status(500).send({message: 'An error occurred'});
+                }
             });
-        }
-        else {
-            console.error(err);
-
-            res.status(500).send({message: 'An error occurred'});
-        }
-    });
+        });
 };
 
 var checkModeratorID = function (id, next) {
