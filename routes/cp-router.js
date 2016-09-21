@@ -131,9 +131,17 @@ var rejectSubmission = function (submissionID, moderatorID, message, res) {
         return;
     }
 
+    var submission;
+
+    global.db.submissions.find({_id: new ObjectID(submissionID)})
+        .toArray(function (err, originalSub) {
+            submission = originalSub[0];
+        });
+
+
     global.db.submissions.deleteOne({_id: new ObjectID(submissionID)}, function (err, docs) {
         if (!err && docs.deletedCount > 0) {
-            addToModLog(moderatorID, submissionID, 'reject', message);
+            addToModLog(moderatorID, submission, 'reject', message);
 
             res.json({message: 'Success!'});
         }
