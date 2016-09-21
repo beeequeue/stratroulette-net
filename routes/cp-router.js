@@ -179,7 +179,7 @@ var removeFromSubmissions = function (subID) {
 
 var addToModLog = function (modID, subID, action, data) {
     var logObj = {
-        submission: new ObjectID(subID),
+        submission: typeof(subID) == 'object' ? subID : new ObjectID(subID),
         action:     action,
         datetime:   (new Date()).toString()
     };
