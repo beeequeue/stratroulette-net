@@ -9,14 +9,14 @@ router.get('/', function (req, res) {
     var modID = req.cookies.moderatorID;
 
     if (modID == null) {
-        res.render('login');
+        res.render('siege/login');
     }
     else {
         checkModeratorID(modID, function (isMod) {
             if (isMod) {
                 global.db.submissions.find({}).toArray(function (err, docs) {
                     if (!err) {
-                        res.render('control-panel', {submissions: JSON.stringify(docs)});
+                        res.render('siege/control-panel', {submissions: JSON.stringify(docs)});
                     }
                     else {
                         console.error(err);

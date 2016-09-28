@@ -14,18 +14,18 @@ const express      = require('express'),
       fs           = require('fs');
 
 
-var routes       = require('./routes/index-router'),
-    getPage      = require('./routes/get-router.js'),
-    controlPanel = require('./routes/cp-router.js');
+var routes       = require('./siege/routes/index-router'),
+    getPage      = require('./siege/routes/get-router.js'),
+    controlPanel = require('./siege/routes/controlpanel-router.js');
 
 var app = express();
 
 
 //region Express setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', ['views', './siege/views']);
 app.set('view engine', 'jade');                                     // Set up jade view engine
 
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));    // Website icon
+app.use(favicon('public/siege/favicon.ico'));                       // Website icon
 app.use(compress({level: 4}));                                      // Enable gzip
 if (app.get('env') === 'production') {
     app.use(minify());                                              // Enable minifying
@@ -33,7 +33,7 @@ if (app.get('env') === 'production') {
 else {
     app.use(logger('dev'));                                         // Bad logger TODO: Add better logging (Winston)
 }
-app.use(express.static(path.join(__dirname, 'public')));            // Serve files
+app.use(express.static('./public'));                                // Serve files
 app.use(session({                                                   // Enable sessions
     secret: process.env.SECRET,
     store:  new MongoStore({db: global.db}),                        // Powered by our MongoDB database

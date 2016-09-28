@@ -14,23 +14,23 @@ html(lang="en-US")
         meta(name="description" content="Get fun 'strategies' to use in games!")
         meta(name="keywords" content="strat,strategy,game,gaming,rainbow,six,siege,generator,stratroulette")
         meta(name='google-site-verification', content='Uf8v3vnOhD7yveO0SjnF0ARJJ7NTu79txVZzn56QMy8')
-        meta(property='og:image', content='http://stratroulette.net/img/thmbn.jpg')
+        meta(property='og:image', content='http://stratroulette.net/siege/img/thmbn.jpg')
         meta(name="viewport" content="width=device-width, initial-scale=1")
 
-        include ./dist.jade
-        link(rel="stylesheet" href="/css/style.css")
+        include ../../views/dist
+        link(rel="stylesheet" href="/siege/css/style.css")
 
         block head
             script.
                 var clientIP = '!{ip}';
             
-            script(src="/js/dist/autosize.min.js")
-            script(src="/js/dist/clipboard.min.js")
-            script(src="/js/stratpage.js")
+            script(src="/dist/autosize.min.js")
+            script(src="/dist/clipboard.min.js")
+            script(src="/siege/js/stratpage.js")
 
     body
         #header
-            img(src="/img/logo.png" alt="Rainbow 6 Siege" id="logo")
+            img(src="/siege/img/logo.png" alt="Rainbow 6 Siege" id="logo")
 
         #content
             block content
@@ -39,7 +39,7 @@ html(lang="en-US")
                     td#name-container
                         div#names
                             p.name(class="1") &#8592; Click on a team to begin! &#8594;
-                            img.name(class="2", src="/img/load.gif")
+                            img.name(class="2", src="/siege/img/load.gif")
                             p.name(class="3") empty
                     td.team-button DEF
 
@@ -61,18 +61,18 @@ html(lang="en-US")
                     block bottom
                         a(href="javascript:" target="_blank")
                             span#author
-                                img.strat-button.submission(src="/img/icons/submission.png")
-                                img.strat-button.reddit.hidden(src="/img/icons/redditsnoo.png")
-                                img.strat-button.youtube.hidden(src="/img/icons/youtube.png")
-                                img.strat-button.twitch.hidden(src="/img/icons/twitch.png")
+                                img.strat-button.submission(src="/siege/img/icons/submission.png")
+                                img.strat-button.reddit.hidden(src="/siege/img/icons/redditsnoo.png")
+                                img.strat-button.youtube.hidden(src="/siege/img/icons/youtube.png")
+                                img.strat-button.twitch.hidden(src="/siege/img/icons/twitch.png")
                                 p Author
 
                         span#strat-options
                             span.strat-button.disabled#like-counter +0
-                            img.strat-button.disabled.like(title="like" src="img/icons/like.png")
-                            img.strat-button.disabled.feedback(title="feedback" src="img/icons/feedback.png")
-                            img.strat-button.disabled.share(title="share" src="img/icons/share.png")
-                            img.strat-button.submit.tooltip(title="submit" src="img/icons/suggest.png")
+                            img.strat-button.disabled.like(title="like" src="/siege/img/icons/like.png")
+                            img.strat-button.disabled.feedback(title="feedback" src="/siege/img/icons/feedback.png")
+                            img.strat-button.disabled.share(title="share" src="/siege/img/icons/share.png")
+                            img.strat-button.submit.tooltip(title="submit" src="/siege/img/icons/suggest.png")
 
                 #bottom
                     .bottom-container.
@@ -86,7 +86,7 @@ html(lang="en-US")
                         p &#9830; Source code available on 
                         a(href="https://github.com/BeeeQueue/stratroulette-net" target="_blank")
                             p GitHub
-                            img(src="img/github-logo.png")
+                            img(src="/siege/img/github-logo.png")
                         p &#9830; Contact: contact@stratroulette.net
 
         #fader(style="display:none")
@@ -98,7 +98,7 @@ html(lang="en-US")
 
             span.d-button#feedback-submit Submit
             p.d-error#feedback-error(style="display:none") Error message
-            img.d-success(src="/img/check.png" style="display:none")
+            img.d-success(src="/siege/img/check.png" style="display:none")
 
         #submission-window.dialogue(style="display:none")
             h1.d-title Submit a Strat
@@ -132,4 +132,4 @@ html(lang="en-US")
             br
             span.d-button#submission-submit Submit
             p.d-error#submission-error(style="display:none") Error message
-            img.d-success(src="/img/check.png" style="display:none")
+            img.d-success(src="/siege/img/check.png" style="display:none")
