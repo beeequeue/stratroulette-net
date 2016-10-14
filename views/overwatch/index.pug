@@ -1,0 +1,136 @@
+//
+   Created by bq on 2016-04-04.
+   Background pattern from subtlepatterns.com
+
+-var teams = ['ATK', 'DEF', 'BOTH'];
+-var gamemodes = ['Bombs', 'Hostage', 'Capture Site'];
+
+doctype html
+html(lang="en-US")
+    head
+        block title
+            title Overwatch - stratroulette.net
+
+        meta(name="description" content="Get fun 'strategies' to use in games!")
+        meta(name="keywords" content="strat,strategy,game,gaming,rainbow,six,siege,generator,stratroulette")
+        meta(name='google-site-verification', content='Uf8v3vnOhD7yveO0SjnF0ARJJ7NTu79txVZzn56QMy8')
+        meta(property='og:image', content='http://stratroulette.net/siege/img/thmbn.jpg')
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+
+        include ../../views/dist
+        link(rel="stylesheet" href="/overwatch/css/style.css")
+
+        block head
+            script.
+                var clientIP = '!{ip}';
+                console.log('!{game}');
+            
+            script(src="/dist/autosize.min.js")
+            script(src="/dist/clipboard.min.js")
+            script(src="/overwatch/js/index.js")
+
+    body
+        #header
+            img(src="/overwatch/logo.png" alt="Rainbow 6 Siege" id="logo")
+
+        #content
+            block content
+                table(id="top" role="presentation")
+                    td.team-button ATK
+                    td#name-container
+                        div#names
+                            p.name(class="1") &#8592; Click on a team to begin! &#8594;
+                            img.name(class="2", src="/siege/img/load.gif")
+                            p.name(class="3") empty
+                    td.team-button DEF
+
+                #gamemode-selection
+                    each val in gamemodes
+                        -var lowerVal = val.toLowerCase().replace(' ', '');
+                        span.gamemode-container
+                            p(style="float:left")=val
+                            .checkbox(style="float:right")
+                                input.gm-checkbox(id='gm-checkbox-' + lowerVal type='checkbox')
+                                label(for='gm-checkbox-' + lowerVal)
+
+                #center
+                    block center
+                        #desc.
+                            Get funny strats to use in Rainbow Six Siege!
+
+                #action-bar
+                    block bottom
+                        a(href="javascript:" target="_blank")
+                            span#author
+                                img.strat-button.submission(src="/siege/img/icons/submission.png")
+                                img.strat-button.reddit.hidden(src="/siege/img/icons/redditsnoo.png")
+                                img.strat-button.youtube.hidden(src="/siege/img/icons/youtube.png")
+                                img.strat-button.twitch.hidden(src="/siege/img/icons/twitch.png")
+                                p Author
+
+                        span#strat-options
+                            span.strat-button.disabled#like-counter +0
+                            img.strat-button.disabled.like(title="like" src="/siege/img/icons/like.png")
+                            img.strat-button.disabled.feedback(title="feedback" src="/siege/img/icons/feedback.png")
+                            img.strat-button.disabled.share(title="share" src="/siege/img/icons/share.png")
+                            img.strat-button.submit.tooltip(title="submit" src="/siege/img/icons/suggest.png")
+
+                #bottom
+                    .bottom-container.
+                        Please only play strats as a five man group. Don't ruin other people's games
+                    .bottom-container
+                        p Help keep the server running 
+                        form#donate-button(action='https://www.paypal.com/cgi-bin/webscr', method='post', target='_top')
+                            input(type='hidden', name='cmd', value='_s-xclick')
+                            input(type='hidden', name='hosted_button_id', value='T6GN3VHNAS4RJ')
+                            input(type='image', src='https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif', name='submit', alt='PayPal - The safer, easier way to pay online!')
+                        p &#9830; Source code available on 
+                        a(href="https://github.com/BeeeQueue/stratroulette-net" target="_blank")
+                            p GitHub
+                            img(src="/siege/img/github-logo.png")
+                        p &#9830; Contact: contact@stratroulette.net
+
+        #fader(style="display:none")
+        #feedback-window.dialogue(style="display:none")
+            h1.d-title Give Feedback
+
+            p.d-info Your IP will be recorded along with your message
+            input.d-textinput#feedback-msg(type="text" title="Req. length: 6 to 35")
+
+            span.d-button#feedback-submit Submit
+            p.d-error#feedback-error(style="display:none") Error message
+            img.d-success(src="/siege/img/check.png" style="display:none")
+
+        #submission-window.dialogue(style="display:none")
+            h1.d-title Submit a Strat
+            p.d-info Author and Strat Name follow the following rules:
+            p.d-info(style="margin-top:-5px;") 3 to 20 alphanumerical characters and - _ /
+
+            p.d-info.bold Author
+            input.d-textinput#submission-author(title='"/u/[username]" to link to reddit user' type="text" maxlength="20")
+
+            p.d-info.bold Strat Name
+            input.d-textinput#submission-stratname(type="text" maxlength="20")
+
+            p.d-info.bold Description
+            textarea.d-textarea#submission-msg(title="Max length: 450" maxlength='450')
+
+            p.d-info.bold Team
+            select.d-combobox#submission-team
+                each val in teams
+                    option(value=val.toLowerCase())=val
+
+            p.d-info.bold Gamemodes
+            .d-wrapper#submission-gamemodes
+                each val in gamemodes
+                    -var lowerVal = val.toLowerCase().replace(' ', '');
+                    .d-checkbox-wrapper
+                        p.d-info(style="float:left")=val
+                        .checkbox.d-checkbox
+                            input(id='submission-checkbox-' + lowerVal type='checkbox')
+                            label(for='submission-checkbox-' + lowerVal)
+
+            br
+            span.d-button#submission-submit Submit
+            p.d-error#submission-error(style="display:none") Error message
+            img.d-success(src="/siege/img/check.png" style="display:none")

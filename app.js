@@ -22,8 +22,8 @@ var app = express();
 
 
 //region Express setup
-app.set('views', ['views', './siege/views']);
-app.set('view engine', 'jade');                                     // Set up jade view engine
+app.set('views', './views');
+app.set('view engine', 'pug');                                                  // Set up jade view engine
 
 app.use(favicon('public/siege/favicon.ico'));                       // Website icon
 app.use(compress({level: 4}));                                      // Enable gzip
