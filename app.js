@@ -9,42 +9,55 @@ const express      = require('express'),
       bodyParser   = require('body-parser'),
       session      = require('express-session'),
       minify       = require('express-minify'),
+      subdomain    = require('express-subdomain'),
       compress     = require('compression'),
       MongoStore   = require('connect-mongo')(session),
       fs           = require('fs');
 
-
-var routes       = require('./siege/routes/index-router'),
-    getPage      = require('./siege/routes/get-router.js'),
-    controlPanel = require('./siege/routes/controlpanel-router.js');
-
 var app = express();
 
+var games   = [],
+    routers = {};
+
+for (let game of process.env.GAMES.split(",")) {
+    var stat = fs.statSync('./routes/' + game);
+    if (stat.isDirectory() === true)
+        games.push(game);
+}
+
+for (let i = 0; i < games.length; i++) {
+    let newRoute = express.Router();
+
+    newRoute.use('/', require('./routes/' + games[i] + '/index-router.js'));
+    newRoute.use('/get', require('./routes/' + games[i] + '/get-router.js'));
+    newRoute.use('/controlpanel', require('./routes/' + games[i] + '/controlpanel-router.js'));
+
+    routers[games[i]] = newRoute;
+}
 
 //region Express setup
 app.set('views', './views');
 app.set('view engine', 'pug');                                                  // Set up jade view engine
 
-app.use(favicon('public/siege/favicon.ico'));                       // Website icon
-app.use(compress({level: 4}));                                      // Enable gzip
+app.use(compress({level: 4}));                                                  // Enable gzip
 if (app.get('env') === 'production') {
-    app.use(minify());                                              // Enable minifying
+    app.use(minify());                                                          // Enable minifying
 }
 else {
-    app.use(logger('dev'));                                         // Bad logger TODO: Add better logging (Winston)
+    app.use(logger('dev'));                                                     // Bad logger TODO: Add better logging (Winston)
 }
-app.use(express.static('./public'));                                // Serve files
-app.use(session({                                                   // Enable sessions
+app.use(express.static('./public'));                                            // Serve files
+app.use(session({                                                               // Enable sessions
     secret: process.env.SECRET,
-    store:  new MongoStore({db: global.db}),                        // Powered by our MongoDB database
+    store:  new MongoStore({db: global.db}),                                    // Powered by our MongoDB database
     cookie: {
         secure:  false,
         expires: 3600000 * 24 * 356 * 5 // 5 years
     }
 }));
-app.use(bodyParser.json());                                         // Enable parser
+app.use(bodyParser.json());                                                     // Enable parser
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());                                            // Enable cookies
+app.use(cookieParser());                                                        // Enable cookies
 //endregion
 
 //region View counting
@@ -83,9 +96,28 @@ app.use("/get*", function (req, res, next) {
 //endregion
 
 // Routes
-app.use('/', routes);
-app.use('/get', getPage);
-app.use('/controlpanel', controlPanel);
+
+for (let game of games) {
+    app.use(subdomain(game, routers[game]));
+}
+
+// TODO: Fix index page
+app.get('/', function (req, res) {
+    var toSend = "", lines = [];
+
+    lines.push("<h1>Testing stratroulette.net, eh?</h1>");
+    lines.push("<h2>Available games:</h2>");
+
+    for (let game of games) {
+        lines.push('<a href="http://' + game + '.dev.dev:1212"><h2>' + game + '</h2></a>');
+    }
+
+    for (let line of lines) {
+        toSend += line + "<br>"
+    }
+
+    res.send(toSend);
+});
 
 //region Error catching
 

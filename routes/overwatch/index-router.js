@@ -1,10 +1,14 @@
-var express = require('express');
+const express = require('express');
+const stratDB = global.db['overwatch'].strats;
+const submDB = global.db['overwatch'].submissions;
+
 var router = express.Router();
+
 
 /* GET home page. */
 router.get('/', function (req, res) {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    res.render('index', {ip: ip});
+    res.render('overwatch/index', {ip: ip});
 });
 
 router.post('/like', function (req, res) {
@@ -24,7 +28,7 @@ router.post('/like', function (req, res) {
             }
         };
 
-        global.db.strats.findOneAndUpdate(findQ, updateQ, function (err) {
+        stratDB.findOneAndUpdate(findQ, updateQ, function (err) {
             if (!err) {
                 res.end();
             }
@@ -56,7 +60,7 @@ router.post('/unlike', function (req, res) {
             }
         };
 
-        global.db.strats.findOneAndUpdate(findQ, updateQ, function (err) {
+        stratDB.findOneAndUpdate(findQ, updateQ, function (err) {
             if (!err) {
                 res.end();
             }
@@ -88,7 +92,7 @@ router.post('/report', function (req, res) {
                 }
             };
 
-            global.db.strats.findOneAndUpdate(findQ, updateQ, function (err) {
+            stratDB.findOneAndUpdate(findQ, updateQ, function (err) {
                 if (!err) {
                     res.end();
                 }
@@ -114,7 +118,7 @@ router.post('/submit', function (req, res) {
         valuesToCheck  = ['author', 'name'],
         validGamemodes = ['bombs', 'hostage', 'capturesite'],
         validTeams     = ['atk', 'def', 'both'];
-    
+
     data.sessionID = req.session.id;
 
 
@@ -169,7 +173,7 @@ router.post('/submit', function (req, res) {
     }
 
 
-    global.db.submissions.insertMany([data], function (err) {
+    submDB.insertMany([data], function (err) {
         if (!err) {
             res.end();
         }

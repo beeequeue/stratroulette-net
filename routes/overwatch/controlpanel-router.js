@@ -1,5 +1,8 @@
 // Created by adam.haglund on 2016-05-18.
 "use strict";
+const stratDB = global.db['overwatch'].strats;
+const submDB = global.db['overwatch'].submissions;
+const modDB = global.db.moderators;
 
 var express  = require('express'),
     ObjectID = require('mongodb').ObjectID,
@@ -9,14 +12,14 @@ router.get('/', function (req, res) {
     var modID = req.cookies.moderatorID;
 
     if (modID == null) {
-        res.render('siege/login');
+        res.render('overwatch/login');
     }
     else {
         checkModeratorID(modID, function (isMod) {
             if (isMod) {
-                global.db.submissions.find({}).toArray(function (err, docs) {
+                submDB.find({}).toArray(function (err, docs) {
                     if (!err) {
-                        res.render('siege/control-panel', {submissions: JSON.stringify(docs)});
+                        res.render('overwatch/control-panel', {submissions: JSON.stringify(docs)});
                     }
                     else {
                         console.error(err);
@@ -64,7 +67,7 @@ var acceptSubmission = function (acceptedSub, moderatorID, res) {
         searchQ = {'id': acceptedSub._id}
     }
 
-    global.db.submissions.find(searchQ, {
+    submDB.find(searchQ, {
         ip:        false,
         sessionID: false
     }).toArray(function (err, originalSub) {
@@ -74,7 +77,7 @@ var acceptSubmission = function (acceptedSub, moderatorID, res) {
                 return;
             }
 
-            global.db.strats.count({}, function (err, count) {
+            stratDB.count({}, function (err, count) {
                 if (!err) {
                     originalSub[0].author = validateAuthor(originalSub[0].author);
 
@@ -91,7 +94,7 @@ var acceptSubmission = function (acceptedSub, moderatorID, res) {
                         return;
                     }
 
-                    global.db.strats.insertOne(acceptedSub, function (err, docs) {
+                    stratDB.insertOne(acceptedSub, function (err, docs) {
                         if (!err && docs.insertedCount > 0) {
                             addToModLog(moderatorID, docs.ops[0]._id, 'accept');
                             removeFromSubmissions(docs.ops[0]._id);
@@ -133,11 +136,11 @@ var rejectSubmission = function (submissionID, moderatorID, message, res) {
 
     var submission;
 
-    global.db.submissions.find({_id: new ObjectID(submissionID)})
+    submDB.find({_id: new ObjectID(submissionID)})
         .toArray(function (err, originalSub) {
             submission = originalSub[0];
 
-            global.db.submissions.deleteOne({_id: new ObjectID(submissionID)}, function (err, docs) {
+            submDB.deleteOne({_id: new ObjectID(submissionID)}, function (err, docs) {
                 if (!err && docs.deletedCount > 0) {
                     addToModLog(moderatorID, submission || submissionID, 'reject', message);
 
@@ -159,7 +162,7 @@ var rejectSubmission = function (submissionID, moderatorID, message, res) {
 };
 
 var checkModeratorID = function (id, next) {
-    global.db.moderators.find({moderatorID: id}).toArray(function (err, docs) {
+    modDB.find({moderatorID: id}).toArray(function (err, docs) {
         if (!err) {
             next(!!docs[0]);
         }
@@ -170,7 +173,7 @@ var checkModeratorID = function (id, next) {
 };
 
 var removeFromSubmissions = function (subID) {
-    global.db.submissions.deleteOne({'_id': new ObjectID(subID)}, function (err, docs) {
+    submDB.deleteOne({'_id': new ObjectID(subID)}, function (err, docs) {
         if (err) {
             console.error("Couldn't remove accepted submission", err);
         }
@@ -194,7 +197,7 @@ var addToModLog = function (modID, subID, action, data) {
             }
         };
 
-    global.db.moderators.findOneAndUpdate(findQ, updateQ, function (err, docs) {
+    modDB.findOneAndUpdate(findQ, updateQ, function (err, docs) {
         if (!err) {
         }
         else {
