@@ -1,43 +1,67 @@
 #!/usr/bin/env node
+"use strict";
 
-var debug    = require('debug')('R6S Stratroulette:server'),
-    http     = require('http'),
-    mongo    = require('mongodb').MongoClient,
-    server;
+const debug = require('debug')('R6S Stratroulette:server'),
+      http  = require('http'),
+      mongo = require('mongodb').MongoClient;
+
+var server;
 
 /**
  * Database connection
  */
 
-var databaseString = "mongodb://{host}:{port}/{database}"
+const databaseString = "mongodb://{host}:{port}/"
     .replace("{host}", process.env.DBHOST)
-    .replace("{port}", process.env.DBPORT)
-    .replace("{database}", process.env.DBNAME);
+    .replace("{port}", process.env.DBPORT);
 
-mongo.connect(databaseString, function (err, db) {
+mongo.connect(databaseString + "global", function (err, db) {
     if (!err) {
-        console.log('Connected to ' + process.env.DBNAME);
-
-        /*
-         *  Globals are bad, but I'm having troubles getting
-         *  cross-script database access to work in any other way.
-         *  I'm open to pull requests that fix it!
-         */
+        console.log('Connected to global db');
 
         global.db = db;
-        global.db.strats = db.collection('strats');
-        global.db.submissions = db.collection('submissions');
-        global.db.moderators = db.collection('moderators');
         global.db.stats = db.collection('stats');
-        global.db.sessions = db.collection('sessions');
+        global.db.moderators = db.collection('moderators');
 
-        startApp();
+        databaseConnected();
+        connectGameDBs();
     }
     else {
-        console.error(err);
+        console.error("Could not connect to database: global");
         throw new Error("DatabaseConnectionException");
     }
 });
+
+var connectGameDBs = function () {
+    var game = "siege";
+    var dbAddr = databaseString + (process.env.NODE_ENV === "development" ? game + "Dev" : game);
+
+    mongo.connect(dbAddr, function (err, db) {
+        if (!err) {
+            console.log('Connected to ' + (process.env.NODE_ENV === "development" ? game + "Dev" : game));
+
+            global.db[game] = db;
+            global.db[game].strats = db.collection('strats');
+            global.db[game].submissions = db.collection('submissions');
+
+            databaseConnected();
+        }
+        else {
+            console.error("Could not connect to database: " + game);
+            throw new Error("DatabaseConnectionException");
+        }
+    });
+};
+
+
+var connectedDbAmt = 0;
+var databaseConnected = function () {
+    connectedDbAmt++;
+
+    if (connectedDbAmt == 2) {
+        startApp();
+    }
+};
 
 var startApp = function () {
     /**

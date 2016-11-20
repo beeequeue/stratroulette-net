@@ -23,9 +23,10 @@
     "express": "~4.13.1",
     "express-minify": "^0.2.0",
     "express-session": "^1.13.0",
-    "jade": "~1.11.0",
+    "express-subdomain": "^1.0.5",
     "mongodb": "^2.1.17",
     "morgan": "~1.6.1",
+    "pug": "^2.0.0-beta6",
     "serve-favicon": "~2.3.0"
   }
 }
