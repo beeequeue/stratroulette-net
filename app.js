@@ -14,8 +14,6 @@ const express      = require('express'),
       fs           = require('fs'),
       app          = express();
 
-var routers = {};
-
 var routes = require('./routes/siege/index-router.js');
 var getPage = require('./routes/siege/get-router.js');
 var controlPanel = require('./routes/siege/controlpanel-router.js');
