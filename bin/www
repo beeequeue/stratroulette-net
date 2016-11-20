@@ -3,24 +3,12 @@
 
 const debug = require('debug')('R6S Stratroulette:server'),
       http  = require('http'),
-      mongo = require('mongodb').MongoClient,
-      games = process.env.GAMES.split(",");
+      mongo = require('mongodb').MongoClient;
 
 var server;
 
 /**
  * Database connection
- */
-
-/*
- *  Siege & OW
- *  * Strats
- *  * Submissions
- *  
- *  Global
- *  * Moderators TODO: add games to mods
- *  * Sessions
- *  * Stats
  */
 
 const databaseString = "mongodb://{host}:{port}/"
@@ -45,25 +33,24 @@ mongo.connect(databaseString + "global", function (err, db) {
 });
 
 var connectGameDBs = function () {
-    for (let game of games) {
-        var dbAddr = databaseString + (process.env.NODE_ENV === "development" ? game + "Dev" : game);
+    var game = "siege";
+    var dbAddr = databaseString + (process.env.NODE_ENV === "development" ? game + "Dev" : game);
 
-        mongo.connect(dbAddr, function (err, db) {
-            if (!err) {
-                console.log('Connected to ' + (process.env.NODE_ENV === "development" ? game + "Dev" : game));
+    mongo.connect(dbAddr, function (err, db) {
+        if (!err) {
+            console.log('Connected to ' + (process.env.NODE_ENV === "development" ? game + "Dev" : game));
 
-                global.db[game] = db;
-                global.db[game].strats = db.collection('strats');
-                global.db[game].submission = db.collection('submissions');
+            global.db[game] = db;
+            global.db[game].strats = db.collection('strats');
+            global.db[game].submissions = db.collection('submissions');
 
-                databaseConnected();
-            }
-            else {
-                console.error("Could not connect to database: " + game);
-                throw new Error("DatabaseConnectionException");
-            }
-        });
-    }
+            databaseConnected();
+        }
+        else {
+            console.error("Could not connect to database: " + game);
+            throw new Error("DatabaseConnectionException");
+        }
+    });
 };
 
 
@@ -71,7 +58,7 @@ var connectedDbAmt = 0;
 var databaseConnected = function () {
     connectedDbAmt++;
 
-    if (connectedDbAmt == games.length + 1) {
+    if (connectedDbAmt == 2) {
         startApp();
     }
 };

@@ -9,31 +9,17 @@ const express      = require('express'),
       bodyParser   = require('body-parser'),
       session      = require('express-session'),
       minify       = require('express-minify'),
-      subdomain    = require('express-subdomain'),
       compress     = require('compression'),
       MongoStore   = require('connect-mongo')(session),
-      fs           = require('fs');
+      fs           = require('fs'),
+      app          = express();
 
-var app = express();
+var routers = {};
 
-var games   = [],
-    routers = {};
+var routes = require('./routes/siege/index-router.js');
+var getPage = require('./routes/siege/get-router.js');
+var controlPanel = require('./routes/siege/controlpanel-router.js');
 
-for (let game of process.env.GAMES.split(",")) {
-    var stat = fs.statSync('./routes/' + game);
-    if (stat.isDirectory() === true)
-        games.push(game);
-}
-
-for (let i = 0; i < games.length; i++) {
-    let newRoute = express.Router();
-
-    newRoute.use('/', require('./routes/' + games[i] + '/index-router.js'));
-    newRoute.use('/get', require('./routes/' + games[i] + '/get-router.js'));
-    newRoute.use('/controlpanel', require('./routes/' + games[i] + '/controlpanel-router.js'));
-
-    routers[games[i]] = newRoute;
-}
 
 //region Express setup
 app.set('views', './views');
@@ -97,27 +83,10 @@ app.use("/get*", function (req, res, next) {
 
 // Routes
 
-for (let game of games) {
-    app.use(subdomain(game, routers[game]));
-}
+app.use('/', routes);
+app.use('/get', getPage);
+app.use('/controlpanel', controlPanel);
 
-// TODO: Fix index page
-app.get('/', function (req, res) {
-    var toSend = "", lines = [];
-
-    lines.push("<h1>Testing stratroulette.net, eh?</h1>");
-    lines.push("<h2>Available games:</h2>");
-
-    for (let game of games) {
-        lines.push('<a href="http://' + game + '.dev.dev:1212"><h2>' + game + '</h2></a>');
-    }
-
-    for (let line of lines) {
-        toSend += line + "<br>"
-    }
-
-    res.send(toSend);
-});
 
 //region Error catching
 
