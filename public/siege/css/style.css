@@ -6,9 +6,8 @@ html {
 
 body {
     background: #353536 url(../img/background.png);
-    min-height: 100%;
-    text-align: center;
 
+    text-align: center;
     font-family: 'Lato', sans-serif;
     font-weight: 400;
     color: #2f2f2f;
@@ -159,38 +158,42 @@ table {
 /* region Top */
 #top {
     background: #bfbfc3;
-    height: 70px;
     width: 100%;
     border-bottom: 2px solid #bfbfc3;
 }
 
-#top * {
-    height: 70px;
-    margin: 0;
-    padding-left: 0;
-    padding-right: 0;
-    border: none;
-}
-
 #name-container {
-    height: 70px;
     width: 60%;
     min-width: 380px;
     max-width: 450px;
     display: table-cell;
     background: #f8f8fc;
     font-weight: 700;
+    overflow: hidden;
+    padding: 0 10px;
 }
 
 #names {
+    height: 70px;
     overflow: hidden;
 }
 
-.name {
-    line-height: 70px;
+.name-wrapper {
+    height: 70px;
+    width: 95%;
+    display: inline-block;
     white-space: nowrap;
-    overflow: hidden;
-    font-size: 30px;
+    text-align: center;
+    padding: 0 8px;
+}
+
+img.name {
+
+}
+
+.name {
+    line-height: 70px !important;
+    white-space: nowrap;
 }
 
 .team-button {
@@ -358,6 +361,7 @@ table {
     height: 15px;
     line-height: 100%;
     vertical-align: middle;
+    overflow: hidden;
 }
 
 .bottom-container p {
@@ -395,10 +399,11 @@ table {
     background: black;
     opacity: 0.65;
     z-index: 1;
+    display: none;
 }
 
 /* region Dialogue */
-.dialogue {
+.c-dialogue {
     position: absolute;
     left: 50%;
     top: 25%;
@@ -498,6 +503,67 @@ table {
 .d-wrapper {
     display: inline-block;
     width: 150px;
+}
+
+/*endregion*/
+
+/*region Mobile Dialogue*/
+.md-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.m-dialogue {
+    position: relative;
+    width: 85%;
+    z-index: 10;
+
+    background: rgba(195, 196, 187, 0.95);
+    -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.9);
+    -moz-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.9);
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.9);
+}
+
+.md-title {
+    font-size: 2em;
+    padding: 5px 15px;
+}
+
+.md-text {
+    font-size: 1em;
+    padding: 0 15px;
+}
+
+.md-button-wrapper {
+    width: 100%;
+    margin-top: 10px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.md-button {
+    text-align: center;
+    line-height: 100%;
+    vertical-align: middle;
+    padding: 10px;
+    flex-basis: 50%;
+    font-size: 1.5em;
+    font-family: "Catamaran", "Lato", serif;
+
+    background: rgba(255, 255, 255, 0.5);
+
+    transition: background 0.1s;
+}
+
+.md-button:active {
+    background: rgba(255, 255, 255, 0.3);
 }
 
 /*endregion*/

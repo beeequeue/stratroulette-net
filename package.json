@@ -21,12 +21,12 @@
     "cookie-parser": "~1.3.5",
     "debug": "~2.2.0",
     "express": "~4.13.1",
+    "express-device": "^0.4.2",
     "express-minify": "^0.2.0",
     "express-session": "^1.13.0",
     "express-subdomain": "^1.0.5",
     "mongodb": "^2.1.17",
     "morgan": "~1.6.1",
-    "pug": "^2.0.0-beta6",
-    "serve-favicon": "~2.3.0"
+    "pug": "^2.0.0-beta6"
   }
 }
