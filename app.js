@@ -3,12 +3,13 @@
 // Requires
 const express      = require('express'),
       path         = require('path'),
-      favicon      = require('serve-favicon'),
       logger       = require('morgan'),
       cookieParser = require('cookie-parser'),
       bodyParser   = require('body-parser'),
       session      = require('express-session'),
       minify       = require('express-minify'),
+      subdomain    = require('express-subdomain'),
+      device       = require('express-device'),
       compress     = require('compression'),
       MongoStore   = require('connect-mongo')(session),
       fs           = require('fs'),
@@ -42,6 +43,7 @@ app.use(session({                                                               
 app.use(bodyParser.json());                                                     // Enable parser
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());                                                        // Enable cookies
+app.use(device.capture());
 //endregion
 
 //region View counting
@@ -80,6 +82,8 @@ app.use("/get*", function (req, res, next) {
 //endregion
 
 // Routes
+
+app.use(subdomain('beta', require('./routes/siege/beta-router.js')));
 
 app.use('/', routes);
 app.use('/get', getPage);

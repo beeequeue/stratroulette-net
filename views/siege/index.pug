@@ -16,6 +16,7 @@ html(lang="en-US")
         meta(name='google-site-verification', content='Uf8v3vnOhD7yveO0SjnF0ARJJ7NTu79txVZzn56QMy8')
         meta(property='og:image', content='http://stratroulette.net/siege/img/thmbn.jpg')
         meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="icon" type="image/x-icon" href="siege/favicon.ico")
 
         include ../dist
         link(rel="stylesheet" href="/siege/css/style.css")
@@ -23,19 +24,22 @@ html(lang="en-US")
         block head
             script.
                 var clientIP = '!{ip}';
-            
+                var mobile = !{mobile} || false;
+
             script(src="/dist/js/autosize.min.js")
             script(src="/dist/js/clipboard.min.js")
+            script(src="/dist/js/jquery-bigtext.js")
             script(src="/siege/js/stratpage.js")
+            script(src="/siege/js/beta-notice.js")
 
             script.
                 (function (i, s, o, g, r, a, m) {
                     i['GoogleAnalyticsObject'] = r;
                     i[r] = i[r] || function () {
-                                (i[r].q = i[r].q || []).push(arguments)
-                            }, i[r].l = 1 * new Date();
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date();
                     a = s.createElement(o),
-                            m = s.getElementsByTagName(o)[0];
+                        m = s.getElementsByTagName(o)[0];
                     a.async = 1;
                     a.src = g;
                     m.parentNode.insertBefore(a, m)
@@ -44,6 +48,23 @@ html(lang="en-US")
                 ga('send', 'pageview');
 
     body
+        #beta-dialogue.md-container.dialogue(style="display:none")
+            .m-dialogue
+                p.md-title Mobile Beta
+                p.md-text.
+                    Hello there!
+                    <br>
+                    I see you're accessing the website through a mobile device,
+                    so I think you'd like to hear that I've been working on a
+                    mobile version of the website!
+                    <br>The beta of it is now available for use
+                    over at <a href="http://beta.stratroulette.net" target="_blank">beta.stratroulette.net</a>
+                    <br>
+                    Would you like to go check it out?
+                .md-button-wrapper
+                    span.md-button(onclick="seenNotice();window.location.href = 'http://beta.stratroulette.net';") OK
+                    span.md-button(onclick="seenNotice();closeAllDialogues();") NO
+
         #header
             img(src="/siege/img/logo.png" alt="Rainbow 6 Siege" id="logo")
 
@@ -53,9 +74,12 @@ html(lang="en-US")
                     td.team-button ATK
                     td#name-container
                         div#names
-                            p.name(class="1") &#8592; Click on a team to begin! &#8594;
-                            img.name(class="2", src="/siege/img/load.gif")
-                            p.name(class="3") empty
+                            div.name-wrapper(class="1")
+                                p.name.bigText &#8592; Click on a team to begin! &#8594;
+                            div.name-wrapper(class="2")
+                                img.name(src="/siege/img/load.gif")
+                            div.name-wrapper(class="3")
+                                p.name.bigText empty
                     td.team-button DEF
 
                 #gamemode-selection
@@ -86,7 +110,7 @@ html(lang="en-US")
                             span.strat-button.disabled#like-counter +0
                             img.strat-button.disabled.like(title="like" src="/siege/img/icons/like.png")
                             img.strat-button.disabled.feedback(title="feedback" src="/siege/img/icons/feedback.png")
-                            img.strat-button.disabled.share(title="share" src="/siege/img/icons/share.png")
+                            //img.strat-button.disabled.share(title="URL" src="/siege/img/icons/share.png")
                             img.strat-button.submit.tooltip(title="submit" src="/siege/img/icons/suggest.png")
 
                 #bottom
@@ -104,8 +128,9 @@ html(lang="en-US")
                             img(src="/siege/img/github-logo.png")
                         p &#9830; Contact: contact@stratroulette.net
 
-        #fader(style="display:none")
-        #feedback-window.dialogue(style="display:none")
+        #fader(onclick="closeAllDialogues();$('body').unbind('touchmove');")
+
+        #feedback-window.c-dialogue.dialogue(style="display:none")
             h1.d-title Give Feedback
 
             p.d-info Your IP will be recorded along with your message
@@ -115,7 +140,7 @@ html(lang="en-US")
             p.d-error#feedback-error(style="display:none") Error message
             img.d-success(src="/siege/img/check.png" style="display:none")
 
-        #submission-window.dialogue(style="display:none")
+        #submission-window.c-dialogue.dialogue(style="display:none")
             h1.d-title Submit a Strat
             p.d-info Author and Strat Name follow the following rules:
             p.d-info(style="margin-top:-5px;") 3 to 20 alphanumerical characters and - _ /

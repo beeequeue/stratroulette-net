@@ -1,0 +1,459 @@
+html {
+    min-height: 100%;
+}
+
+body {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    background: #353536 url(../img/background-white.png);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    color: #2f2f2f;
+}
+
+a {
+    color: #3373c7;
+    text-decoration: none;
+    transition: color 0.2s;
+    font-weight: 700;
+}
+
+a:hover {
+    color: #0295ff;
+    transition: color 0.2s;
+}
+
+br {
+    border-bottom: 1px solid darkgray;
+}
+
+h1, p {
+    margin: 0;
+}
+
+span {
+    display: inline-block;
+}
+
+/*region Modifiers*/
+.disabled {
+    opacity: 0.4;
+    cursor: default !important;
+    transition: opacity 0.75s;
+    pointer-events: none;
+    user-select: none;
+}
+
+.hidden {
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+/*endregion*/
+
+#content {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    bottom: 122px;
+    right: 0;
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* region Top */
+#top {
+    height: 70px;
+    width: 100%;
+    background: #f8f8fc;
+    font-weight: 700;
+}
+
+#names {
+    height: 70px;
+    overflow: hidden;
+}
+
+.name-wrapper {
+    height: 70px;
+    white-space: nowrap;
+    text-align: center;
+    padding: 0 20px;
+}
+
+/*endregion*/
+
+/*region Center*/
+#center {
+    position: absolute;
+    top: 70px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 10px 20px 10px 20px;
+    background: rgba(218, 218, 222, 0.8) url("../img/logo.png") no-repeat center;
+    background-size: 70%;
+    overflow: hidden;
+
+    transition: background-position-y 1s;
+}
+
+#center.started {
+    background-position-y: 200%;
+}
+
+#desc {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 10px 60px 50px 20px;
+
+    text-align: left;
+    font-size: 20px;
+    overflow-y: auto;
+}
+
+/*endregion*/
+
+/*region Author*/
+#author-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    border-top-left-radius: 25px;
+}
+
+#author {
+    position: relative;
+    height: 40px;
+    max-width: 225px;
+    font-size: 20px;
+    color: #727275;
+    font-weight: 400;
+    line-height: 40px;
+    overflow: hidden;
+
+    padding-left: 15px;
+}
+
+#author > p {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 50px;
+    max-width: 225px;
+}
+
+#author img {
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    transition: opacity 0.7s;
+
+    float: right;
+    height: 35px;
+    width: 35px;
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: top;
+}
+
+/*endregion*/
+
+/*region Actionbar*/
+#action-bar {
+    position: absolute;
+    bottom: 40px;
+    right: 0;
+    width: auto;
+    overflow: hidden;
+
+    line-height: 55px;
+    transition: opacity 0.7s;
+}
+
+.strat-button {
+    float: right;
+    height: 45px;
+    width: 45px;
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 8px;
+    vertical-align: top;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+.strat-button:last-child {
+    margin-bottom: 12px;
+}
+
+#like-counter {
+    float: right;
+    vertical-align: inherit;
+    margin-right: 15px;
+    font-weight: 900;
+    font-size: 35px;
+    cursor: default;
+    color: #329537;
+    width: auto;
+}
+
+.settings-button {
+    top: 8px;
+    right: 0;
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    position: absolute;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    z-index: 1;
+}
+
+/*endregion*/
+
+/*region Bottom */
+#bottom {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+}
+
+/*region Gamemode selection*/
+#gamemode-selection {
+    border-bottom: 2px solid #bfbfc3;
+    background: #f3f3f7;
+    height: 50px;
+    line-height: 35px;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+.divider {
+    border-left: 1px solid #cbcbcf;
+    border-radius: 5px;
+    height: 40px;
+    margin-top: 5px;
+    flex-shrink: 0.1;
+}
+
+/*region Checkbox*/
+.checkbox {
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+    position: relative;
+    flex-grow: 4;
+}
+
+.checkbox input[type=checkbox] {
+    display: none;
+}
+
+.checkbox label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: contain !important;
+
+    transition: all .15s;
+}
+
+.checkbox input[type=checkbox]:not(:checked) + label {
+    opacity: 0.4;
+}
+
+.checkbox input[type=checkbox]:checked + label {
+    opacity: 1;
+}
+
+/*endregion*/
+
+/*endregion*/
+
+/*region Team buttons*/
+.team-button {
+    height: 70px;
+    line-height: 65px;
+    width: 50%;
+
+    padding-top: 5px;
+    border-right: 1px solid #9c9c9f;
+    background: #bfbfc3;
+
+    font-family: 'Catamaran', Impact, sans-serif;
+    font-weight: 800;
+    font-size: 40px;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    box-sizing: border-box;
+
+    transition: background 0.075s;
+}
+
+.team-button:last-child {
+    border-right: none;
+    border-left: 1px solid #9c9c9f;
+}
+
+.team-button:active {
+    background: #a1a1a5;
+    transition: background 0.2s;
+}
+
+/*endregion*/
+
+/*endregion*/
+
+/*region Mobile Dialogue*/
+.m-dialogue {
+    position: relative;
+    width: 85%;
+    z-index: 10;
+    text-align: center;
+
+    background: rgba(195, 196, 187, 0.9);
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+}
+
+.md-title {
+    font-size: 2em;
+    padding: 5px 15px;
+}
+
+.md-text {
+    font-size: 1em;
+    padding: 0 15px;
+}
+
+.md-button-wrapper {
+    width: 100%;
+    margin-top: 12px;
+
+    display: flex;
+    justify-content: space-around;
+}
+
+.md-button {
+    text-align: center;
+    line-height: 100%;
+    vertical-align: middle;
+    padding: 10px;
+    flex-basis: 100%;
+    font-size: 1.5em;
+    font-family: "Catamaran", "Lato", serif;
+
+    background: rgba(255, 255, 255, 0.5);
+
+    transition: background 0.1s;
+}
+
+.md-button:active {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/*endregion*/
+
+/*region Settings*/
+.setting-wrapper {
+    box-sizing: border-box;
+    margin: 10px 10px;
+    line-height: 100%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.setting-wrapper p {
+    font-size: 1em;
+    margin-right: 10px;
+}
+
+/*endregion*/
+
+/*region Checkboxes*/
+.setting-checkbox {
+    width: 32px;
+    height: 32px;
+
+    background: #f7f7fb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50px;
+}
+
+.setting-checkbox input {
+    display: none;
+}
+
+.setting-checkbox label {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+
+    cursor: pointer;
+    border-radius: 50px;
+
+    background: #c9d6c3;
+    transition: background 0.1s;
+}
+
+.setting-checkbox input[type=checkbox]:checked + label {
+    background: #565c53;
+}
+
+/*endregion*/
+
+.disclaimer {
+    margin-top: 5px;
+    font-size: 0.75em;
+}
+
+#fader {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    background: black;
+    opacity: 0.65;
+    z-index: 1;
+    display: none;
+}
+
+.code-box {
+    border: 1px solid gray;
+    background: #ccccd1;
+    border-radius: 2px;
+    font-family: monospace;
+    font-size: 15px;
+    padding: 5px 25px 5px 25px;
+}

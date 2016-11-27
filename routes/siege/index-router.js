@@ -8,7 +8,12 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function (req, res) {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    res.render('siege/index', {ip: ip});
+
+    if (req.device.type === "desktop")
+        res.render('siege/index', {ip: ip, mobile: false});
+    else
+        res.render('siege/index', {ip: ip, mobile: true});
+
 });
 
 router.post('/like', function (req, res) {
