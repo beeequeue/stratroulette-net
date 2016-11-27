@@ -3,48 +3,47 @@
 // Requires
 const express      = require('express'),
       path         = require('path'),
-      favicon      = require('serve-favicon'),
       logger       = require('morgan'),
       cookieParser = require('cookie-parser'),
       bodyParser   = require('body-parser'),
       session      = require('express-session'),
       minify       = require('express-minify'),
+      subdomain    = require('express-subdomain'),
+      device       = require('express-device'),
       compress     = require('compression'),
       MongoStore   = require('connect-mongo')(session),
-      fs           = require('fs');
+      fs           = require('fs'),
+      app          = express();
 
-
-var routes       = require('./routes/index-router'),
-    getPage      = require('./routes/get-router.js'),
-    controlPanel = require('./routes/cp-router.js');
-
-var app = express();
+var routes = require('./routes/siege/index-router.js');
+var getPage = require('./routes/siege/get-router.js');
+var controlPanel = require('./routes/siege/controlpanel-router.js');
 
 
 //region Express setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');                                     // Set up jade view engine
+app.set('views', './views');
+app.set('view engine', 'pug');                                                  // Set up jade view engine
 
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));    // Website icon
-app.use(compress({level: 4}));                                      // Enable gzip
+app.use(compress({level: 4}));                                                  // Enable gzip
 if (app.get('env') === 'production') {
-    app.use(minify());                                              // Enable minifying
+    app.use(minify());                                                          // Enable minifying
 }
 else {
-    app.use(logger('dev'));                                         // Bad logger TODO: Add better logging (Winston)
+    app.use(logger('dev'));                                                     // Bad logger TODO: Add better logging (Winston)
 }
-app.use(express.static(path.join(__dirname, 'public')));            // Serve files
-app.use(session({                                                   // Enable sessions
+app.use(express.static('./public'));                                            // Serve files
+app.use(session({                                                               // Enable sessions
     secret: process.env.SECRET,
-    store:  new MongoStore({db: global.db}),                        // Powered by our MongoDB database
+    store:  new MongoStore({db: app.get('env') === 'production' ? global.db : global.db['siege']}), // Powered by our MongoDB database
     cookie: {
         secure:  false,
         expires: 3600000 * 24 * 356 * 5 // 5 years
     }
 }));
-app.use(bodyParser.json());                                         // Enable parser
+app.use(bodyParser.json());                                                     // Enable parser
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());                                            // Enable cookies
+app.use(cookieParser());                                                        // Enable cookies
+app.use(device.capture());
 //endregion
 
 //region View counting
@@ -83,9 +82,13 @@ app.use("/get*", function (req, res, next) {
 //endregion
 
 // Routes
+
+app.use(subdomain('beta', require('./routes/siege/beta-router.js')));
+
 app.use('/', routes);
 app.use('/get', getPage);
 app.use('/controlpanel', controlPanel);
+
 
 //region Error catching
 

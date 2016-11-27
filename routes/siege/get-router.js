@@ -1,4 +1,6 @@
-var express = require('express');
+const express = require('express');
+const stratDB = global.db['siege'].strats;
+
 var router = express.Router();
 var fieldFilter = {
     _id:       false,
@@ -8,15 +10,15 @@ var fieldFilter = {
 };
 
 
-router.post('/:type', function (req, res) {
-    handleRequest(req, res);
+router.post('/:type', function (req, res, next) {
+    handleRequest(req, res, next);
 });
 
-router.get('/:type', function (req, res) {
-    handleRequest(req, res);
+router.get('/:type', function (req, res, next) {
+    handleRequest(req, res, next);
 });
 
-var handleRequest = function (req, res) {
+var handleRequest = function (req, res, next) {
     var team          = req.params.type,
         gamemodes     = req.body.gamemodes,
         notWanted     = req.body.not,
@@ -43,7 +45,7 @@ var handleRequest = function (req, res) {
                 }
             };
 
-            global.db.strats.find(query, fieldFilter)
+            stratDB.find(query, fieldFilter)
                 .toArray(function (err, strats) {
                     if (!err && strats.length > 0) {
                         // If the array of not wanted strats isn't there
@@ -91,7 +93,7 @@ var handleRequest = function (req, res) {
         case 'all':
             var allStrats = [];
 
-            global.db.strats.find({}, fieldFilter)
+            stratDB.find({}, fieldFilter)
                 .toArray(function (err, docs) {
                     if (!err) {
                         for (var i = 0; i < docs.length; i++) {
@@ -115,7 +117,7 @@ var handleRequest = function (req, res) {
                     uid: Number(team)
                 };
 
-                global.db.strats.find(query, fieldFilter)
+                stratDB.find(query, fieldFilter)
                     .toArray(function (err, doc) {
                         if (!err) {
                             if (doc.length > 0) {
@@ -125,7 +127,7 @@ var handleRequest = function (req, res) {
                                 res.json(doc[0]);
                             }
                             else {
-                                res.status(404).json({message:""});
+                                res.status(404).json({message: ""});
                             }
                         }
                         else {

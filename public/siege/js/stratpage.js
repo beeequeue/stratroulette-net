@@ -7,9 +7,14 @@ var canGetStrat       = true,
     lastStratsAmount  = 6,
     gamemodesToSearch = [];
 
+var config = {
+    deskPref: false
+};
+
 $(document).ready(function () {
     autosize($('.d-textarea'));
     new Clipboard('.share');
+    $('.bigText').bigText({horizontalAlign: "center", maximumFontSize: 65});
 
     // Tooltipster setup
     $.fn.tooltipster('setDefaults', {
@@ -147,15 +152,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#fader').click(function () {
-        var elementsToFade = ['#fader', '#feedback-window', '#submission-window'];
-
-        elementsToFade.forEach(function (elem) {
-            $(elem).stop().fadeOut(150);
-        });
-    });
-
-    $('.gm-checkbox').click(function () {
+    $('.gm-checkbox').on('change', function () {
         var gm = $(this).attr('id').replace("gm-checkbox-", "");
         var index = gamemodesToSearch.indexOf(gm);
 
@@ -173,12 +170,26 @@ $(document).ready(function () {
         $(this).find("input").click();
     });
 
+    $('.setting-checkbox input').on('change', function () {
+        var changed = $(this).attr("id").replace("setting-", "");
+        config[changed] = $(this).is(":checked");
+        saveConfig();
+    });
+
     $('.checkbox label').click(function (e) {
         e.stopPropagation();
     });
-    
+
+    // remove false after testing
+    if (mobile === true && !Cookies.get("seenBetaNotice") && false) {
+        openDialogue('#beta-dialogue');
+        $('body').bind('touchmove', function (e) {
+            e.preventDefault()
+        });
+    }
+
     //region Specific strat getting
-    
+
     $(window).bind('hashchange', function () {
         setStrat(window.location.hash.substr(1));
     });
@@ -227,12 +238,41 @@ var openDialogue = function (elem) {
     $(elem).fadeIn(150);
 };
 
+var closeAllDialogues = function () {
+    var elementsToFade = ['#fader', '.dialogue'];
+
+    elementsToFade.forEach(function (elem) {
+        $(elem).stop().fadeOut(150);
+    });
+};
+
+var openSettings = function () {
+    openDialogue($('#settings'));
+};
+
+var loadConfig = function () {
+    var newConfig = tryJSONParse(Cookies.get("config"));
+
+    if (newConfig != undefined) {
+        config = newConfig;
+    }
+    else {
+        saveConfig();
+    }
+};
+
+var saveConfig = function () {
+    Cookies.set("config", config, {expires: 180});
+};
+
 var resetPage = function (speed) {
+    let animation = mobile ? {opacity: 0} : {height: 0};
+
+    $('#center').addClass('started');
+
     $('#desc')
         .stop()
-        .animate({
-            height: 0
-        }, speed, function () {
+        .animate(animation, speed, function () {
             $(this).html("");
         });
 
@@ -280,21 +320,36 @@ var getStratData = function (type, next) {
         success:     function (data) {
             currentStrat = data;
             updateLatestStrats(data.uid);
+            ga('send', {
+                hitType:       'event',
+                eventCategory: 'StratGet',
+                eventAction:   'success'
+            });
+
             next(null, data);
         },
         error:       function (err) {
+            ga('send', {
+                hitType:       'event',
+                eventCategory: 'StratGet',
+                eventAction:   'fail'
+            });
+
             next(err);
         }
     });
 };
 
 var fillPage = function (strat) {
-    $('.name:not(div)').html(strat.name);
+    $('.name:not(div)').html(strat.name).bigText({
+        horizontalAlign: "center",
+        maximumFontSize: 50
+    });
 
     $('#names')
         .stop()
         .animate({
-            scrollTop: 140
+            scrollTop: 146
         }, function () {
             $('#names').scrollTop(0);
         });
@@ -312,20 +367,20 @@ var fillPage = function (strat) {
 
     setLikedStatus(strat.liked);
 
-    $('#desc')
-        .html(strat.desc.replace('\\n', '<br>').replace('\n', '<br>'))
-        .stop()
-        .animate({
-            height: $("#desc").get(0).scrollHeight
-        }, 700, function () {
+    let desc = $('#desc');
+    desc.html(strat.desc.replace('\\n', '<br>').replace('\n', '<br>'));
+    let animation = mobile ? {opacity: 1} : {height: desc.get(0).scrollHeight};
+
+    desc.stop()
+        .animate(animation, 700, function () {
             canGetStrat = true;
         });
-    
+
     $('.share').attr('data-clipboard-text', 'http://stratroulette.net#' + strat.uid);
 
     // Enable buttons and add tooltips
-    if ($('.feedback').hasClass("disabled")) {
-        $('.strat-button:not(.submit)').removeClass("disabled").tooltipster();
+    if ($('.like').hasClass("disabled")) {
+        $('.strat-button').removeClass("disabled").tooltipster();
     }
 };
 
@@ -470,6 +525,11 @@ var feedbackStrat = function (uid, message, next) {
             next(err);
         }
     });
+};
+
+var seenNotice = function () {
+    Cookies.set("seenBetaNotice", true, {expires: 90});
+    $('body').unbind('touchmove');
 };
 
 var submitStrat = function (data, next) {

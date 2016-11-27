@@ -1,0 +1,124 @@
+//
+   Created by bq on 2016-04-04.
+   Background pattern from subtlepatterns.com
+
+-var teams = ['ATK', 'DEF', 'BOTH'];
+-var gamemodes = ['Bombs', 'Hostage', 'Capture Site'];
+
+doctype html
+html(lang="en-US")
+    head
+        block title
+            title R6|S - stratroulette.net
+
+        meta(name="Description" content="Get fun 'strategies' to use in games!")
+        meta(name="Keywords" content="strat,strategy,game,gaming,rainbow,six,siege,generator,stratroulette")
+        meta(name='google-site-verification', content='Uf8v3vnOhD7yveO0SjnF0ARJJ7NTu79txVZzn56QMy8')
+        meta(property='og:image', content='http://stratroulette.net/siege/img/thmbn.jpg')
+        meta(name="viewport" content="width=device-width, initial-scale=1, user-scalable=no")
+        link(rel="icon" type="image/x-icon" href="siege/favicon.ico")
+        meta(name="theme-color" content="#bfbfc3")
+
+        include ../dist
+        link(rel="stylesheet" href="/siege/css/mobile.css")
+
+        block head
+            script.
+                var clientIP = '!{ip}';
+                var mobile = true;
+
+            script(src="/dist/js/autosize.min.js")
+            script(src="/dist/js/clipboard.min.js")
+            script(src="/dist/js/jquery-bigtext.js")
+            script(src="/siege/js/stratpage.js")
+
+            script.
+                (function (i, s, o, g, r, a, m) {
+                    i['GoogleAnalyticsObject'] = r;
+                    i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date();
+                    a = s.createElement(o),
+                        m = s.getElementsByTagName(o)[0];
+                    a.async = 1;
+                    a.src = g;
+                    m.parentNode.insertBefore(a, m)
+                })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+                ga('create', 'UA-87690373-1', 'auto');
+                ga('send', 'pageview');
+
+    body
+        #content
+            block content
+                div#top
+                    div#names
+                        div.name-wrapper(class="1")
+                            p.name.bigText Tap on a team to begin!
+                        div.name-wrapper(class="2")
+                            img.name(src="/siege/img/load.gif")
+                        div.name-wrapper(class="3")
+                            p.name.bigText empty
+
+                #center
+                    block center
+                        img.strat-button.settings-button(src="/siege/img/icons/settings.png" onclick="openSettings()")
+
+                        #desc//-.
+                            //-Sub-light rumours lead to the mineral<br><br>Greatly exaggerated advices lead to the anomaly<br>Extraterrestrial sonic showers, to the radiation dome<br><br>Protons are the spaces of the senior faith<br>Hur'qs harvest with alignment at the cold wormhole!<br><br>All of those ionic cannons will be lost in pressures like stigmas in peacesI infiltrate this courage, it's called conscious peace<br>This sonic shower has only been commanded by a bare transformator<br>All those vogons disrupt galactic, seismic crewmates<br>Tribbles yell with nuclear flux at the conscious saucer section!
+
+                        a#author-container(href="javascript:" target="_blank")
+                            span#author
+                                p Author
+                                img.submission(src="/siege/img/icons/submission.png")
+                                img.reddit.hidden(src="/siege/img/icons/redditsnoo.png")
+                                img.youtube.hidden(src="/siege/img/icons/youtube.png")
+                                img.twitch.hidden(src="/siege/img/icons/twitch.png")
+
+                        #action-bar
+                            span.strat-button.disabled#like-counter +0
+                            br
+                            img.strat-button.disabled.like(src="/siege/img/icons/like.png")
+
+                #bottom
+                    #gamemode-selection
+                        -var i = 0;
+                        each val in gamemodes
+                            -var lowerVal = val.toLowerCase().replace(' ', '');
+                            span.checkbox
+                                input.gm-checkbox(id="gm-checkbox-" + lowerVal type="checkbox")
+                                label(for="gm-checkbox-" + lowerVal style="background: url(./siege/img/icons/" + lowerVal + ".png)")
+                            if(i < 2)
+                                span.divider
+                                -i++;
+
+                    #team-container
+                        span.team-button ATK
+                        span.team-button DEF
+
+        #fader(onclick="closeAllDialogues()")
+
+        #settings.m-dialogue.dialogue(style="display:none;")
+            p.md-title Settings
+
+            .setting-wrapper.disabled
+                p Prefer desktop website
+                .setting-checkbox
+                    input#setting-deskPref(type='checkbox')
+                    label(for='setting-deskPref')
+
+            .disclaimer
+                | Background patterns from 
+                a(href='http://www.subtlepatterns.com', title='subtlepatterns') subtlepatterns.com<br>
+            .disclaimer
+                | Icons made by 
+                a(href='http://www.freepik.com', title='Freepik') Freepik
+                |  and 
+                a(href='http://www.flaticon.com/authors/google', title='Google') Google
+                br
+                |  from 
+                a(href='http://www.flaticon.com', title='Flaticon') flaticon.com
+                |  are licensed by 
+                a(href='http://creativecommons.org/licenses/by/3.0/', title='Creative Commons BY 3.0', target='_blank') CC 3.0 BY
+
+            .md-button-wrapper
+                span.md-button(onclick="closeAllDialogues();") Close
