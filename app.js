@@ -34,7 +34,7 @@ else {
 app.use(express.static('./public'));                                            // Serve files
 app.use(session({                                                               // Enable sessions
     secret: process.env.SECRET,
-    store:  new MongoStore({db: global.db}),                                    // Powered by our MongoDB database
+    store:  new MongoStore({db: app.get('env') === 'production' ? global.db : global.db['siege']}), // Powered by our MongoDB database
     cookie: {
         secure:  false,
         expires: 3600000 * 24 * 356 * 5 // 5 years
