@@ -379,8 +379,8 @@ var fillPage = function (strat) {
     $('.share').attr('data-clipboard-text', 'http://stratroulette.net#' + strat.uid);
 
     // Enable buttons and add tooltips
-    if ($('.feedback').hasClass("disabled")) {
-        $('.strat-button:not(.submit)').removeClass("disabled").tooltipster();
+    if ($('.like').hasClass("disabled")) {
+        $('.strat-button').removeClass("disabled").tooltipster();
     }
 };
 
