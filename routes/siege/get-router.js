@@ -10,15 +10,15 @@ var fieldFilter = {
 };
 
 
-router.post('/:type', function (req, res) {
-    handleRequest(req, res);
+router.post('/:type', function (req, res, next) {
+    handleRequest(req, res, next);
 });
 
-router.get('/:type', function (req, res) {
-    handleRequest(req, res);
+router.get('/:type', function (req, res, next) {
+    handleRequest(req, res, next);
 });
 
-var handleRequest = function (req, res) {
+var handleRequest = function (req, res, next) {
     var team          = req.params.type,
         gamemodes     = req.body.gamemodes,
         notWanted     = req.body.not,
