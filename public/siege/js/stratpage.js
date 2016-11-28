@@ -181,7 +181,7 @@ $(document).ready(function () {
     });
 
     // remove false after testing
-    if (mobile === true && !Cookies.get("seenBetaNotice") && false) {
+    if (mobile === false && deviceIsMobile && !Cookies.get("seenBetaNotice")) {
         openDialogue('#beta-dialogue');
         $('body').bind('touchmove', function (e) {
             e.preventDefault()

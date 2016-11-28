@@ -24,8 +24,10 @@ html(lang="en-US")
 
         block head
             script.
-                var clientIP = '!{ip}';
-                var mobile = true;
+                const clientIP = '!{ip}';
+                const mobile = true;
+                const device = "!{device_type}";
+                const deviceIsMobile = !{is_mobile};
 
             script(src="/dist/js/autosize.min.js")
             script(src="/dist/js/clipboard.min.js")
