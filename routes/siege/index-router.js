@@ -10,9 +10,9 @@ router.get('/', function (req, res) {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
     if (req.device.type === "desktop")
-        res.render('siege/index', {ip: ip, mobile: false});
+        res.render('siege/index', {ip: ip});
     else
-        res.render('siege/index', {ip: ip, mobile: true});
+        res.render('siege/index', {ip: ip});
 
 });
 
