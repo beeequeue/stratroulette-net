@@ -266,7 +266,7 @@ var saveConfig = function () {
 };
 
 var resetPage = function (speed) {
-    let animation = mobile ? {opacity: 0} : {height: 0};
+    var animation = mobile ? {opacity: 0} : {height: 0};
 
     $('#center').addClass('started');
 
@@ -367,9 +367,9 @@ var fillPage = function (strat) {
 
     setLikedStatus(strat.liked);
 
-    let desc = $('#desc');
+    var desc = $('#desc');
     desc.html(strat.desc.replace('\\n', '<br>').replace('\n', '<br>'));
-    let animation = mobile ? {opacity: 1} : {height: desc.get(0).scrollHeight};
+    var animation = mobile ? {opacity: 1} : {height: desc.get(0).scrollHeight};
 
     desc.stop()
         .animate(animation, 700, function () {
