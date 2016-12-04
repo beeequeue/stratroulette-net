@@ -102,8 +102,8 @@ span {
     right: 0;
     left: 0;
     padding: 10px 20px 10px 20px;
-    background: rgba(218, 218, 222, 0.8) url("../img/logo.png") no-repeat center;
-    background-size: 70%;
+    background: rgba(218, 218, 222, 0.8) no-repeat center;
+    background-size: 90%;
     overflow: hidden;
 
     transition: background-position-y 1s;
