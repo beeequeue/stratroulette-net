@@ -304,11 +304,12 @@ img.name {
 }
 
 #strat-options {
+    display: flex;
+    align-items: center;
+
     float: right;
     overflow: hidden;
-    line-height: 50px;
     height: 100%;
-    vertical-align: middle;
     -webkit-user-select: none;
     -moz-user-select: none;
 }
@@ -316,10 +317,11 @@ img.name {
 .strat-button {
     height: 45px;
     width: 45px;
+    line-height: 45px;
+    vertical-align: bottom;
     display: inline-block;
     cursor: pointer;
     margin-right: 18px;
-    vertical-align: middle;
 }
 
 #like-counter {
