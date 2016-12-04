@@ -130,15 +130,17 @@ table {
 }
 
 #header {
+    display: inline-block;
     padding-top: 20px;
     margin-bottom: 25px;
     color: white;
-}
-
-#logo {
     width: 90%;
     min-width: 600px;
     max-width: 850px;
+}
+
+#logo {
+    width: 100%;
     -webkit-user-select: none;
     -moz-user-select: none;
 }
