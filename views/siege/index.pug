@@ -20,6 +20,8 @@ html(lang="en-US")
 
         include ../dist
         link(rel="stylesheet" href="/siege/css/style.css")
+        if(holiday !== "normal")
+            link(rel="stylesheet" href="/season-themes/" + holiday + "/style.css")
 
         block head
             script.
@@ -67,7 +69,9 @@ html(lang="en-US")
                     span.md-button(onclick="seenNotice();closeAllDialogues();") NO
 
         #header
-            img(src="/siege/img/logo.png" alt="Rainbow 6 Siege" id="logo")
+            img(src="/siege/img/logos/" + holiday + ".png" alt="Rainbow 6 Siege" id="logo")
+
+        #holiday-overlay
 
         #content
             block content

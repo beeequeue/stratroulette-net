@@ -1,0 +1,31 @@
+#holiday-overlay {
+    background-image: url('http://www.wearewebstars.dk/codepen/img/s1.png'), url('http://www.wearewebstars.dk/codepen/img//s2.png'), url('http://www.wearewebstars.dk/codepen/img//s3.png');
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    animation: snow 25s linear infinite;
+}
+
+@keyframes snow {
+    0% {
+        background-position: 0 0, 0 0, 0 0;
+    }
+    50% {
+        background-position: 550px 200px, 200px 290px, -100px 145px;
+    }
+    100% {
+        background-position: 1000px 500px, 400px 400px, -300px 300px;
+    }
+}
+
+#bottom:after {
+    color: greenyellow;
+    position: absolute;
+    right: 15px;
+    height: 100px;
+    bottom: -100px;
+    content: url(icicle.png);
+}

@@ -1,18 +1,20 @@
+const holidayChecker = require("../../extras/holiday-checker.js");
 const express = require('express');
 const stratDB = global.db['siege'].strats;
 const submDB = global.db['siege'].submissions;
 
-var router = express.Router();
-
+var router = express.Router(),
+    holiday = "normal";
 
 /* GET home page. */
 router.get('/', function (req, res) {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    var locals = {ip: ip, holiday: holidayChecker.season()};
 
     if (req.device.type === "desktop")
-        res.render('siege/index', {ip: ip});
+        res.render('siege/index', locals);
     else
-        res.render('siege/index', {ip: ip});
+        res.render('siege/mobile', locals);
 
 });
 
