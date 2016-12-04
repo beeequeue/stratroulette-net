@@ -150,6 +150,8 @@ table {
     min-width: 600px;
     max-width: 850px;
     height: auto;
+    z-index: 2;
+    position: relative;
 
     right: 0;
     left: 0;
