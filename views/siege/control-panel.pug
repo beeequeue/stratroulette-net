@@ -8,16 +8,16 @@ html(lang="en-US")
     head
         title Siege Control Panel
 
-        include ./dist.jade
+        include ../dist.pug
         link(rel="stylesheet" href="/siege/css/style.css")
         link(rel="stylesheet" href="/siege/css/control-panel.css")
-        link(rel="stylesheet" href="/siege/css/jquery-ui.css")
+        link(rel="stylesheet" href="/dist/css/jquery-ui.css")
         
         script.
             var submissions = !{submissions};
 
-        script(src="/siege/js/dist/jquery-ui.js")
-        script(src="/siege/js/dist/autosize.min.js")
+        script(src="/dist/js/jquery-ui.js")
+        script(src="/dist/js/autosize.min.js")
         script(src="/siege/js/control-panel.js")
 
 
@@ -49,18 +49,18 @@ html(lang="en-US")
                         #action-bar
                             span#author
                                 a(href="")
-                                    img.strat-button.submission.hidden(src="/img/icons/submission.png")
-                                    img.strat-button.reddit.hidden(src="/img/icons/redditsnoo.png")
-                                    img.strat-button.youtube.hidden(src="/img/icons/youtube.png")
-                                    img.strat-button.twitch.hidden(src="/img/icons/twitch.png")
+                                    img.strat-button.submission.hidden(src="/siege/img/icons/submission.png")
+                                    img.strat-button.reddit.hidden(src="/siege/img/icons/redditsnoo.png")
+                                    img.strat-button.youtube.hidden(src="/siege/img/icons/youtube.png")
+                                    img.strat-button.twitch.hidden(src="/siege/img/icons/twitch.png")
                                 input.tooltip.author-name(type='text' maxlength=20
                                 title="Don't edit the author name unless you really have to.")
 
                             span#strat-options
                                 span.strat-button.disabled#like-counter +0
-                                img.strat-button.disabled(title="like" src="img/icons/like.png")
-                                img.strat-button.disabled(title="feedback" src="img/icons/feedback.png")
-                                img.strat-button.disabled(title="submit" src="img/icons/suggest.png")
+                                img.strat-button.disabled(title="like" src="/siege/img/icons/like.png")
+                                img.strat-button.disabled(title="feedback" src="/siege/img/icons/feedback.png")
+                                img.strat-button.disabled(title="submit" src="/siege/img/icons/suggest.png")
             #actions.panel
                 .button.accept Accept
 
