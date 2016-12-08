@@ -438,7 +438,7 @@ span {
     font-size: 0.75em;
 }
 
-#fader {
+#dialogue-container {
     position: fixed;
     top: 0;
     bottom: 0;

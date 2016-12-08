@@ -134,7 +134,7 @@ $(document).ready(function () {
                     $(selec + ' .d-success').fadeIn(250);
 
                     setTimeout(function () {
-                        $('#fader').click();
+                        $('#dialogue-container').click();
                     }, 1000);
 
                     setTimeout(function () {
@@ -221,7 +221,7 @@ var giveSuccess = function (window) {
 
     // Then wait before fading window out
     setTimeout(function () {
-        $('#fader').click();
+        $('#dialogue-container').click();
     }, 1250);
 
     // Also wait until window gone to reset window
@@ -232,12 +232,13 @@ var giveSuccess = function (window) {
 };
 
 var openDialogue = function (elem) {
-    $('#fader').fadeIn(150);
+    $('#dialogue-container').fadeIn(150).css({display: "flex"});
+
     $(elem).fadeIn(150);
 };
 
 var closeAllDialogues = function () {
-    var elementsToFade = ['#fader', '.dialogue'];
+    var elementsToFade = ['#dialogue-container', '.c-dialogue', '.m-dialogue'];
 
     elementsToFade.forEach(function (elem) {
         $(elem).stop().fadeOut(150);

@@ -138,48 +138,47 @@ html(lang="en-US")
                             img(src="/siege/img/github-logo.png")
                         p &#9830; Contact: contact@stratroulette.net
 
-        #fader(onclick="closeAllDialogues();$('body').unbind('touchmove');")
+        #dialogue-container(onclick="closeAllDialogues();$('body').unbind('touchmove');")
+            #feedback-window.c-dialogue(style="display:none")
+                h1.d-title Give Feedback
 
-        #feedback-window.c-dialogue.dialogue(style="display:none")
-            h1.d-title Give Feedback
+                p.d-info Your IP will be recorded along with your message
+                input.d-textinput#feedback-msg(type="text" title="Req. length: 6 to 35")
 
-            p.d-info Your IP will be recorded along with your message
-            input.d-textinput#feedback-msg(type="text" title="Req. length: 6 to 35")
+                span.d-button#feedback-submit Submit
+                p.d-error#feedback-error(style="display:none") Error message
+                img.d-success(src="/siege/img/check.png" style="display:none")
 
-            span.d-button#feedback-submit Submit
-            p.d-error#feedback-error(style="display:none") Error message
-            img.d-success(src="/siege/img/check.png" style="display:none")
+            #submission-window.c-dialogue(style="display:none")
+                h1.d-title Submit a Strat
+                p.d-info Author and Strat Name follow the following rules:
+                p.d-info(style="margin-top:-5px;") 3 to 20 alphanumerical characters and - _ /
 
-        #submission-window.c-dialogue.dialogue(style="display:none")
-            h1.d-title Submit a Strat
-            p.d-info Author and Strat Name follow the following rules:
-            p.d-info(style="margin-top:-5px;") 3 to 20 alphanumerical characters and - _ /
+                p.d-info.bold Author
+                input.d-textinput#submission-author(title='"/u/[username]" to link to reddit user' type="text" maxlength="20")
 
-            p.d-info.bold Author
-            input.d-textinput#submission-author(title='"/u/[username]" to link to reddit user' type="text" maxlength="20")
+                p.d-info.bold Strat Name
+                input.d-textinput#submission-stratname(type="text" maxlength="20")
 
-            p.d-info.bold Strat Name
-            input.d-textinput#submission-stratname(type="text" maxlength="20")
+                p.d-info.bold Description
+                textarea.d-textarea#submission-msg(title="Max length: 450" maxlength='450')
 
-            p.d-info.bold Description
-            textarea.d-textarea#submission-msg(title="Max length: 450" maxlength='450')
+                p.d-info.bold Team
+                select.d-combobox#submission-team
+                    each val in teams
+                        option(value=val.toLowerCase())=val
 
-            p.d-info.bold Team
-            select.d-combobox#submission-team
-                each val in teams
-                    option(value=val.toLowerCase())=val
+                p.d-info.bold Gamemodes
+                .d-wrapper#submission-gamemodes
+                    each val in gamemodes
+                        -var lowerVal = val.toLowerCase().replace(' ', '');
+                        .d-checkbox-wrapper
+                            p.d-info(style="float:left")=val
+                            .checkbox-wrapper.d-checkbox
+                                input(id='submission-checkbox-' + lowerVal type='checkbox')
+                                label(for='submission-checkbox-' + lowerVal)
 
-            p.d-info.bold Gamemodes
-            .d-wrapper#submission-gamemodes
-                each val in gamemodes
-                    -var lowerVal = val.toLowerCase().replace(' ', '');
-                    .d-checkbox-wrapper
-                        p.d-info(style="float:left")=val
-                        .checkbox.d-checkbox
-                            input(id='submission-checkbox-' + lowerVal type='checkbox')
-                            label(for='submission-checkbox-' + lowerVal)
-
-            br
-            span.d-button#submission-submit Submit
-            p.d-error#submission-error(style="display:none") Error message
-            img.d-success(src="/siege/img/check.png" style="display:none")
+                br
+                span.d-button#submission-submit Submit
+                p.d-error#submission-error(style="display:none") Error message
+                img.d-success(src="/siege/img/check.png" style="display:none")
