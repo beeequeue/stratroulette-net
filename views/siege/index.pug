@@ -91,13 +91,15 @@ html(lang="en-US")
                     td.team-button DEF
 
                 #gamemode-selection
+                    -var i = 0;
                     each val in gamemodes
                         -var lowerVal = val.toLowerCase().replace(' ', '');
-                        span.gamemode-container
-                            p(style="float:left")=val
-                            .checkbox(style="float:right")
-                                input.gm-checkbox(id='gm-checkbox-' + lowerVal type='checkbox')
-                                label(for='gm-checkbox-' + lowerVal)
+                        span.gamemode-button
+                            input.gm-checkbox(id="gm-checkbox-" + lowerVal type="checkbox")
+                            label(for="gm-checkbox-" + lowerVal style="background: url(./siege/img/icons/" + lowerVal + ".png)")
+                        if(i < 2)
+                            span.divider
+                            -i++;
 
                 #center
                     block center

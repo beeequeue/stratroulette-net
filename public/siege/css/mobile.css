@@ -259,7 +259,7 @@ span {
 }
 
 /*region Checkbox*/
-.checkbox {
+.gamemode-button {
     display: inline-block;
     height: 50px;
     width: 50px;
@@ -267,11 +267,11 @@ span {
     flex-grow: 4;
 }
 
-.checkbox input[type=checkbox] {
+.gamemode-button input[type=checkbox] {
     display: none;
 }
 
-.checkbox label {
+.gamemode-button label {
     position: absolute;
     top: 0;
     left: 0;
@@ -284,11 +284,11 @@ span {
     transition: all .15s;
 }
 
-.checkbox input[type=checkbox]:not(:checked) + label {
+.gamemode-button input[type=checkbox]:not(:checked) + label {
     opacity: 0.4;
 }
 
-.checkbox input[type=checkbox]:checked + label {
+.gamemode-button input[type=checkbox]:checked + label {
     opacity: 1;
 }
 

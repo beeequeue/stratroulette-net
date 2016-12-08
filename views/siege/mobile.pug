@@ -86,7 +86,7 @@ html(lang="en-US")
                         -var i = 0;
                         each val in gamemodes
                             -var lowerVal = val.toLowerCase().replace(' ', '');
-                            span.checkbox
+                            span.gamemode-button
                                 input.gm-checkbox(id="gm-checkbox-" + lowerVal type="checkbox")
                                 label(for="gm-checkbox-" + lowerVal style="background: url(./siege/img/icons/" + lowerVal + ".png)")
                             if(i < 2)

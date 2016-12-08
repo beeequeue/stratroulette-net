@@ -226,25 +226,48 @@ img.name {
 #gamemode-selection {
     border-bottom: 2px solid #bfbfc3;
     background: #f3f3f7;
-    height: 35px;
-    line-height: 35px;
-    vertical-align: middle;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 10%;
+
     -webkit-user-select: none;
     -moz-user-select: none;
 }
 
-.gamemode-container {
-    margin: auto 10px;
-    cursor: pointer;
+.gamemode-button {
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+    position: relative;
+    flex-grow: 4;
 }
 
-.gamemode-container > p {
-    font-size: 18px;
+.gamemode-button input[type=checkbox] {
+    display: none;
 }
 
-.gamemode-container > .checkbox {
-    margin-top: 4px;
-    margin-left: 8px;
+.gamemode-button label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: contain !important;
+    cursor: pointer !important;
+
+    transition: all .1s;
+}
+
+.gamemode-button input[type=checkbox]:not(:checked) + label {
+    opacity: 0.4;
+}
+
+.gamemode-button input[type=checkbox]:checked + label {
+    opacity: 1;
 }
 
 /*endregion*/

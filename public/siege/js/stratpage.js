@@ -104,7 +104,7 @@ $(document).ready(function () {
             giveErrorMessage('submission', 'Please select at least one gamemode');
             return;
         }
-        
+
         data.ip = clientIP;
 
 
@@ -170,13 +170,11 @@ $(document).ready(function () {
         $(this).find("input").click();
     });
 
-    $('.setting-checkbox input').on('change', function () {
-        var changed = $(this).attr("id").replace("setting-", "");
-        config[changed] = $(this).is(":checked");
-        saveConfig();
+    $('.setting-wrapper > span').click(function () {
+        $(this).next().find('input').click();
     });
 
-    $('.checkbox label').click(function (e) {
+    $('.gamemode-container .checkbox-wrapper label, .c-dialogue, .setting-checkbox label').click(function (e) {
         e.stopPropagation();
     });
 
@@ -199,7 +197,7 @@ $(document).ready(function () {
     if (idAskedFor && !isNaN(idAskedFor)) {
         setStrat(idAskedFor);
     }
-    
+
     //endregion
 });
 
@@ -409,6 +407,9 @@ var setStrat = function (type) {
             }
         });
     }
+    else if (gamemodesToSearch.length === 0) {
+        flashGameModeButtons();
+    }
 };
 
 var updateLatestStrats = function (newID) {
@@ -530,6 +531,15 @@ var feedbackStrat = function (uid, message, next) {
 var seenNotice = function () {
     Cookies.set("seenBetaNotice", true, {expires: 90});
     $('body').unbind('touchmove');
+};
+
+var flashGameModeButtons = function () {
+    $('.gm-checkbox').prop('checked', true);
+    for (let i = 0; i < 3; i++) {
+        setTimeout(function () {
+            $('.gm-checkbox').prop('checked', (i == 1));
+        }, 150 * (i + 1));
+    }
 };
 
 var submitStrat = function (data, next) {
