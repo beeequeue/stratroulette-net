@@ -7,8 +7,9 @@ var canGetStrat       = true,
     lastStratsAmount  = 6,
     gamemodesToSearch = [];
 
-var config = {
-    deskPref: false
+var _settings = {
+    preferDesktop:  false,
+    disableHoliday: false
 };
 
 $(document).ready(function () {
@@ -38,13 +39,7 @@ $(document).ready(function () {
             $(this).tooltipster('hide');
         });
 
-    var cookieGM = tryJSONParse(Cookies.get('gamemodes'));
-    if (cookieGM !== undefined) {
-        for (var i = 0; i < cookieGM.length; i++) {
-            gamemodesToSearch.push(cookieGM[i]);
-            $('#gm-checkbox-' + cookieGM[i]).prop('checked', true);
-        }
-    }
+    loadCookieSettings();
 
     $('.team-button').click(function () {
         setStrat($(this).html());
@@ -163,22 +158,30 @@ $(document).ready(function () {
             gamemodesToSearch.splice(index, 1);
         }
 
-        Cookies.set("gamemodes", gamemodesToSearch, {expires: 365});
-    });
-
-    $('.gamemode-container').click(function () {
-        $(this).find("input").click();
+        Cookies.set("gamemodes", gamemodesToSearch, {
+            expires: 30,
+            domain:  "." + window.location.hostname
+        });
     });
 
     $('.setting-wrapper > span').click(function () {
         $(this).next().find('input').click();
     });
 
-    $('.gamemode-container .checkbox-wrapper label, .c-dialogue, .setting-checkbox label').click(function (e) {
+    $('.checkbox-wrapper label, .c-dialogue, .setting-checkbox label').click(function (e) {
         e.stopPropagation();
     });
 
-    // remove false after testing
+    $('.settings-checkbox').change(function () {
+        var setting = $(this).attr('id').replace('setting-', '');
+        _settings[setting] = $(this).prop('checked');
+
+        Cookies.set('settings', _settings, {
+            expires: 90,
+            domain:  "." + window.location.hostname
+        });
+    });
+
     if (mobile === false && deviceIsMobile && !Cookies.get("seenBetaNotice")) {
         openDialogue('#beta-dialogue');
         $('body').bind('touchmove', function (e) {
@@ -246,22 +249,7 @@ var closeAllDialogues = function () {
 };
 
 var openSettings = function () {
-    openDialogue($('#settings'));
-};
-
-var loadConfig = function () {
-    var newConfig = tryJSONParse(Cookies.get("config"));
-
-    if (newConfig != undefined) {
-        config = newConfig;
-    }
-    else {
-        saveConfig();
-    }
-};
-
-var saveConfig = function () {
-    Cookies.set("config", config, {expires: 180});
+    openDialogue($('#settings-window'));
 };
 
 var resetPage = function (speed) {
@@ -532,6 +520,30 @@ var feedbackStrat = function (uid, message, next) {
 var seenNotice = function () {
     Cookies.set("seenBetaNotice", true, {expires: 90});
     $('body').unbind('touchmove');
+};
+
+var loadCookieSettings = function () {
+    var gamemodeC = tryJSONParse(Cookies.get('gamemodes'));
+    var settingsC = tryJSONParse(Cookies.get('settings'));
+
+    if (gamemodeC !== undefined) {
+        for (var i = 0; i < gamemodeC.length; i++) {
+            gamemodesToSearch.push(gamemodeC[i]);
+            $('#gm-checkbox-' + gamemodeC[i]).prop('checked', true);
+        }
+    }
+
+    if (settingsC !== undefined) {
+        _settings = settingsC;
+
+        var keys = Object.keys(settingsC);
+
+        for (var i = 0; i < keys.length; i++) {
+            var setting = {key: keys[i], value: settingsC[keys[i]]};
+
+            $('#setting-' + setting.key).prop('checked', setting.value);
+        }
+    }
 };
 
 var flashGameModeButtons = function () {

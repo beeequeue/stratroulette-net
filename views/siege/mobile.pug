@@ -4,6 +4,7 @@
 
 -var teams = ['ATK', 'DEF', 'BOTH'];
 -var gamemodes = ['Bombs', 'Hostage', 'Capture Site'];
+-var settings = [{id:'disableHoliday', desc:'Disable holiday themes'}, {id:'preferDesktop', desc:'Prefer desktop website'}];
 
 doctype html
 html(lang="en-US")
@@ -102,11 +103,15 @@ html(lang="en-US")
         #settings-window.m-dialogue(style="display:none;")
             p.md-title Settings
 
-            .setting-wrapper.disabled
-                p Prefer desktop website
-                .setting-checkbox
-                    input#setting-deskPref(type='checkbox')
-                    label(for='setting-deskPref')
+            each setting in settings
+                -var id = 'setting-' + setting.id;
+                .setting-wrapper
+                    span=setting.desc
+                    .checkbox-wrapper
+                        input.settings-checkbox(id=id type='checkbox')
+                        label(for=id)
+                    
+            hr
 
             .disclaimer
                 | Background patterns from 

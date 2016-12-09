@@ -4,6 +4,7 @@
 
 -var teams = ['ATK', 'DEF', 'BOTH'];
 -var gamemodes = ['Bombs', 'Hostage', 'Capture Site'];
+-var settings = [{id:'disableHoliday', desc:'Disable holiday themes'}, {id:'preferDesktop', desc:'Prefer desktop website'}];
 
 doctype html
 html(lang="en-US")
@@ -118,10 +119,10 @@ html(lang="en-US")
 
                         span#strat-options
                             span.strat-button.disabled#like-counter +0
-                            img.strat-button.disabled.like(title="like" src="/siege/img/icons/like.png")
+                            img.strat-button.disabled.like(src="/siege/img/icons/like.png")
                             img.strat-button.disabled.feedback(title="feedback" src="/siege/img/icons/feedback.png")
-                            //img.strat-button.disabled.share(title="URL" src="/siege/img/icons/share.png")
                             img.strat-button.submit.tooltip(title="submit" src="/siege/img/icons/suggest.png")
+                            img.strat-button.settings(src="/siege/img/icons/settings.png" onclick="openSettings()")
 
                 #bottom
                     .bottom-container.
@@ -182,3 +183,32 @@ html(lang="en-US")
                 span.d-button#submission-submit Submit
                 p.d-error#submission-error(style="display:none") Error message
                 img.d-success(src="/siege/img/check.png" style="display:none")
+
+            #settings-window.c-dialogue(style="display:none")
+                .d-title Settings
+
+                each setting in settings
+                    -var id = 'setting-' + setting.id;
+                    .setting-wrapper
+                        span=setting.desc
+                        .checkbox-wrapper
+                            input.settings-checkbox(id=id type='checkbox')
+                            label(for=id)
+
+                hr
+
+                .disclaimer
+                    | Background patterns from 
+                    a(href='http://www.subtlepatterns.com' target="_blank" title='subtlepatterns') subtlepatterns.com<br>
+                .disclaimer
+                    | Icons made by 
+                    a(href='http://www.freepik.com' target="_blank" title='Freepik') Freepik
+                    | , 
+                    a(href='http://www.flaticon.com/authors/google' target="_blank" title='Google') Google, 
+                    | and 
+                    a(href='http://www.flaticon.com/authors/madebyoliver' target="_blank" title='Madebyoliver') Madebyoliver
+                    br
+                    | from 
+                    a(href='http://www.flaticon.com' target="_blank" title='Flaticon') flaticon.com
+                    |  are licensed by 
+                    a(href='http://creativecommons.org/licenses/by/3.0/' title='Creative Commons BY 3.0' target='_blank') CC 3.0 BY
