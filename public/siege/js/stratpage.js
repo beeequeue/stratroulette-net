@@ -404,7 +404,8 @@ var setStrat = function (type) {
             }
         });
     }
-    else if (gamemodesToSearch.length === 0) {
+    else if (canGetStrat && gamemodesToSearch.length === 0) {
+        canGetStrat = false;
         flashGameModeButtons();
     }
 };
@@ -559,10 +560,16 @@ var saveSettings = function () {
 
 var flashGameModeButtons = function () {
     $('.gm-checkbox').prop('checked', true);
-    for (let i = 0; i < 3; i++) {
+
+    setTimeout(function () {
+        $('.gm-checkbox').prop('checked', false);
+
         setTimeout(function () {
-            $('.gm-checkbox').prop('checked', (i == 1));
-        }, 150 * (i + 1));
+            canGetStrat = true;
+        }, 250);
+    }, 200);
+};
+
 var toggleHolidayAnimation = function () {
     var overlay     = $('#holiday-overlay'),
         pauseButton = $('#pause-button');
