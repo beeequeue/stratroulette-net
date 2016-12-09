@@ -174,7 +174,7 @@ html(lang="en-US")
                     each val in gamemodes
                         -var lowerVal = val.toLowerCase().replace(' ', '');
                         .d-checkbox-wrapper
-                            p.d-info(style="float:left")=val
+                            span.d-checkbox-info(style="float:left")=val
                             .checkbox-wrapper.d-checkbox
                                 input(id='submission-checkbox-' + lowerVal type='checkbox')
                                 label(for='submission-checkbox-' + lowerVal)
