@@ -5,16 +5,24 @@ var canGetStrat       = true,
     currentStrat      = {},
     lastStrats        = [],
     lastStratsAmount  = 6,
-    gamemodesToSearch = [];
+    gamemodesToSearch = [],
+    domain            = 'stratroulette.net';
 
-var config = {
-    deskPref: false
+var _settings = {
+    preferDesktop:  0,
+    disableHoliday: 0
+};
+var settingCookieConfig = {
+    expires: 604800000,
+    domain:  "." + domain
 };
 
 $(document).ready(function () {
     autosize($('.d-textarea'));
     new Clipboard('.share');
-    $('.bigText').bigText({horizontalAlign: "center", maximumFontSize: 65});
+    setTimeout(function () {
+        $('.bigText').bigText({horizontalAlign: "center", maximumFontSize: 65});
+    }, 0);
 
     // Tooltipster setup
     $.fn.tooltipster('setDefaults', {
@@ -38,13 +46,7 @@ $(document).ready(function () {
             $(this).tooltipster('hide');
         });
 
-    var cookieGM = tryJSONParse(Cookies.get('gamemodes'));
-    if (cookieGM !== undefined) {
-        for (var i = 0; i < cookieGM.length; i++) {
-            gamemodesToSearch.push(cookieGM[i]);
-            $('#gm-checkbox-' + cookieGM[i]).prop('checked', true);
-        }
-    }
+    loadCookieSettings();
 
     $('.team-button').click(function () {
         setStrat($(this).html());
@@ -104,7 +106,7 @@ $(document).ready(function () {
             giveErrorMessage('submission', 'Please select at least one gamemode');
             return;
         }
-        
+
         data.ip = clientIP;
 
 
@@ -134,7 +136,7 @@ $(document).ready(function () {
                     $(selec + ' .d-success').fadeIn(250);
 
                     setTimeout(function () {
-                        $('#fader').click();
+                        $('#dialogue-container').click();
                     }, 1000);
 
                     setTimeout(function () {
@@ -163,29 +165,36 @@ $(document).ready(function () {
             gamemodesToSearch.splice(index, 1);
         }
 
-        Cookies.set("gamemodes", gamemodesToSearch, {expires: 365});
+        Cookies.set("gamemodes", gamemodesToSearch, {
+            expires: 30,
+            domain:  "." + domain
+        });
     });
 
-    $('.gamemode-container').click(function () {
-        $(this).find("input").click();
+    $('.setting-wrapper > span').click(function () {
+        $(this).next().find('input').click();
     });
 
-    $('.setting-checkbox input').on('change', function () {
-        var changed = $(this).attr("id").replace("setting-", "");
-        config[changed] = $(this).is(":checked");
-        saveConfig();
-    });
-
-    $('.checkbox label').click(function (e) {
+    $('.checkbox-wrapper label, .c-dialogue, .setting-checkbox label').click(function (e) {
         e.stopPropagation();
     });
 
-    // remove false after testing
+    $('.settings-checkbox').change(function () {
+        var setting = $(this).attr('id').replace('setting-', '');
+        _settings[setting] = Number($(this).prop('checked'));
+
+        Cookies.set(setting, _settings[setting], settingCookieConfig);
+    });
+
     if (mobile === false && deviceIsMobile && !Cookies.get("seenBetaNotice")) {
         openDialogue('#beta-dialogue');
         $('body').bind('touchmove', function (e) {
             e.preventDefault()
         });
+    }
+    
+    if (!mobile && !deviceIsMobile) {
+        $('#setting-preferDesktop').parent().parent().css('display', 'none');
     }
 
     //region Specific strat getting
@@ -199,7 +208,7 @@ $(document).ready(function () {
     if (idAskedFor && !isNaN(idAskedFor)) {
         setStrat(idAskedFor);
     }
-    
+
     //endregion
 });
 
@@ -223,7 +232,7 @@ var giveSuccess = function (window) {
 
     // Then wait before fading window out
     setTimeout(function () {
-        $('#fader').click();
+        $('#dialogue-container').click();
     }, 1250);
 
     // Also wait until window gone to reset window
@@ -234,12 +243,13 @@ var giveSuccess = function (window) {
 };
 
 var openDialogue = function (elem) {
-    $('#fader').fadeIn(150);
+    $('#dialogue-container').fadeIn(150).css({display: "flex"});
+
     $(elem).fadeIn(150);
 };
 
 var closeAllDialogues = function () {
-    var elementsToFade = ['#fader', '.dialogue'];
+    var elementsToFade = ['#dialogue-container', '.c-dialogue', '.m-dialogue'];
 
     elementsToFade.forEach(function (elem) {
         $(elem).stop().fadeOut(150);
@@ -247,22 +257,7 @@ var closeAllDialogues = function () {
 };
 
 var openSettings = function () {
-    openDialogue($('#settings'));
-};
-
-var loadConfig = function () {
-    var newConfig = tryJSONParse(Cookies.get("config"));
-
-    if (newConfig != undefined) {
-        config = newConfig;
-    }
-    else {
-        saveConfig();
-    }
-};
-
-var saveConfig = function () {
-    Cookies.set("config", config, {expires: 180});
+    openDialogue($('#settings-window'));
 };
 
 var resetPage = function (speed) {
@@ -409,6 +404,10 @@ var setStrat = function (type) {
             }
         });
     }
+    else if (canGetStrat && gamemodesToSearch.length === 0) {
+        canGetStrat = false;
+        flashGameModeButtons();
+    }
 };
 
 var updateLatestStrats = function (newID) {
@@ -528,8 +527,61 @@ var feedbackStrat = function (uid, message, next) {
 };
 
 var seenNotice = function () {
-    Cookies.set("seenBetaNotice", true, {expires: 90});
+    Cookies.set("seenBetaNotice", true, {
+        expires: 90,
+        domain:  "." + domain
+    });
     $('body').unbind('touchmove');
+};
+
+var loadCookieSettings = function () {
+    var gamemodeC = tryJSONParse(Cookies.get('gamemodes'));
+
+    if (gamemodeC !== undefined) {
+        for (var i = 0; i < gamemodeC.length; i++) {
+            gamemodesToSearch.push(gamemodeC[i]);
+            $('#gm-checkbox-' + gamemodeC[i]).prop('checked', true);
+        }
+    }
+
+    // Settings
+    for (var key in _settings) {
+        var setting = {key: key, value: Cookies.get(key)};
+
+        $('#setting-' + setting.key).prop('checked', setting.value == 1);
+    }
+};
+
+var saveSettings = function () {
+    for (var key in _settings) {
+        Cookies.set(key, _settings[key], settingCookieConfig);
+    }
+};
+
+var flashGameModeButtons = function () {
+    $('.gm-checkbox').prop('checked', true);
+
+    setTimeout(function () {
+        $('.gm-checkbox').prop('checked', false);
+
+        setTimeout(function () {
+            canGetStrat = true;
+        }, 250);
+    }, 200);
+};
+
+var toggleHolidayAnimation = function () {
+    var overlay     = $('#holiday-overlay'),
+        pauseButton = $('#pause-button');
+
+    if (overlay.hasClass('paused')) {
+        pauseButton.removeClass('paused');
+        overlay.removeClass('paused');
+    }
+    else {
+        pauseButton.addClass('paused');
+        overlay.addClass('paused');
+    }
 };
 
 var submitStrat = function (data, next) {

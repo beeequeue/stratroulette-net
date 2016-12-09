@@ -44,7 +44,7 @@ app.use(bodyParser.json());                                                     
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());                                                        // Enable cookies
 app.use(device.capture());
-device.enableDeviceHelpers(app)
+device.enableDeviceHelpers(app);
 //endregion
 
 //region View counting

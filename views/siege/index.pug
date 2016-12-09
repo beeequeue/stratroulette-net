@@ -4,6 +4,7 @@
 
 -var teams = ['ATK', 'DEF', 'BOTH'];
 -var gamemodes = ['Bombs', 'Hostage', 'Capture Site'];
+-var settings = [{id:'disableHoliday', desc:'Disable holiday themes*'}, {id:'preferDesktop', desc:'Prefer desktop website*'}];
 
 doctype html
 html(lang="en-US")
@@ -20,6 +21,8 @@ html(lang="en-US")
 
         include ../dist
         link(rel="stylesheet" href="/siege/css/style.css")
+        if(holiday !== "normal")
+            link(rel="stylesheet" href="/season-themes/" + holiday + "/style.css")
 
         block head
             script.
@@ -67,7 +70,13 @@ html(lang="en-US")
                     span.md-button(onclick="seenNotice();closeAllDialogues();") NO
 
         #header
-            img(src="/siege/img/logo.png" alt="Rainbow 6 Siege" id="logo")
+            img(src="/siege/img/logos/" + holiday + ".png" 
+                alt="Rainbow 6 Siege" 
+                id="logo"
+                onerror="if (this.src != '/siege/img/logos/normal.png') this.src = '/siege/img/logos/normal.png;") 
+
+        if(holiday !== "normal")
+            #holiday-overlay
 
         #content
             block content
@@ -84,18 +93,22 @@ html(lang="en-US")
                     td.team-button DEF
 
                 #gamemode-selection
+                    -var i = 0;
                     each val in gamemodes
                         -var lowerVal = val.toLowerCase().replace(' ', '');
-                        span.gamemode-container
-                            p(style="float:left")=val
-                            .checkbox(style="float:right")
-                                input.gm-checkbox(id='gm-checkbox-' + lowerVal type='checkbox')
-                                label(for='gm-checkbox-' + lowerVal)
+                        span.gamemode-button
+                            input.gm-checkbox(id="gm-checkbox-" + lowerVal type="checkbox")
+                            label(for="gm-checkbox-" + lowerVal style="background: url(./siege/img/icons/" + lowerVal + ".png)")
+                        if(i < 2)
+                            span.divider
+                            -i++;
 
                 #center
                     block center
                         #desc.
                             Get funny strats to use in Rainbow Six Siege!
+                        if(holiday !== "normal")
+                            #pause-button(onclick="toggleHolidayAnimation()")
 
                 #action-bar
                     block bottom
@@ -109,10 +122,10 @@ html(lang="en-US")
 
                         span#strat-options
                             span.strat-button.disabled#like-counter +0
-                            img.strat-button.disabled.like(title="like" src="/siege/img/icons/like.png")
+                            img.strat-button.disabled.like(src="/siege/img/icons/like.png")
                             img.strat-button.disabled.feedback(title="feedback" src="/siege/img/icons/feedback.png")
-                            //img.strat-button.disabled.share(title="URL" src="/siege/img/icons/share.png")
                             img.strat-button.submit.tooltip(title="submit" src="/siege/img/icons/suggest.png")
+                            img.strat-button.settings(src="/siege/img/icons/settings.png" onclick="openSettings()")
 
                 #bottom
                     .bottom-container.
@@ -129,48 +142,76 @@ html(lang="en-US")
                             img(src="/siege/img/github-logo.png")
                         p &#9830; Contact: contact@stratroulette.net
 
-        #fader(onclick="closeAllDialogues();$('body').unbind('touchmove');")
+        #dialogue-container(onclick="closeAllDialogues();$('body').unbind('touchmove');")
+            #feedback-window.c-dialogue(style="display:none")
+                h1.d-title Give Feedback
 
-        #feedback-window.c-dialogue.dialogue(style="display:none")
-            h1.d-title Give Feedback
+                p.d-info Your IP will be recorded along with your message
+                input.d-textinput#feedback-msg(type="text" title="Req. length: 6 to 35")
 
-            p.d-info Your IP will be recorded along with your message
-            input.d-textinput#feedback-msg(type="text" title="Req. length: 6 to 35")
+                span.d-button#feedback-submit Submit
+                p.d-error#feedback-error(style="display:none") Error message
+                img.d-success(src="/siege/img/check.png" style="display:none")
 
-            span.d-button#feedback-submit Submit
-            p.d-error#feedback-error(style="display:none") Error message
-            img.d-success(src="/siege/img/check.png" style="display:none")
+            #submission-window.c-dialogue(style="display:none")
+                h1.d-title Submit a Strat
+                p.d-info Author and Strat Name follow the following rules:
+                p.d-info(style="margin-top:-5px;") 3 to 20 alphanumerical characters and - _ /
 
-        #submission-window.c-dialogue.dialogue(style="display:none")
-            h1.d-title Submit a Strat
-            p.d-info Author and Strat Name follow the following rules:
-            p.d-info(style="margin-top:-5px;") 3 to 20 alphanumerical characters and - _ /
+                p.d-info.bold Author
+                input.d-textinput#submission-author(title='"/u/[username]" to link to reddit user' type="text" maxlength="20")
 
-            p.d-info.bold Author
-            input.d-textinput#submission-author(title='"/u/[username]" to link to reddit user' type="text" maxlength="20")
+                p.d-info.bold Strat Name
+                input.d-textinput#submission-stratname(type="text" maxlength="20")
 
-            p.d-info.bold Strat Name
-            input.d-textinput#submission-stratname(type="text" maxlength="20")
+                p.d-info.bold Description
+                textarea.d-textarea#submission-msg(title="Max length: 450" maxlength='450')
 
-            p.d-info.bold Description
-            textarea.d-textarea#submission-msg(title="Max length: 450" maxlength='450')
+                p.d-info.bold Team
+                select.d-combobox#submission-team
+                    each val in teams
+                        option(value=val.toLowerCase())=val
 
-            p.d-info.bold Team
-            select.d-combobox#submission-team
-                each val in teams
-                    option(value=val.toLowerCase())=val
+                p.d-info.bold Gamemodes
+                .d-wrapper#submission-gamemodes
+                    each val in gamemodes
+                        -var lowerVal = val.toLowerCase().replace(' ', '');
+                        .d-checkbox-wrapper
+                            span.d-checkbox-info(style="float:left")=val
+                            .checkbox-wrapper.d-checkbox
+                                input(id='submission-checkbox-' + lowerVal type='checkbox')
+                                label(for='submission-checkbox-' + lowerVal)
 
-            p.d-info.bold Gamemodes
-            .d-wrapper#submission-gamemodes
-                each val in gamemodes
-                    -var lowerVal = val.toLowerCase().replace(' ', '');
-                    .d-checkbox-wrapper
-                        p.d-info(style="float:left")=val
-                        .checkbox.d-checkbox
-                            input(id='submission-checkbox-' + lowerVal type='checkbox')
-                            label(for='submission-checkbox-' + lowerVal)
+                br
+                span.d-button#submission-submit Submit
+                p.d-error#submission-error(style="display:none") Error message
+                img.d-success(src="/siege/img/check.png" style="display:none")
 
-            br
-            span.d-button#submission-submit Submit
-            p.d-error#submission-error(style="display:none") Error message
-            img.d-success(src="/siege/img/check.png" style="display:none")
+            #settings-window.c-dialogue(style="display:none")
+                .d-title Settings
+
+                each setting in settings
+                    -var id = 'setting-' + setting.id;
+                    .setting-wrapper
+                        span=setting.desc
+                        .checkbox-wrapper
+                            input.settings-checkbox(id=id type='checkbox')
+                            label(for=id)
+                .d-info *requires refresh
+                hr
+
+                .disclaimer
+                    | Background patterns from 
+                    a(href='http://www.subtlepatterns.com' target="_blank" title='subtlepatterns') subtlepatterns.com<br>
+                .disclaimer
+                    | Icons made by 
+                    a(href='http://www.freepik.com' target="_blank" title='Freepik') Freepik
+                    | , 
+                    a(href='http://www.flaticon.com/authors/google' target="_blank" title='Google') Google, 
+                    | and 
+                    a(href='http://www.flaticon.com/authors/madebyoliver' target="_blank" title='Madebyoliver') Madebyoliver
+                    br
+                    | from 
+                    a(href='http://www.flaticon.com' target="_blank" title='Flaticon') flaticon.com
+                    |  are licensed by 
+                    a(href='http://creativecommons.org/licenses/by/3.0/' title='Creative Commons BY 3.0' target='_blank') CC 3.0 BY

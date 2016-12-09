@@ -1,0 +1,46 @@
+#holiday-overlay {
+    background-image: url('snow1.png'), url('snow2.png'), url('snow3.png');
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    animation: snow 25s linear infinite;
+}
+
+@keyframes snow {
+    0% {
+        background-position: 0 0, 0 0, 0 0;
+    }
+    50% {
+        background-position: 550px 200px, 200px 290px, -100px 145px;
+    }
+    100% {
+        background-position: 1000px 500px, 400px 400px, -300px 300px;
+    }
+}
+
+#bottom:after {
+    position: absolute;
+    right: 15px;
+    height: 75px;
+    width: 40px;
+    bottom: -75px;
+    content: "";
+    background-image: url(icicle.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#bottom:before {
+    position: absolute;
+    right: 30px;
+    height: 50px;
+    width: 40px;
+    bottom: -50px;
+    content: "";
+    background-image: url(icicle.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}

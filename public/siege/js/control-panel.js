@@ -92,7 +92,7 @@ var fillList = function () {
         $(this).find("input").click();
     });
     
-    $('.checkbox label').click(function (e) {
+    $('.gamemode-button label').click(function (e) {
         e.stopPropagation();
     });
 
