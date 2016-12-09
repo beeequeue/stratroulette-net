@@ -18,8 +18,6 @@ var settingCookieConfig = {
 };
 
 $(document).ready(function () {
-    autosize($('.d-textarea'));
-    new Clipboard('.share');
     setTimeout(function () {
         $('.bigText').bigText({horizontalAlign: "center", maximumFontSize: 65});
     }, 0);
