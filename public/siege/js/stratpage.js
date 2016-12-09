@@ -22,10 +22,15 @@ $(document).ready(function () {
         $('.bigText').bigText({horizontalAlign: "center", maximumFontSize: 65});
     }, 0);
 
+    try {
+        autosize($('.d-textarea'));
+    } catch (e) {
+    }
+
     // Tooltipster setup
     $.fn.tooltipster('setDefaults', {
         delay: 0,
-        speed: 175
+        speed: 100
     });
 
     $('.tooltip').tooltipster();
