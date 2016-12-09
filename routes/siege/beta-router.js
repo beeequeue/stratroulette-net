@@ -9,14 +9,11 @@ var router = express.Router();
 router.get('/', function (req, res) {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-    if (req.device.type === "desktop" || req.cookies.preferDesktop) {
+    if (req.device.type === "desktop" || (req.cookies["preferDesktop"] && req.cookies["preferDesktop"] == 1)) {
         var reply =
                 "'<h1>Hello!</h1>" +
                 "<p>I am currently trying out the mobile version of the website here!</p>" +
                 "<p>Feel free to come here on your mobile!</p>";
-
-        if (req.device.type === "mobile")
-            reply += '<button onclick=""> Go to mobile website';
 
         res.send(reply);
     }
