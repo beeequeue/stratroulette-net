@@ -15,7 +15,9 @@ var _settings = {
 $(document).ready(function () {
     autosize($('.d-textarea'));
     new Clipboard('.share');
-    $('.bigText').bigText({horizontalAlign: "center", maximumFontSize: 65});
+    setTimeout(function () {
+        $('.bigText').bigText({horizontalAlign: "center", maximumFontSize: 65});
+    }, 0);
 
     // Tooltipster setup
     $.fn.tooltipster('setDefaults', {
