@@ -518,7 +518,10 @@ var feedbackStrat = function (uid, message, next) {
 };
 
 var seenNotice = function () {
-    Cookies.set("seenBetaNotice", true, {expires: 90});
+    Cookies.set("seenBetaNotice", true, {
+        expires: 90,
+        domain:  "." + window.location.hostname
+    });
     $('body').unbind('touchmove');
 };
 
