@@ -4,7 +4,7 @@
 
 -var teams = ['ATK', 'DEF', 'BOTH'];
 -var gamemodes = ['Bombs', 'Hostage', 'Capture Site'];
--var settings = [{id:'disableHoliday', desc:'Disable holiday themes'}, {id:'preferDesktop', desc:'Prefer desktop website'}];
+-var settings = [{id:'disableHoliday', desc:'Disable holiday themes*'}, {id:'preferDesktop', desc:'Prefer desktop website*'}];
 
 doctype html
 html(lang="en-US")
@@ -110,7 +110,7 @@ html(lang="en-US")
                     .checkbox-wrapper
                         input.settings-checkbox(id=id type='checkbox')
                         label(for=id)
-                    
+            .disclaimer *requires refresh   
             hr
 
             .disclaimer

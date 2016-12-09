@@ -1,21 +1,37 @@
+"use strict";
+
 const holidayChecker = require("../../extras/holiday-checker.js");
 const express = require('express');
 const stratDB = global.db['siege'].strats;
 const submDB = global.db['siege'].submissions;
 
-var router = express.Router(),
+var router  = express.Router(),
     holiday = "normal";
 
 /* GET home page. */
 router.get('/', function (req, res) {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    var locals = {ip: ip, holiday: holidayChecker.season()};
+    var userSettings = {
+        preferDesktop:  req.cookies["preferDesktop"] || 0,
+        disableHoliday: req.cookies["disableHoliday"] || 0
+    };
 
-    if (req.device.type === "desktop")
+    for (let key in userSettings) {
+        res.cookie(key, req.cookies[key] || 0, {
+            domain:  process.env.DOMAIN || '.stratroulette.net',
+            expires: new Date(Date.now() + 604800000)
+        });
+    }
+
+    var locals = {
+        ip:      ip,
+        holiday: userSettings.disableHoliday == 1 ? "normal" : holidayChecker.season()
+    };
+
+    if (req.device.type === "desktop" || userSettings.preferDesktop == 1)
         res.render('siege/index', locals);
     else
         res.render('siege/mobile', locals);
-
 });
 
 router.post('/like', function (req, res) {

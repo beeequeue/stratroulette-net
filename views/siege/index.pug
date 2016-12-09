@@ -4,7 +4,7 @@
 
 -var teams = ['ATK', 'DEF', 'BOTH'];
 -var gamemodes = ['Bombs', 'Hostage', 'Capture Site'];
--var settings = [{id:'disableHoliday', desc:'Disable holiday themes'}, {id:'preferDesktop', desc:'Prefer desktop website'}];
+-var settings = [{id:'disableHoliday', desc:'Disable holiday themes*'}, {id:'preferDesktop', desc:'Prefer desktop website*'}];
 
 doctype html
 html(lang="en-US")
@@ -75,7 +75,8 @@ html(lang="en-US")
                 id="logo"
                 onerror="if (this.src != '/siege/img/logos/normal.png') this.src = '/siege/img/logos/normal.png;") 
 
-        #holiday-overlay
+        if(holiday !== "normal")
+            #holiday-overlay
 
         #content
             block content
@@ -196,7 +197,7 @@ html(lang="en-US")
                         .checkbox-wrapper
                             input.settings-checkbox(id=id type='checkbox')
                             label(for=id)
-
+                .d-info *requires refresh
                 hr
 
                 .disclaimer

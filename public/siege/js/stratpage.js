@@ -5,11 +5,16 @@ var canGetStrat       = true,
     currentStrat      = {},
     lastStrats        = [],
     lastStratsAmount  = 6,
-    gamemodesToSearch = [];
+    gamemodesToSearch = [],
+    domain            = 'stratroulette.net';
 
 var _settings = {
-    preferDesktop:  false,
-    disableHoliday: false
+    preferDesktop:  0,
+    disableHoliday: 0
+};
+var settingCookieConfig = {
+    expires: 604800000,
+    domain:  "." + domain
 };
 
 $(document).ready(function () {
@@ -162,7 +167,7 @@ $(document).ready(function () {
 
         Cookies.set("gamemodes", gamemodesToSearch, {
             expires: 30,
-            domain:  "." + window.location.hostname
+            domain:  "." + domain
         });
     });
 
@@ -176,12 +181,9 @@ $(document).ready(function () {
 
     $('.settings-checkbox').change(function () {
         var setting = $(this).attr('id').replace('setting-', '');
-        _settings[setting] = $(this).prop('checked');
+        _settings[setting] = Number($(this).prop('checked'));
 
-        Cookies.set('settings', _settings, {
-            expires: 90,
-            domain:  "." + window.location.hostname
-        });
+        Cookies.set(setting, _settings[setting], settingCookieConfig);
     });
 
     if (mobile === false && deviceIsMobile && !Cookies.get("seenBetaNotice")) {
@@ -189,6 +191,10 @@ $(document).ready(function () {
         $('body').bind('touchmove', function (e) {
             e.preventDefault()
         });
+    }
+    
+    if (!mobile && !deviceIsMobile) {
+        $('#setting-preferDesktop').parent().parent().css('display', 'none');
     }
 
     //region Specific strat getting
@@ -522,14 +528,13 @@ var feedbackStrat = function (uid, message, next) {
 var seenNotice = function () {
     Cookies.set("seenBetaNotice", true, {
         expires: 90,
-        domain:  "." + window.location.hostname
+        domain:  "." + domain
     });
     $('body').unbind('touchmove');
 };
 
 var loadCookieSettings = function () {
     var gamemodeC = tryJSONParse(Cookies.get('gamemodes'));
-    var settingsC = tryJSONParse(Cookies.get('settings'));
 
     if (gamemodeC !== undefined) {
         for (var i = 0; i < gamemodeC.length; i++) {
@@ -538,16 +543,17 @@ var loadCookieSettings = function () {
         }
     }
 
-    if (settingsC !== undefined) {
-        _settings = settingsC;
+    // Settings
+    for (var key in _settings) {
+        var setting = {key: key, value: Cookies.get(key)};
 
-        var keys = Object.keys(settingsC);
+        $('#setting-' + setting.key).prop('checked', setting.value == 1);
+    }
+};
 
-        for (var i = 0; i < keys.length; i++) {
-            var setting = {key: keys[i], value: settingsC[keys[i]]};
-
-            $('#setting-' + setting.key).prop('checked', setting.value);
-        }
+var saveSettings = function () {
+    for (var key in _settings) {
+        Cookies.set(key, _settings[key], settingCookieConfig);
     }
 };
 
