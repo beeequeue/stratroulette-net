@@ -45,6 +45,29 @@ table {
     border-collapse: collapse
 }
 
+#pause-button {
+    position: absolute;
+    right: 0;
+    top: -24px;
+    height: 20px;
+    width: 20px;
+    
+    border-radius: 50%;
+    cursor: pointer;
+    
+    background-image:url(../img/icons/pause.png);
+    background-size:contain;
+}
+
+#pause-button.paused {
+    background-image:url(../img/icons/play.png);
+}
+
+#holiday-overlay.paused {
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
+}
+
 /*region Checkbox*/
 .checkbox-wrapper {
     position: relative;
