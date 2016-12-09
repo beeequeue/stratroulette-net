@@ -557,6 +557,17 @@ var flashGameModeButtons = function () {
         setTimeout(function () {
             $('.gm-checkbox').prop('checked', (i == 1));
         }, 150 * (i + 1));
+var toggleHolidayAnimation = function () {
+    var overlay     = $('#holiday-overlay'),
+        pauseButton = $('#pause-button');
+
+    if (overlay.hasClass('paused')) {
+        pauseButton.removeClass('paused');
+        overlay.removeClass('paused');
+    }
+    else {
+        pauseButton.addClass('paused');
+        overlay.addClass('paused');
     }
 };
 
