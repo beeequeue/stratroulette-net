@@ -4,6 +4,7 @@
 
 -var teams = ['ATK', 'DEF', 'BOTH'];
 -var gamemodes = ['Bombs', 'Hostage', 'Capture Site'];
+-var settings = [{id:'disableHoliday', desc:'Disable holiday themes*'}, {id:'preferDesktop', desc:'Prefer desktop website*'}];
 
 doctype html
 html(lang="en-US")
@@ -29,8 +30,6 @@ html(lang="en-US")
                 const device = "!{device_type}";
                 const deviceIsMobile = !{is_mobile};
 
-            script(src="/dist/js/autosize.min.js")
-            script(src="/dist/js/clipboard.min.js")
             script(src="/dist/js/jquery-bigtext.js")
             script(src="/siege/js/stratpage.js")
 
@@ -61,7 +60,7 @@ html(lang="en-US")
                         div.name-wrapper(class="3")
                             p.name.bigText empty
 
-                #center
+                #center(style="background-image :url('/siege/img/logos/" + holiday + ".png')")
                     block center
                         img.strat-button.settings-button(src="/siege/img/icons/settings.png" onclick="openSettings()")
 
@@ -86,7 +85,7 @@ html(lang="en-US")
                         -var i = 0;
                         each val in gamemodes
                             -var lowerVal = val.toLowerCase().replace(' ', '');
-                            span.checkbox
+                            span.gamemode-button
                                 input.gm-checkbox(id="gm-checkbox-" + lowerVal type="checkbox")
                                 label(for="gm-checkbox-" + lowerVal style="background: url(./siege/img/icons/" + lowerVal + ".png)")
                             if(i < 2)
@@ -97,16 +96,20 @@ html(lang="en-US")
                         span.team-button ATK
                         span.team-button DEF
 
-        #fader(onclick="closeAllDialogues()")
+        #dialogue-container(onclick="closeAllDialogues()")
 
-        #settings.m-dialogue.dialogue(style="display:none;")
+        #settings-window.m-dialogue(style="display:none;")
             p.md-title Settings
 
-            .setting-wrapper.disabled
-                p Prefer desktop website
-                .setting-checkbox
-                    input#setting-deskPref(type='checkbox')
-                    label(for='setting-deskPref')
+            each setting in settings
+                -var id = 'setting-' + setting.id;
+                .setting-wrapper
+                    span=setting.desc
+                    .checkbox-wrapper
+                        input.settings-checkbox(id=id type='checkbox')
+                        label(for=id)
+            .disclaimer *requires refresh   
+            hr
 
             .disclaimer
                 | Background patterns from 

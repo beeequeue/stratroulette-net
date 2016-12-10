@@ -33,8 +33,12 @@ a:hover {
     transition: color 0.2s;
 }
 
-br {
-    border-bottom: 1px solid darkgray;
+hr {
+    border-width: 0;
+    background: #848487;
+    height: 1px;
+    width: 65%;
+    margin: 8px auto;
 }
 
 h1, p {
@@ -102,8 +106,8 @@ span {
     right: 0;
     left: 0;
     padding: 10px 20px 10px 20px;
-    background: rgba(218, 218, 222, 0.8) url("../img/logo.png") no-repeat center;
-    background-size: 70%;
+    background: rgba(218, 218, 222, 0.8) no-repeat center;
+    background-size: 90%;
     overflow: hidden;
 
     transition: background-position-y 1s;
@@ -259,7 +263,7 @@ span {
 }
 
 /*region Checkbox*/
-.checkbox {
+.gamemode-button {
     display: inline-block;
     height: 50px;
     width: 50px;
@@ -267,11 +271,11 @@ span {
     flex-grow: 4;
 }
 
-.checkbox input[type=checkbox] {
+.gamemode-button input[type=checkbox] {
     display: none;
 }
 
-.checkbox label {
+.gamemode-button label {
     position: absolute;
     top: 0;
     left: 0;
@@ -284,11 +288,11 @@ span {
     transition: all .15s;
 }
 
-.checkbox input[type=checkbox]:not(:checked) + label {
+.gamemode-button input[type=checkbox]:not(:checked) + label {
     opacity: 0.4;
 }
 
-.checkbox input[type=checkbox]:checked + label {
+.gamemode-button input[type=checkbox]:checked + label {
     opacity: 1;
 }
 
@@ -383,52 +387,84 @@ span {
 /*region Settings*/
 .setting-wrapper {
     box-sizing: border-box;
-    margin: 10px 10px;
-    line-height: 100%;
-    
+    margin: 8px auto;
+    padding: 0 10%;
+    width: 300px;
+
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    align-items: stretch;
 }
 
-.setting-wrapper p {
-    font-size: 1em;
+.setting-wrapper span {
     margin-right: 10px;
+
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    user-select: none;
+
+    font-weight: bold;
+    font-size: 1em;
 }
 
 /*endregion*/
 
-/*region Checkboxes*/
-.setting-checkbox {
-    width: 32px;
-    height: 32px;
+/*region Checkbox*/
+.checkbox-wrapper {
+    position: relative;
 
-    background: #f7f7fb;
+}
+
+.checkbox-wrapper label {
+    height: 35px;
+    width: 35px;
+
+    background: #a1a1a4;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    border-radius: 50px;
-}
-
-.setting-checkbox input {
-    display: none;
-}
-
-.setting-checkbox label {
-    position: absolute;
-    width: 24px;
-    height: 24px;
-
     cursor: pointer;
-    border-radius: 50px;
 
-    background: #c9d6c3;
-    transition: background 0.1s;
+    border-radius: 50%;
 }
 
-.setting-checkbox input[type=checkbox]:checked + label {
-    background: #565c53;
+.checkbox-wrapper label:before {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+
+    background: #474747;
+    border-radius: 50%;
+
+    content: "";
+
+    transition: 0.2s;
+}
+
+.checkbox-wrapper label:after {
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+
+    background: none;
+    border-radius: 50%;
+
+    content: "";
+
+    transition: 0.2s;
+}
+
+.checkbox-wrapper input[type=checkbox]:checked + label:after {
+    background: #f6f6f9;
+}
+
+.checkbox-wrapper input {
+    display: none;
 }
 
 /*endregion*/
@@ -438,7 +474,7 @@ span {
     font-size: 0.75em;
 }
 
-#fader {
+#dialogue-container {
     position: fixed;
     top: 0;
     bottom: 0;
