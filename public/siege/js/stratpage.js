@@ -188,13 +188,6 @@ $(document).ready(function () {
 
         Cookies.set(setting, _settings[setting], settingCookieConfig);
     });
-
-    if (mobile === false && deviceIsMobile && !Cookies.get("seenBetaNotice")) {
-        openDialogue('#beta-dialogue');
-        $('body').bind('touchmove', function (e) {
-            e.preventDefault()
-        });
-    }
     
     if (!mobile && !deviceIsMobile) {
         $('#setting-preferDesktop').parent().parent().css('display', 'none');
@@ -527,14 +520,6 @@ var feedbackStrat = function (uid, message, next) {
             next(err);
         }
     });
-};
-
-var seenNotice = function () {
-    Cookies.set("seenBetaNotice", true, {
-        expires: 90,
-        domain:  "." + domain
-    });
-    $('body').unbind('touchmove');
 };
 
 var loadCookieSettings = function () {
