@@ -2,9 +2,7 @@
    Created by bq on 2016-04-04.
    Background pattern from subtlepatterns.com
 
--var teams = ['ATK', 'DEF', 'BOTH'];
 -var gamemodes = ['Bombs', 'Hostage', 'Capture Site'];
--var settings = [{id:'disableHoliday', desc:'Disable holiday themes*'}, {id:'preferDesktop', desc:'Prefer desktop website*'}];
 
 doctype html
 html(lang="en-US")
@@ -22,10 +20,12 @@ html(lang="en-US")
 
         block head
             script.
-                const clientIP = "!{ip}";
-                const mobile = false;
-                const device = "!{device_type}";
-                const deviceIsMobile = !{is_mobile};
+                var _settings = !{JSON.stringify(settings)};
+                var _settingsMeta = !{JSON.stringify(settingsMeta)};
+                var clientIP = "!{ip}";
+                var mobile = false;
+                var device = "!{device_type}";
+                var deviceIsMobile = !{is_mobile};
 
             script(src="/dist/js/autosize.min.js")
             script(src="/dist/js/jquery-bigtext.js")
@@ -144,7 +144,7 @@ html(lang="en-US")
 
                 p.d-info.bold Team
                 select.d-combobox#submission-team
-                    each val in teams
+                    each val in ['ATK', 'DEF', 'BOTH']
                         option(value=val.toLowerCase())=val
 
                 p.d-info.bold Gamemodes
@@ -165,14 +165,14 @@ html(lang="en-US")
             #settings-window.c-dialogue(style="display:none")
                 .d-title Settings
 
-                each setting in settings
+                each setting in settingsMeta
                     -var id = 'setting-' + setting.id;
                     .setting-wrapper
                         span=setting.desc
                         .checkbox-wrapper
                             input.settings-checkbox(id=id type='checkbox')
                             label(for=id)
-                .d-info *requires refresh
+                .d-info requires refresh
                 hr
 
                 .disclaimer

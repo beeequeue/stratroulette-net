@@ -5,30 +5,48 @@ const express = require('express');
 const stratDB = global.db['siege'].strats;
 const submDB = global.db['siege'].submissions;
 
+const settingsMeta = [{
+    id:   'disableHoliday',
+    desc: 'Disable holiday themes'
+}, {
+    id:   'preferDesktop',
+    desc: 'Prefer desktop website'
+}];
 var router  = express.Router(),
     holiday = "normal";
 
 /* GET home page. */
 router.get('/', function (req, res) {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    var userSettings = {
-        preferDesktop:  req.cookies["preferDesktop"] || 0,
-        disableHoliday: req.cookies["disableHoliday"] || 0
+
+    var locals = {
+        ip:           ip,
+        holiday:      "normal",
+        settings:     {},
+        settingsMeta: settingsMeta
     };
 
-    for (let key in userSettings) {
-        res.cookie(key, req.cookies[key] || 0, {
+    var reqSettings = {
+        disableHoliday: 0,
+        preferDesktop:  0
+    };
+
+    for (let setting of settingsMeta) {
+        let key = setting.id;
+        reqSettings[key] = req.cookies[key] || 0;
+
+        res.cookie(key, reqSettings[key] || 0, {
             domain:  process.env.DOMAIN || '.stratroulette.net',
-            expires: new Date(Date.now() + 604800000)
+            expires: new Date(Date.now() + 1209600000)
         });
     }
 
-    var locals = {
-        ip:      ip,
-        holiday: userSettings.disableHoliday == 1 ? "normal" : holidayChecker.season()
-    };
+    locals.holiday =
+        reqSettings.disableHoliday == 1 ? "normal" : holidayChecker.season();
 
-    if (req.device.type === "desktop" || userSettings.preferDesktop == 1)
+    locals.settings = reqSettings;
+
+    if (req.device.type === "desktop" || reqSettings.preferDesktop == 1)
         res.render('siege/index', locals);
     else
         res.render('siege/mobile', locals);

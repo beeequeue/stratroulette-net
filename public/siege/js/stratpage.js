@@ -8,12 +8,8 @@ var canGetStrat       = true,
     gamemodesToSearch = [],
     domain            = 'stratroulette.net';
 
-var _settings = {
-    preferDesktop:  0,
-    disableHoliday: 0
-};
 var settingCookieConfig = {
-    expires: 604800000,
+    expires: 1209600000,
     domain:  "." + domain
 };
 
@@ -534,15 +530,13 @@ var loadCookieSettings = function () {
 
     // Settings
     for (var key in _settings) {
-        var setting = {key: key, value: Cookies.get(key)};
-
-        $('#setting-' + setting.key).prop('checked', setting.value == 1);
+        $('#setting-' + key).prop('checked', _settings[key] == 1);
     }
 };
 
 var saveSettings = function () {
-    for (var key in _settings) {
-        Cookies.set(key, _settings[key], settingCookieConfig);
+    for (var key in _settingsMeta) {
+        Cookies.set(key, _settingsMeta[key], settingCookieConfig);
     }
 };
 
