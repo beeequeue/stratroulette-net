@@ -9,7 +9,7 @@ var canGetStrat       = true,
     domain            = 'stratroulette.net';
 
 var settingCookieConfig = {
-    expires: 1209600000,
+    expires: 30,
     domain:  "." + domain
 };
 
@@ -160,7 +160,7 @@ $(document).ready(function () {
         }
 
         Cookies.set("gamemodes", gamemodesToSearch, {
-            expires: 30,
+            expires: 7,
             domain:  "." + domain
         });
     });
