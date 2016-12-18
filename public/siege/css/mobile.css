@@ -1,20 +1,21 @@
 html {
-    min-height: 100%;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
 }
 
 body {
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-    background: #353536 url(../img/background-white.png);
-    position: absolute;
+    background: #353536 url(../img/background-white.png) top fixed;
+    position: fixed;
     top: 0;
     bottom: 0;
     right: 0;
     left: 0;
 
+    overflow: hidden;
+
     text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
     font-family: 'Lato', sans-serif;
     font-weight: 400;
@@ -65,19 +66,9 @@ span {
 
 /*endregion*/
 
-#content {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    bottom: 122px;
-    right: 0;
-    left: 0;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 /* region Top */
 #top {
+    position: relative;
     height: 70px;
     width: 100%;
     background: #f8f8fc;
@@ -98,14 +89,21 @@ span {
 
 /*endregion*/
 
+#content {
+    position: absolute;
+    top: 70px;
+    bottom: -200%;
+
+    width: 100%;
+}
+
 /*region Center*/
 #center {
     position: absolute;
-    top: 70px;
+    top: 0;
     bottom: 0;
     right: 0;
     left: 0;
-    padding: 10px 20px 10px 20px;
     background: rgba(218, 218, 222, 0.8) no-repeat center;
     background-size: 90%;
     overflow: hidden;
@@ -114,7 +112,7 @@ span {
 }
 
 #center.started {
-    background-position-y: 200%;
+    background-position-y: 500%;
 }
 
 #desc {
@@ -123,7 +121,7 @@ span {
     bottom: 0;
     right: 0;
     left: 0;
-    padding: 10px 60px 50px 20px;
+    padding: 10px 70px 50px 20px;
 
     text-align: left;
     font-size: 20px;
@@ -132,33 +130,42 @@ span {
 
 /*endregion*/
 
+/*region Bottom */
+#bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+}
+
 /*region Author*/
 #author-container {
     position: absolute;
     right: 0;
-    bottom: 0;
+    top: -43px;
     background: rgba(255, 255, 255, 0.8);
     border-top-left-radius: 25px;
 }
 
 #author {
     position: relative;
-    height: 40px;
-    max-width: 225px;
+    display: flex;
+    align-items: center;
+    height: 45px;
+    max-width: 300px;
     font-size: 20px;
     color: #727275;
     font-weight: 400;
-    line-height: 40px;
     overflow: hidden;
 
     padding-left: 15px;
 }
 
 #author > p {
+    height: 45px;
     display: inline-block;
     vertical-align: middle;
     margin-right: 50px;
-    max-width: 225px;
 }
 
 #author img {
@@ -169,7 +176,6 @@ span {
     -moz-user-select: none;
     transition: opacity 0.7s;
 
-    float: right;
     height: 35px;
     width: 35px;
     display: inline-block;
@@ -181,36 +187,33 @@ span {
 
 /*region Actionbar*/
 #action-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
     position: absolute;
-    bottom: 40px;
+    box-sizing: border-box;
+    padding: 5px;
+    bottom: 155px;
     right: 0;
-    width: auto;
+    min-width: 50px;
     overflow: hidden;
 
-    line-height: 55px;
     transition: opacity 0.7s;
 }
 
 .strat-button {
+    align-self: flex-end;
     float: right;
     height: 45px;
     width: 45px;
     display: inline-block;
     cursor: pointer;
-    margin-right: 8px;
-    vertical-align: top;
     -webkit-user-select: none;
     -moz-user-select: none;
 }
 
-.strat-button:last-child {
-    margin-bottom: 12px;
-}
-
 #like-counter {
-    float: right;
-    vertical-align: inherit;
-    margin-right: 15px;
     font-weight: 900;
     font-size: 35px;
     cursor: default;
@@ -220,7 +223,7 @@ span {
 
 .settings-button {
     top: 8px;
-    right: 0;
+    right: 8px;
     height: 30px;
     width: 30px;
     display: inline-block;
@@ -233,25 +236,15 @@ span {
 
 /*endregion*/
 
-/*region Bottom */
-#bottom {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: auto;
-}
-
 /*region Gamemode selection*/
 #gamemode-selection {
-    border-bottom: 2px solid #bfbfc3;
+    display: flex;
     background: #f3f3f7;
     height: 50px;
-    line-height: 35px;
-    vertical-align: middle;
     -webkit-user-select: none;
     -moz-user-select: none;
-    display: flex;
     justify-content: space-around;
+    align-items: center;
 }
 
 .divider {
@@ -262,7 +255,7 @@ span {
     flex-shrink: 0.1;
 }
 
-/*region Checkbox*/
+/*region Gamemode button*/
 .gamemode-button {
     display: inline-block;
     height: 50px;
@@ -301,13 +294,21 @@ span {
 /*endregion*/
 
 /*region Team buttons*/
-.team-button {
-    height: 70px;
-    line-height: 65px;
-    width: 50%;
+#team-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
 
-    padding-top: 5px;
-    border-right: 1px solid #9c9c9f;
+.team-button {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-grow: 2;
+    height: 60px;
+
+    box-sizing: border-box;
+    border-right: 1px solid #a5a5a8;
     background: #bfbfc3;
 
     font-family: 'Catamaran', Impact, sans-serif;
@@ -316,14 +317,14 @@ span {
 
     -webkit-user-select: none;
     -moz-user-select: none;
-    box-sizing: border-box;
+    padding-top: 5px;
 
     transition: background 0.075s;
 }
 
 .team-button:last-child {
     border-right: none;
-    border-left: 1px solid #9c9c9f;
+    border-left: 1px solid #a5a5a8;
 }
 
 .team-button:active {
@@ -337,12 +338,13 @@ span {
 
 /*region Mobile Dialogue*/
 .m-dialogue {
-    position: relative;
+    position: absolute;
     width: 85%;
+    max-width: 320px;
     z-index: 10;
     text-align: center;
 
-    background: rgba(195, 196, 187, 0.9);
+    background: #c3c3c3;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
 }
 
@@ -389,7 +391,6 @@ span {
     box-sizing: border-box;
     margin: 8px auto;
     padding: 0 10%;
-    width: 300px;
 
     display: flex;
     justify-content: space-between;
@@ -403,6 +404,7 @@ span {
     cursor: pointer;
     align-items: center;
     user-select: none;
+    flex-grow: 4;
 
     font-weight: bold;
     font-size: 1em;
@@ -479,10 +481,12 @@ span {
     top: 0;
     bottom: 0;
     width: 100%;
-    background: black;
-    opacity: 0.65;
+    background: rgba(0, 0, 0, 0.65);
     z-index: 1;
     display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .code-box {

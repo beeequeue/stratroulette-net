@@ -12,6 +12,7 @@ const settingsMeta = [{
     id:   'preferDesktop',
     desc: 'Prefer desktop website'
 }];
+
 var router  = express.Router(),
     holiday = "normal";
 
