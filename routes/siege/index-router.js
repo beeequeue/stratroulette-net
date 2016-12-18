@@ -11,6 +11,9 @@ const settingsMeta = [{
 }, {
     id:   'preferDesktop',
     desc: 'Prefer desktop website'
+}, {
+    id:   "disableAds",
+    desc: "Disable ads :("
 }];
 
 var router  = express.Router(),
@@ -29,7 +32,8 @@ router.get('/', function (req, res) {
 
     var reqSettings = {
         disableHoliday: 0,
-        preferDesktop:  0
+        preferDesktop:  0,
+        disableAds:     0
     };
 
     for (let setting of settingsMeta) {

@@ -383,6 +383,27 @@ table {
     padding: 5px 25px 5px 25px;
 }
 
+/*region Ads*/
+#ad-bottom {
+    position: relative;
+    width: 100%;
+    min-height: 60px;
+    background: gray;
+}
+
+#desperate-plead {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    color: white;
+    font-size: 0.8em;
+}
+
+/*endregion*/
+
 /*region Bottom */
 #bottom {
     background: #dadade;
