@@ -15,6 +15,8 @@ html(lang="en-US")
 
         include ../dist
         link(rel="stylesheet" href="/siege/css/mobile.css")
+        if(holiday !== "normal")
+            link(rel="stylesheet" href="/season-themes/" + holiday + "/style.css")
 
         block head
             script.
