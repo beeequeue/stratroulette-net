@@ -497,3 +497,22 @@ span {
     font-size: 15px;
     padding: 5px 25px 5px 25px;
 }
+
+#anchor-ad {
+    position: relative;
+    min-height: 60px;
+    width: 100%;
+    background: gray;
+}
+
+#desperate-plead {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    color: white;
+    font-size: 0.8em;
+    overflow: hidden;
+}

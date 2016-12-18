@@ -282,6 +282,11 @@ var resetPage = function (speed) {
     setLikedStatus(false);
 
     setLikeCounter(0, speed);
+
+    if (mobile && $('#action-bar').hasClass('hidden') && $('#anchor-ad').length) {
+        var adHeight = $('#anchor-ad').height();
+        $('#action-bar').css({bottom: parseInt($('#action-bar').css('bottom'), 10) + adHeight});
+    }
 };
 
 var getStratData = function (type, next) {
