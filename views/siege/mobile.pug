@@ -2,9 +2,7 @@
    Created by bq on 2016-04-04.
    Background pattern from subtlepatterns.com
 
--var teams = ['ATK', 'DEF', 'BOTH'];
 -var gamemodes = ['Bombs', 'Hostage', 'Capture Site'];
--var settings = [{id:'disableHoliday', desc:'Disable holiday themes*'}, {id:'preferDesktop', desc:'Prefer desktop website*'}];
 
 doctype html
 html(lang="en-US")
@@ -12,26 +10,26 @@ html(lang="en-US")
         block title
             title R6|S - stratroulette.net
 
-        meta(name="Description" content="Get fun 'strategies' to use in games!")
-        meta(name="Keywords" content="strat,strategy,game,gaming,rainbow,six,siege,generator,stratroulette")
-        meta(name='google-site-verification', content='Uf8v3vnOhD7yveO0SjnF0ARJJ7NTu79txVZzn56QMy8')
-        meta(property='og:image', content='http://stratroulette.net/siege/img/thmbn.jpg')
-        meta(name="viewport" content="width=device-width, initial-scale=1, user-scalable=no")
-        link(rel="icon" type="image/x-icon" href="siege/favicon.ico")
-        meta(name="theme-color" content="#bfbfc3")
+        include meta
+        meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui")
 
         include ../dist
         link(rel="stylesheet" href="/siege/css/mobile.css")
+        if(holiday !== "normal")
+            link(rel="stylesheet" href="/season-themes/" + holiday + "/style.css")
 
         block head
             script.
-                const clientIP = '!{ip}';
-                const mobile = true;
-                const device = "!{device_type}";
-                const deviceIsMobile = !{is_mobile};
+                var _settings = !{JSON.stringify(settings)};
+                var _settingsMeta = !{JSON.stringify(settingsMeta)};
+                var clientIP = "!{ip}";
+                var mobile = true;
+                var device = "!{device_type}";
+                var deviceIsMobile = !{is_mobile};
 
             script(src="/dist/js/jquery-bigtext.js")
             script(src="/siege/js/stratpage.js")
+            script(async src='//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')
 
             script.
                 (function (i, s, o, g, r, a, m) {
@@ -49,81 +47,87 @@ html(lang="en-US")
                 ga('send', 'pageview');
 
     body
+        #top
+            div#names
+                div.name-wrapper(class="1")
+                    p.name.bigText Tap on a team to begin!
+                div.name-wrapper(class="2")
+                    img.name(src="/siege/img/load.gif")
+                div.name-wrapper(class="3")
+                    p.name.bigText empty
+
         #content
-            block content
-                div#top
-                    div#names
-                        div.name-wrapper(class="1")
-                            p.name.bigText Tap on a team to begin!
-                        div.name-wrapper(class="2")
-                            img.name(src="/siege/img/load.gif")
-                        div.name-wrapper(class="3")
-                            p.name.bigText empty
+            #center(style="background-image :url('/siege/img/logos/" + holiday + ".png')")
+                block center
+                    img.strat-button.settings-button(src="/siege/img/icons/settings.png" onclick="openSettings()")
 
-                #center(style="background-image :url('/siege/img/logos/" + holiday + ".png')")
-                    block center
-                        img.strat-button.settings-button(src="/siege/img/icons/settings.png" onclick="openSettings()")
+                    #desc
 
-                        #desc//-.
-                            //-Sub-light rumours lead to the mineral<br><br>Greatly exaggerated advices lead to the anomaly<br>Extraterrestrial sonic showers, to the radiation dome<br><br>Protons are the spaces of the senior faith<br>Hur'qs harvest with alignment at the cold wormhole!<br><br>All of those ionic cannons will be lost in pressures like stigmas in peacesI infiltrate this courage, it's called conscious peace<br>This sonic shower has only been commanded by a bare transformator<br>All those vogons disrupt galactic, seismic crewmates<br>Tribbles yell with nuclear flux at the conscious saucer section!
+        #bottom
+            a#author-container(href="javascript:" target="_blank")
+                span#author
+                    p Author
+                    img.submission(src="/siege/img/icons/submission.png")
+                    img.reddit.hidden(src="/siege/img/icons/redditsnoo.png")
+                    img.youtube.hidden(src="/siege/img/icons/youtube.png")
+                    img.twitch.hidden(src="/siege/img/icons/twitch.png")
 
-                        a#author-container(href="javascript:" target="_blank")
-                            span#author
-                                p Author
-                                img.submission(src="/siege/img/icons/submission.png")
-                                img.reddit.hidden(src="/siege/img/icons/redditsnoo.png")
-                                img.youtube.hidden(src="/siege/img/icons/youtube.png")
-                                img.twitch.hidden(src="/siege/img/icons/twitch.png")
+            #action-bar.hidden
+                span.strat-button.disabled#like-counter 0
+                img.strat-button.disabled.like(src="/siege/img/icons/like.png")
 
-                        #action-bar
-                            span.strat-button.disabled#like-counter +0
-                            br
-                            img.strat-button.disabled.like(src="/siege/img/icons/like.png")
+            #gamemode-selection
+                -var i = 0;
+                each val in gamemodes
+                    -var lowerVal = val.toLowerCase().replace(' ', '');
+                    span.gamemode-button
+                        input.gm-checkbox(id="gm-checkbox-" + lowerVal type="checkbox")
+                        label(for="gm-checkbox-" + lowerVal style="background: url(./siege/img/icons/" + lowerVal + ".png)")
+                    if(i < 2)
+                        span.divider
+                        -i++;
 
-                #bottom
-                    #gamemode-selection
-                        -var i = 0;
-                        each val in gamemodes
-                            -var lowerVal = val.toLowerCase().replace(' ', '');
-                            span.gamemode-button
-                                input.gm-checkbox(id="gm-checkbox-" + lowerVal type="checkbox")
-                                label(for="gm-checkbox-" + lowerVal style="background: url(./siege/img/icons/" + lowerVal + ".png)")
-                            if(i < 2)
-                                span.divider
-                                -i++;
+            #team-container
+                span.team-button ATK
+                span.team-button DEF
 
-                    #team-container
-                        span.team-button ATK
-                        span.team-button DEF
+            if(settings.disableAds == 0)
+                #anchor-ad
+                    #desperate-plead.
+                        This is where an ad would appear if it didn't fail to load!<br>
+                        You can completely disable all ads in the settings.
+                    //- s-net - Responsive Bottom
+                    ins.adsbygoogle(style='display:block', data-ad-client='ca-pub-2760086516112871', data-ad-slot='3859200341', data-ad-format='horizontal')
+                    script.
+                        (adsbygoogle = window.adsbygoogle || []).push({});
 
         #dialogue-container(onclick="closeAllDialogues()")
+            #settings-window.m-dialogue(style="display:none;")
+                p.md-title Settings
 
-        #settings-window.m-dialogue(style="display:none;")
-            p.md-title Settings
+                each setting in settingsMeta
+                    -var id = 'setting-' + setting.id;
+                    .setting-wrapper
+                        span=setting.desc
+                        .checkbox-wrapper
+                            input.settings-checkbox(id=id type='checkbox')
+                            label(for=id)
+                .disclaimer requires refresh  
+                hr
 
-            each setting in settings
-                -var id = 'setting-' + setting.id;
-                .setting-wrapper
-                    span=setting.desc
-                    .checkbox-wrapper
-                        input.settings-checkbox(id=id type='checkbox')
-                        label(for=id)
-            .disclaimer *requires refresh   
-            hr
+                .disclaimer
+                    | Background patterns from 
+                    a(href='http://www.subtlepatterns.com', title='subtlepatterns') subtlepatterns.com<br>
+                .disclaimer
+                    | Icons made by 
+                    a(href='http://www.freepik.com', title='Freepik') Freepik
+                    |  and 
+                    a(href='http://www.flaticon.com/authors/google', title='Google') Google
+                    br
+                    |  from 
+                    a(href='http://www.flaticon.com', title='Flaticon') flaticon.com
+                    |  are licensed by 
+                    a(href='http://creativecommons.org/licenses/by/3.0/', title='Creative Commons BY 3.0', target='_blank') CC 3.0 BY
 
-            .disclaimer
-                | Background patterns from 
-                a(href='http://www.subtlepatterns.com', title='subtlepatterns') subtlepatterns.com<br>
-            .disclaimer
-                | Icons made by 
-                a(href='http://www.freepik.com', title='Freepik') Freepik
-                |  and 
-                a(href='http://www.flaticon.com/authors/google', title='Google') Google
-                br
-                |  from 
-                a(href='http://www.flaticon.com', title='Flaticon') flaticon.com
-                |  are licensed by 
-                a(href='http://creativecommons.org/licenses/by/3.0/', title='Creative Commons BY 3.0', target='_blank') CC 3.0 BY
-
-            .md-button-wrapper
-                span.md-button(onclick="closeAllDialogues();") Close
+                .md-button-wrapper
+                    span.md-button(onclick="closeAllDialogues();") Close

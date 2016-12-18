@@ -51,16 +51,16 @@ table {
     top: -24px;
     height: 20px;
     width: 20px;
-    
+
     border-radius: 50%;
     cursor: pointer;
-    
-    background-image:url(../img/icons/pause.png);
-    background-size:contain;
+
+    background-image: url(../img/icons/pause.png);
+    background-size: contain;
 }
 
 #pause-button.paused {
-    background-image:url(../img/icons/play.png);
+    background-image: url(../img/icons/play.png);
 }
 
 #holiday-overlay.paused {
@@ -184,7 +184,6 @@ table {
 #top {
     background: #bfbfc3;
     width: 100%;
-    border-bottom: 2px solid #bfbfc3;
 }
 
 #name-container {
@@ -192,7 +191,7 @@ table {
     min-width: 380px;
     max-width: 450px;
     display: table-cell;
-    background: #f8f8fc;
+    background: #ffffff;
     font-weight: 700;
     overflow: hidden;
     padding: 0 10px;
@@ -241,7 +240,6 @@ table {
 
 /*region Gamemode selection*/
 #gamemode-selection {
-    border-bottom: 2px solid #bfbfc3;
     background: #f3f3f7;
 
     display: flex;
@@ -314,18 +312,14 @@ table {
 /*region Actionbar*/
 #action-bar {
     height: 55px;
-    overflow: hidden;
-    border-top: 2px solid #bfbfc3;
-    border-bottom: 2px solid #bfbfc3;
+    align-items: center;
     background: #f3f3f7;
-    line-height: 55px;
     transition: opacity 0.7s;
 }
 
 #author {
     position: relative;
     float: left;
-    font-size: 25px;
     color: #727275;
     font-weight: 200;
     margin-left: 20px;
@@ -334,8 +328,8 @@ table {
 
 #author > p {
     display: inline-block;
-    vertical-align: middle;
     margin-left: 60px;
+    font-size: 25px;
 }
 
 #author img {
@@ -389,11 +383,30 @@ table {
     padding: 5px 25px 5px 25px;
 }
 
+/*region Ads*/
+#ad-bottom {
+    position: relative;
+    width: 100%;
+    min-height: 60px;
+    background: gray;
+}
+
+#desperate-plead {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    color: white;
+    font-size: 0.8em;
+}
+
+/*endregion*/
+
 /*region Bottom */
 #bottom {
     background: #dadade;
-    border-bottom-right-radius: 15px;
-    border-bottom-left-radius: 15px;
     vertical-align: middle;
     padding: 5px;
     line-height: 100%;
@@ -593,6 +606,7 @@ table {
     display: flex;
     cursor: pointer;
     align-items: center;
+    flex-grow: 4;
     user-select: none;
 
     font-weight: bold;
