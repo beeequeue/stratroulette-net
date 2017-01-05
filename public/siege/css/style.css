@@ -151,6 +151,10 @@ table {
     opacity: 0;
 }
 
+.text-center {
+    text-align: center !important;
+}
+
 .divider {
     height: 40px;
 
@@ -356,7 +360,7 @@ table {
 
 #author {
     font-weight: 200;
-    line-height: 50px;
+    line-height: 55px;
 
     position: relative;
 
@@ -631,7 +635,7 @@ table {
 }
 
 .d-error {
-    margin-top: 5px;
+    margin-bottom: 10px;
 
     color: #ea0000;
 }
@@ -644,8 +648,6 @@ table {
     height: 150px;
     margin-left: -75px;
 }
-
-
 
 .d-checkbox {
     float: right;
