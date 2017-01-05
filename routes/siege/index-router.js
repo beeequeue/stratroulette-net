@@ -47,7 +47,7 @@ router.get('/', function (req, res) {
     }
 
     locals.holiday =
-        reqSettings.disableHoliday == 1 ? "normal" : holidayChecker.season();
+        reqSettings.disableHoliday == 1 ? "normal" : holiday;
 
     locals.settings = reqSettings;
 
@@ -229,5 +229,12 @@ router.post('/submit', function (req, res) {
         }
     });
 });
+
+
+holiday = holidayChecker.season();
+
+setInterval(function () {
+    holiday = holidayChecker.season();
+}, 1000 * 60 * 60 * 2);
 
 module.exports = router;
