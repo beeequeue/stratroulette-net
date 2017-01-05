@@ -81,8 +81,12 @@ html(lang="en-US")
 
                 #center
                     block center
-                        #desc.
-                            Get funny strats to use in Rainbow Six Siege!
+                        #desc.text-center.
+                            Rules<br><hr>
+                            Get a fun strat to play in Rainbow Six Siege!<br>
+                            Get a new strat every round.<br>
+                            Try to win while following the strat to the letter!<br>
+
                         if(holiday !== "normal")
                             #pause-button(onclick="toggleHolidayAnimation()")
 
@@ -97,13 +101,13 @@ html(lang="en-US")
                                 p Author
 
                         span#strat-options
-                            span.strat-button.disabled#like-counter +0
+                            span.strat-button.disabled#like-counter 0
                             img.strat-button.disabled.like(src="/siege/img/icons/like.png")
                             img.strat-button.disabled.feedback(title="feedback" src="/siege/img/icons/feedback.png")
                             img.strat-button.submit.tooltip(title="submit" src="/siege/img/icons/suggest.png")
                             img.strat-button.settings(src="/siege/img/icons/settings.png" onclick="openSettings()")
 
-                if(settings.disableAds === "disabled")
+                if(settings.disableAds == 0)
                     #ad-bottom
                         #desperate-plead.
                             This is where an ad would appear if it didn't fail to load!<br>
@@ -116,7 +120,7 @@ html(lang="en-US")
 
                 #bottom
                     .bottom-container.
-                        Please only play strats as a five man group. Don't ruin other people's games
+                        Please only play strats as a five man group. Don't ruin other people's games.
                     .bottom-container
                         p Help keep the server running 
                         form#donate-button(action='https://www.paypal.com/cgi-bin/webscr', method='post', target='_top')
@@ -135,7 +139,7 @@ html(lang="en-US")
 
                 p.d-info Your IP will be recorded along with your message
                 input.d-textinput#feedback-msg(type="text" title="Req. length: 6 to 35")
-
+                br
                 span.d-button#feedback-submit Submit
                 p.d-error#feedback-error(style="display:none") Error message
                 img.d-success(src="/siege/img/check.png" style="display:none")
