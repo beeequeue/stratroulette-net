@@ -1,48 +1,56 @@
 html {
-    height: 100%;
-    width: 100%;
     overflow: hidden;
+
+    width: 100%;
+    height: 100%;
 }
 
 body {
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-    background: #353536 url(../img/background-white.png) top fixed;
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+
     position: fixed;
     top: 0;
-    bottom: 0;
     right: 0;
+    bottom: 0;
     left: 0;
 
     overflow: hidden;
 
     text-align: center;
 
-    font-family: 'Lato', sans-serif;
-    font-weight: 400;
     color: #2f2f2f;
+    background: #353536 url(../img/background-white.png) top fixed;
+
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
 a {
-    color: #3373c7;
-    text-decoration: none;
-    transition: color 0.2s;
     font-weight: 700;
+
+    transition: color 0.2s;
+    text-decoration: none;
+
+    color: #3373c7;
 }
 
 a:hover {
-    color: #0295ff;
     transition: color 0.2s;
+
+    color: #0295ff;
 }
 
 hr {
+    width: 65%;
+    height: 1px;
+    margin: 8px auto;
+
     border-width: 0;
     background: #848487;
-    height: 1px;
-    width: 65%;
-    margin: 8px auto;
 }
 
-h1, p {
+h1,
+p {
     margin: 0;
 }
 
@@ -52,39 +60,46 @@ span {
 
 /*region Modifiers*/
 .disabled {
-    opacity: 0.4;
     cursor: default !important;
+    user-select: none;
     transition: opacity 0.75s;
     pointer-events: none;
-    user-select: none;
+
+    opacity: 0.4;
 }
 
 .hidden {
-    opacity: 0;
     transition: opacity 1s;
+
+    opacity: 0;
 }
 
 /*endregion*/
 
 /* region Top */
 #top {
-    position: relative;
-    height: 70px;
-    width: 100%;
-    background: #f8f8fc;
     font-weight: 700;
+
+    position: relative;
+
+    width: 100%;
+    height: 70px;
+
+    background: #f8f8fc;
 }
 
 #names {
-    height: 70px;
     overflow: hidden;
+
+    height: 70px;
 }
 
 .name-wrapper {
     height: 70px;
-    white-space: nowrap;
-    text-align: center;
     padding: 0 20px;
+
+    text-align: center;
+    white-space: nowrap;
 }
 
 /*endregion*/
@@ -101,14 +116,16 @@ span {
 #center {
     position: absolute;
     top: 0;
-    bottom: 0;
     right: 0;
+    bottom: 0;
     left: 0;
-    background: rgba(218, 218, 222, 0.8) no-repeat center;
-    background-size: 90%;
+
     overflow: hidden;
 
     transition: background-position-y 1s;
+
+    background: rgba(218, 218, 222, 0.8) no-repeat center;
+    background-size: 90%;
 }
 
 #center.started {
@@ -116,16 +133,19 @@ span {
 }
 
 #desc {
+    font-size: 20px;
+
     position: absolute;
     top: 0;
-    bottom: 0;
     right: 0;
+    bottom: 0;
     left: 0;
+
+    overflow-y: auto;
+
     padding: 10px 70px 50px 20px;
 
     text-align: left;
-    font-size: 20px;
-    overflow-y: auto;
 }
 
 /*endregion*/
@@ -134,6 +154,7 @@ span {
 #bottom {
     position: absolute;
     bottom: 0;
+
     width: 100%;
     height: auto;
 }
@@ -141,28 +162,34 @@ span {
 /*region Author*/
 #author-container {
     position: absolute;
-    right: 0;
     top: -43px;
-    background: rgba(255, 255, 255, 0.8);
+    right: 0;
+
     border-top-left-radius: 25px;
+    background: rgba(255, 255, 255, 0.8);
 }
 
 #author {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: 45px;
-    max-width: 300px;
     font-size: 20px;
-    color: #727275;
     font-weight: 400;
+
+    position: relative;
+
+    display: flex;
     overflow: hidden;
 
+    max-width: 300px;
+    height: 45px;
     padding-left: 15px;
+
+    color: #727275;
+
+    align-items: center;
 }
 
 #author > p {
     display: inline-block;
+
     margin-right: 50px;
 }
 
@@ -170,14 +197,16 @@ span {
     position: absolute;
     top: 5px;
     right: 8px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    transition: opacity 0.7s;
 
-    height: 35px;
-    width: 35px;
     display: inline-block;
+
+    width: 35px;
+    height: 35px;
+
     cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+    transition: opacity 0.7s;
     vertical-align: top;
 }
 
@@ -185,51 +214,62 @@ span {
 
 /*region Actionbar*/
 #action-bar {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
     position: absolute;
-    box-sizing: border-box;
-    padding: 5px;
-    bottom: 155px;
     right: 0;
-    min-width: 50px;
+    bottom: 155px;
+
+    display: flex;
     overflow: hidden;
+    flex-direction: column;
+
+    box-sizing: border-box;
+    min-width: 50px;
+    padding: 5px;
 
     transition: opacity 0.7s;
+
+    justify-content: center;
 }
 
 .strat-button {
-    align-self: flex-end;
-    float: right;
-    height: 45px;
-    width: 45px;
     display: inline-block;
+    float: right;
+
+    width: 45px;
+    height: 45px;
+
     cursor: pointer;
     -webkit-user-select: none;
-    -moz-user-select: none;
+       -moz-user-select: none;
+
+    align-self: flex-end;
 }
 
 #like-counter {
-    font-weight: 900;
     font-size: 35px;
-    cursor: default;
-    color: #329537;
+    font-weight: 900;
+
     width: auto;
+
+    cursor: default;
+
+    color: #329537;
 }
 
 .settings-button {
+    position: absolute;
+    z-index: 1;
     top: 8px;
     right: 8px;
-    height: 30px;
-    width: 30px;
+
     display: inline-block;
-    position: absolute;
+
+    width: 30px;
+    height: 30px;
+
     cursor: pointer;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    z-index: 1;
+       -moz-user-select: none;
 }
 
 /*endregion*/
@@ -237,28 +277,37 @@ span {
 /*region Gamemode selection*/
 #gamemode-selection {
     display: flex;
-    background: #f3f3f7;
+
     height: 50px;
+
     -webkit-user-select: none;
-    -moz-user-select: none;
-    justify-content: space-around;
+       -moz-user-select: none;
+
+    background: #f3f3f7;
+
     align-items: center;
+    justify-content: space-around;
 }
 
 .divider {
-    border-left: 1px solid #cbcbcf;
-    border-radius: 5px;
     height: 40px;
     margin-top: 5px;
+
+    border-left: 1px solid #cbcbcf;
+    border-radius: 5px;
+
     flex-shrink: 0.1;
 }
 
 /*region Gamemode button*/
 .gamemode-button {
-    display: inline-block;
-    height: 50px;
-    width: 50px;
     position: relative;
+
+    display: inline-block;
+
+    width: 50px;
+    height: 50px;
+
     flex-grow: 4;
 }
 
@@ -270,13 +319,15 @@ span {
     position: absolute;
     top: 0;
     left: 0;
-    height: 100%;
+
     width: 100%;
+    height: 100%;
+
+    transition: all 0.15s;
+
     background-repeat: no-repeat !important;
     background-position: center !important;
     background-size: contain !important;
-
-    transition: all .15s;
 }
 
 .gamemode-button input[type=checkbox]:not(:checked) + label {
@@ -294,30 +345,32 @@ span {
 /*region Team buttons*/
 #team-container {
     display: flex;
-    justify-content: space-around;
+
     align-items: center;
+    justify-content: space-around;
 }
 
 .team-button {
+    font-family: "Catamaran", Impact, sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-grow: 2;
-    height: 60px;
 
     box-sizing: border-box;
+    height: 60px;
+    padding-top: 5px;
+
+    -webkit-user-select: none;
+       -moz-user-select: none;
+    transition: background 0.075s;
+
     border-right: 1px solid #a5a5a8;
     background: #bfbfc3;
 
-    font-family: 'Catamaran', Impact, sans-serif;
-    font-weight: 800;
-    font-size: 40px;
-
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    padding-top: 5px;
-
-    transition: background 0.075s;
+    align-items: center;
+    flex-grow: 2;
+    justify-content: space-around;
 }
 
 .team-button:last-child {
@@ -326,8 +379,9 @@ span {
 }
 
 .team-button:active {
-    background: #a1a1a5;
     transition: background 0.2s;
+
+    background: #a1a1a5;
 }
 
 /*endregion*/
@@ -337,9 +391,11 @@ span {
 /*region Mobile Dialogue*/
 .m-dialogue {
     position: absolute;
+    z-index: 10;
+
     width: 85%;
     max-width: 320px;
-    z-index: 10;
+
     text-align: center;
 
     background: #c3c3c3;
@@ -348,34 +404,39 @@ span {
 
 .md-title {
     font-size: 2em;
+
     padding: 5px 15px;
 }
 
 .md-text {
     font-size: 1em;
+
     padding: 0 15px;
 }
 
 .md-button-wrapper {
+    display: flex;
+
     width: 100%;
     margin-top: 12px;
 
-    display: flex;
     justify-content: space-around;
 }
 
 .md-button {
-    text-align: center;
-    line-height: 100%;
-    vertical-align: middle;
-    padding: 10px;
-    flex-basis: 100%;
-    font-size: 1.5em;
     font-family: "Catamaran", "Lato", serif;
+    font-size: 1.5em;
+    line-height: 100%;
+
+    padding: 10px;
+
+    transition: background 0.1s;
+    text-align: center;
+    vertical-align: middle;
 
     background: rgba(255, 255, 255, 0.5);
 
-    transition: background 0.1s;
+    flex-basis: 100%;
 }
 
 .md-button:active {
@@ -386,26 +447,29 @@ span {
 
 /*region Settings*/
 .setting-wrapper {
+    display: flex;
+
     box-sizing: border-box;
     margin: 8px auto;
     padding: 0 10%;
 
-    display: flex;
-    justify-content: space-between;
     align-items: stretch;
+    justify-content: space-between;
 }
 
 .setting-wrapper span {
-    margin-right: 10px;
+    font-size: 1em;
+    font-weight: bold;
 
     display: flex;
-    cursor: pointer;
-    align-items: center;
-    user-select: none;
-    flex-grow: 4;
 
-    font-weight: bold;
-    font-size: 1em;
+    margin-right: 10px;
+
+    cursor: pointer;
+    user-select: none;
+
+    align-items: center;
+    flex-grow: 4;
 }
 
 /*endregion*/
@@ -413,50 +477,49 @@ span {
 /*region Checkbox*/
 .checkbox-wrapper {
     position: relative;
-
 }
 
 .checkbox-wrapper label {
-    height: 35px;
-    width: 35px;
-
-    background: #a1a1a4;
     display: flex;
-    justify-content: center;
-    align-items: center;
+
+    width: 35px;
+    height: 35px;
+
     cursor: pointer;
 
     border-radius: 50%;
+    background: #a1a1a4;
+
+    align-items: center;
+    justify-content: center;
 }
 
 .checkbox-wrapper label:before {
     position: absolute;
     top: 5px;
+    right: 5px;
     bottom: 5px;
     left: 5px;
-    right: 5px;
-
-    background: #474747;
-    border-radius: 50%;
 
     content: "";
-
     transition: 0.2s;
+
+    border-radius: 50%;
+    background: #474747;
 }
 
 .checkbox-wrapper label:after {
     position: absolute;
     top: 8px;
+    right: 8px;
     bottom: 8px;
     left: 8px;
-    right: 8px;
-
-    background: none;
-    border-radius: 50%;
 
     content: "";
-
     transition: 0.2s;
+
+    border-radius: 50%;
+    background: none;
 }
 
 .checkbox-wrapper input[type=checkbox]:checked + label:after {
@@ -470,47 +533,61 @@ span {
 /*endregion*/
 
 .disclaimer {
-    margin-top: 5px;
     font-size: 0.75em;
+
+    margin-top: 5px;
 }
 
 #dialogue-container {
     position: fixed;
+    z-index: 1;
     top: 0;
     bottom: 0;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.65);
-    z-index: 1;
+
     display: none;
     flex-direction: column;
-    justify-content: center;
+
+    width: 100%;
+
+    background: rgba(0, 0, 0, 0.65);
+
     align-items: center;
+    justify-content: center;
 }
 
 .code-box {
-    border: 1px solid gray;
-    background: #ccccd1;
-    border-radius: 2px;
     font-family: monospace;
     font-size: 15px;
+
     padding: 5px 25px 5px 25px;
+
+    border: 1px solid gray;
+    border-radius: 2px;
+    background: #ccccd1;
 }
 
 #anchor-ad {
     position: relative;
-    min-height: 60px;
+
     width: 100%;
+    min-height: 60px;
+
     background: gray;
 }
 
 #desperate-plead {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    color: white;
     font-size: 0.8em;
+
+    position: absolute;
+
+    display: flex;
     overflow: hidden;
+
+    width: 100%;
+    height: 100%;
+
+    color: white;
+
+    align-items: center;
+    justify-content: center;
 }

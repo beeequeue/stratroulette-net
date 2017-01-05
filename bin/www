@@ -11,11 +11,7 @@ var server;
  * Database connection
  */
 
-const databaseString = "mongodb://{host}:{port}/"
-    .replace("{host}", process.env.DBHOST)
-    .replace("{port}", process.env.DBPORT);
-
-mongo.connect(databaseString + "global", function (err, db) {
+mongo.connect(getDBAddress("global"), function (err, db) {
     if (!err) {
         console.log('Connected to global db');
 
@@ -34,11 +30,11 @@ mongo.connect(databaseString + "global", function (err, db) {
 
 var connectGameDBs = function () {
     var game = "siege";
-    var dbAddr = databaseString + (process.env.NODE_ENV === "development" ? game + "Dev" : game);
+    var dbAddr = getDBAddress(process.env.NODE_ENV === "development" ? game + "Dev" : game);
 
     mongo.connect(dbAddr, function (err, db) {
         if (!err) {
-            console.log('Connected to ' + (process.env.NODE_ENV === "development" ? game + "Dev" : game));
+            console.log('Connected to ' + game);
 
             global.db[game] = db;
             global.db[game].strats = db.collection('strats');
@@ -91,6 +87,15 @@ var startApp = function () {
     server.on('error', onError);
     server.on('listening', onListening);
 };
+
+function getDBAddress(database) {
+    return "mongodb://{user}:{password}@{host}:{port}/{database}?authSource=global"
+        .replace("{host}", process.env.DBHOST)
+        .replace("{port}", process.env.DBPORT)
+        .replace("{user}", process.env.DBUSER)
+        .replace("{password}", process.env.DBPASS)
+        .replace("{database}", database || "");
+}
 
 /**
  * Normalize a port into a number, string, or false.
