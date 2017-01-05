@@ -6,7 +6,7 @@ var holidaySeason = "normal";
 var holidays = {
     christmas: {
         start: "Dec 1",
-        end:   "Jan 10 23:59"
+        end:   "Jan 1 + 1y"
     }
 };
 
