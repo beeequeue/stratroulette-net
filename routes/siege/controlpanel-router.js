@@ -27,7 +27,7 @@ router.get('/', function (req, res) {
                 });
             }
             else {
-                res.render('login');
+                res.render('siege/login');
             }
         });
     }
