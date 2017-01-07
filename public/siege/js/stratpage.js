@@ -374,12 +374,11 @@ var fillPage = function (strat) {
             canGetStrat = true;
         });
 
-    $('.share').attr('data-clipboard-text', 'http://stratroulette.net#' + strat.uid);
-
     // Enable buttons and add tooltips
     if ($('.like').hasClass("disabled")) {
         $('.strat-button').removeClass("disabled").tooltipster();
         $('#action-bar').removeClass('hidden');
+        desc.removeClass("text-center");
     }
 };
 

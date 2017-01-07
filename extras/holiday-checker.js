@@ -6,7 +6,7 @@ var holidaySeason = "normal";
 var holidays = {
     christmas: {
         start: "Dec 1",
-        end:   "Dec 31 23:59"
+        end:   "Jan 1 + 1y"
     }
 };
 
@@ -16,7 +16,7 @@ function getSeason() {
     for (var h in holidays) {
         var holiday = holidays[h];
 
-        if (true || now.between(Date.parse(holiday.start), Date.parse(holiday.end))) {
+        if (now.between(Date.parse(holiday.start), Date.parse(holiday.end))) {
             holidaySeason = h;
             return;
         }
@@ -30,6 +30,6 @@ getSeason();
 
 setInterval(function () {
     getSeason();
-}, 1000 * 60 * 60 * 4);
+}, 1000 * 60 * 60 * 12);
 
 module.exports.season = () => holidaySeason;
