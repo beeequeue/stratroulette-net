@@ -378,7 +378,7 @@ var fillPage = function (strat) {
     if ($('.like').hasClass("disabled")) {
         $('.strat-button').removeClass("disabled").tooltipster();
         $('#action-bar').removeClass('hidden');
-        $('#desc').removeClass("text-center");
+        desc.removeClass("text-center");
     }
 };
 

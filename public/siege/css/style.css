@@ -195,6 +195,10 @@ table {
     height: auto;
     margin-right: auto;
     margin-left: auto;
+
+    -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);
+       -moz-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);
+            box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);
 }
 
 /* region Top */
@@ -445,10 +449,14 @@ table {
 #ad-bottom {
     position: relative;
 
-    width: 100%;
+    width: 728px;
     min-height: 60px;
+    margin: 15px auto;
 
     background: gray;
+    -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);
+       -moz-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);
+            box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);
 }
 
 #desperate-plead {
