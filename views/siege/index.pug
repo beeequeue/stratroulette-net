@@ -29,6 +29,7 @@ html(lang="en-US")
 
             script(src="/dist/js/autosize.min.js")
             script(src="/dist/js/jquery-bigtext.js")
+            script(src='//cdn.chitika.net/getads.js', async)
             script(src="/siege/js/stratpage.js")
 
             script.
@@ -121,13 +122,30 @@ html(lang="en-US")
                             img(src="/siege/img/github-logo.png")
                         p &#9830; Contact: contact@stratroulette.net
 
-        //-if(settings.disableAds == 0)
-            #ad-bottom
+        if(settings.disableAds == 0)
+            #footer
+                #ad-container
+                    script(type='text/javascript').
+                        (function () {
+                            if (window.CHITIKA === undefined) {
+                                window.CHITIKA = {'units': []};
+                            }
+                            var unit = {
+                                "calltype":  "async[2]",
+                                "publisher": "BeeQueue",
+                                "width":     728,
+                                "height":    90,
+                                "sid":       "Chitika Default"
+                            };
+                            var placement_id = window.CHITIKA.units.length;
+                            window.CHITIKA.units.push(unit);
+                            document.write('<div id="chitikaAdBlock-' + placement_id + '"></div>');
+                        }());
+
                 #desperate-plead.
                     This is where an ad would appear if it didn't fail to load!<br>
                     If you are using an adblocker you can whitelist this website to help us keep going! :)<br>
                     Otherwise you can completely disable all ads in the settings.
-                #adspace
 
         #dialogue-container(onclick="closeAllDialogues();$('body').unbind('touchmove');")
             #feedback-window.c-dialogue(style="display:none")
