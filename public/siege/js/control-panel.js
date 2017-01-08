@@ -25,7 +25,7 @@ $(document).ready(function () {
     }).tooltipster();
 
     $('.reject').click(function () {
-        rejectSubmission($('.reject-message').val());
+        rejectSubmission($('.reject-message').val() || "Dupe");
     }).tooltipster();
 });
 
