@@ -1,12 +1,14 @@
 #holiday-overlay {
-    background-image: url('snow1.png'), url('snow2.png'), url('snow3.png');
     position: absolute;
+    z-index: 1;
     top: 0;
+    right: 0;
     bottom: 0;
     left: 0;
-    right: 0;
-    z-index: 1;
+
     animation: snow 25s linear infinite;
+
+    background-image: url("snow1.png"), url("snow2.png"), url("snow3.png");
 }
 
 @keyframes snow {
@@ -24,23 +26,29 @@
 #bottom:after {
     position: absolute;
     right: 15px;
-    height: 75px;
-    width: 40px;
     bottom: -75px;
+
+    width: 40px;
+    height: 75px;
+
     content: "";
+
     background-image: url(icicle.png);
-    background-size: contain;
     background-repeat: no-repeat;
+    background-size: contain;
 }
 
 #bottom:before {
     position: absolute;
     right: 30px;
-    height: 50px;
-    width: 40px;
     bottom: -50px;
+
+    width: 40px;
+    height: 50px;
+
     content: "";
+
     background-image: url(icicle.png);
-    background-size: contain;
     background-repeat: no-repeat;
+    background-size: contain;
 }

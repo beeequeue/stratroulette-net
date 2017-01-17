@@ -570,15 +570,34 @@ span {
     position: relative;
 
     width: 100%;
-    min-height: 60px;
+    min-height: 30px;
 
     background: gray;
+}
+
+#ad-container {
+    position: relative;
+    z-index: 1;
+    top: 0;
+}
+
+@media (max-width: 727px) {
+    #ad-container {
+        height: 50px;
+    }
+}
+
+@media (min-width: 728px) {
+    #ad-container {
+        height: 90px;
+    }
 }
 
 #desperate-plead {
     font-size: 0.8em;
 
     position: absolute;
+    top: 0;
 
     display: flex;
     overflow: hidden;
@@ -590,4 +609,8 @@ span {
 
     align-items: center;
     justify-content: center;
+}
+
+#chitika-container-adhesion {
+    display: none !important;
 }
