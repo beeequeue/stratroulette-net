@@ -125,22 +125,7 @@ html(lang="en-US")
         if(settings.disableAds == 0)
             #footer
                 #ad-container
-                    script(type='text/javascript').
-                        (function () {
-                            if (window.CHITIKA === undefined) {
-                                window.CHITIKA = {'units': []};
-                            }
-                            var unit = {
-                                "calltype":  "async[2]",
-                                "publisher": "BeeQueue",
-                                "width":     728,
-                                "height":    90,
-                                "sid":       "Chitika Default"
-                            };
-                            var placement_id = window.CHITIKA.units.length;
-                            window.CHITIKA.units.push(unit);
-                            document.write('<div id="chitikaAdBlock-' + placement_id + '"></div>');
-                        }());
+                    script(type="text/javascript" src="//ubercpm.com/show.php?z=26&pl=79094&j=1")
 
                 #desperate-plead.
                     This is where an ad would appear if it didn't fail to load!<br>

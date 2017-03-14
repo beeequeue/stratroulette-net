@@ -97,22 +97,7 @@ html(lang="en-US")
                         This is where an ad would appear if it didn't fail to load!<br>
                         You can completely disable all ads in the settings.
                     #ad-container
-                        script(type='text/javascript').
-                            (function () {
-                                if (window.CHITIKA === undefined) {
-                                    window.CHITIKA = {'units': []};
-                                }
-                                var unit = {
-                                    "calltype":  "async[2]",
-                                    "publisher": "BeeQueue",
-                                    "width":     window.innerWidth >= 728 ? 728 : 320,
-                                    "height":    window.innerWidth >= 728 ? 90 : 50,
-                                    "sid":       "Chitika Default"
-                                };
-                                var placement_id = window.CHITIKA.units.length;
-                                window.CHITIKA.units.push(unit);
-                                document.write('<div id="chitikaAdBlock-' + placement_id + '"></div>');
-                            }());
+                        script(type="text/javascript" src="//ubercpm.com/show.php?z=26&pl=79094&j=1")
 
         #dialogue-container(onclick="closeAllDialogues()")
             #settings-window.m-dialogue(style="display:none;")
