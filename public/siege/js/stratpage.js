@@ -187,10 +187,7 @@ $(document).ready(function () {
             $('#setting-preferDesktop').parent().parent().css('display', 'none');
     }
     else {
-        // Fix content height
-        setTimeout(function () {
-            $('#content').animate({"bottom": $('#bottom').height()}, 700);
-        }, 500);
+        fixContentHeight();
     }
 
     //region Specific strat getting
@@ -283,9 +280,10 @@ var resetPage = function (speed) {
 
     setLikeCounter(0, speed);
 
-    if (mobile && $('#action-bar').hasClass('hidden') && $('#anchor-ad').length) {
-        var adHeight = $('#anchor-ad').height();
-        $('#action-bar').css({bottom: parseInt($('#action-bar').css('bottom'), 10) + adHeight});
+    if (mobile && !$('#anchor-ad').hasClass('hidden')) {
+		fixContentHeight(110);
+		$('#anchor-ad').addClass('hidden');
+        $('#action-bar').css({bottom: parseInt($('#action-bar').css('bottom'), 10)});
     }
 };
 
@@ -343,6 +341,8 @@ var fillPage = function (strat) {
         horizontalAlign: "center",
         maximumFontSize: 50
     });
+	
+	$('.hidden:not(#anchor-ad, #author>img)').removeClass('hidden');
 
     $('#names')
         .stop()
@@ -560,6 +560,10 @@ var flashGameModeButtons = function () {
             canGetStrat = true;
         }, 250);
     }, 200);
+};
+
+var fixContentHeight = function (height) {
+	$('#content').animate({"bottom": height || $('#bottom').height()}, 700);
 };
 
 var toggleHolidayAnimation = function () {

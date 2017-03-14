@@ -27,7 +27,6 @@ html(lang="en-US")
                 var device = "!{device_type}";
                 var deviceIsMobile = !{is_mobile};
 
-            script(src = '//cdn.chitika.net/getads.js', async)
             script(src="/dist/js/jquery-bigtext.js")
             script(src="/siege/js/stratpage.js")
 
@@ -59,12 +58,12 @@ html(lang="en-US")
         #content
             #center(style="background-image :url('/siege/img/logos/" + holiday + ".png')")
                 block center
-                    img.strat-button.settings-button(src="/siege/img/icons/settings.png" onclick="openSettings()")
+                    img.hidden.strat-button.settings-button(src="/siege/img/icons/settings.png" onclick="openSettings()")
 
                     #desc
 
         #bottom
-            a#author-container(href="javascript:" target="_blank")
+            a.hidden#author-container(href="javascript:" target="_blank")
                 span#author
                     p Author
                     img.submission(src="/siege/img/icons/submission.png")
@@ -97,7 +96,7 @@ html(lang="en-US")
                         This is where an ad would appear if it didn't fail to load!<br>
                         You can completely disable all ads in the settings.
                     #ad-container
-                        script(type="text/javascript" src="//ubercpm.com/show.php?z=26&pl=79094&j=1")
+                        script(type="text/javascript" src="//ubercpm.com/show.php?z=27&pl=79125&j=1")
 
         #dialogue-container(onclick="closeAllDialogues()")
             #settings-window.m-dialogue(style="display:none;")

@@ -167,6 +167,8 @@ span {
 
     border-top-left-radius: 25px;
     background: rgba(255, 255, 255, 0.8);
+
+	transition: opacity 0.25s;
 }
 
 #author {
@@ -270,6 +272,8 @@ span {
     cursor: pointer;
     -webkit-user-select: none;
        -moz-user-select: none;
+
+	transition: opacity 0.25s;
 }
 
 /*endregion*/
@@ -570,27 +574,23 @@ span {
     position: relative;
 
     width: 100%;
-    min-height: 30px;
-
+	height: 250px;
+	
     background: gray;
+
+	transition: height 0.75s ease;
+}
+
+#anchor-ad.hidden {
+    opacity: 1;
+    height: 0;
 }
 
 #ad-container {
     position: relative;
+    height: 250px;
     z-index: 1;
     top: 0;
-}
-
-@media (max-width: 727px) {
-    #ad-container {
-        height: 50px;
-    }
-}
-
-@media (min-width: 728px) {
-    #ad-container {
-        height: 90px;
-    }
 }
 
 #desperate-plead {
@@ -609,8 +609,4 @@ span {
 
     align-items: center;
     justify-content: center;
-}
-
-#chitika-container-adhesion {
-    display: none !important;
 }
