@@ -168,7 +168,7 @@ span {
     border-top-left-radius: 25px;
     background: rgba(255, 255, 255, 0.8);
 
-	transition: opacity 0.25s;
+    transition: opacity 0.25s;
 }
 
 #author {
@@ -207,7 +207,7 @@ span {
 
     cursor: pointer;
     -webkit-user-select: none;
-       -moz-user-select: none;
+    -moz-user-select: none;
     transition: opacity 0.7s;
     vertical-align: top;
 }
@@ -242,7 +242,7 @@ span {
 
     cursor: pointer;
     -webkit-user-select: none;
-       -moz-user-select: none;
+    -moz-user-select: none;
 
     align-self: flex-end;
 }
@@ -271,9 +271,9 @@ span {
 
     cursor: pointer;
     -webkit-user-select: none;
-       -moz-user-select: none;
+    -moz-user-select: none;
 
-	transition: opacity 0.25s;
+    transition: opacity 0.25s;
 }
 
 /*endregion*/
@@ -285,7 +285,7 @@ span {
     height: 50px;
 
     -webkit-user-select: none;
-       -moz-user-select: none;
+    -moz-user-select: none;
 
     background: #f3f3f7;
 
@@ -366,7 +366,7 @@ span {
     padding-top: 5px;
 
     -webkit-user-select: none;
-       -moz-user-select: none;
+    -moz-user-select: none;
     transition: background 0.075s;
 
     border-right: 1px solid #a5a5a8;
@@ -574,11 +574,11 @@ span {
     position: relative;
 
     width: 100%;
-	height: 250px;
-	
+    height: 250px;
+
     background: gray;
 
-	transition: height 0.75s ease;
+    transition: height 0.75s ease;
 }
 
 #anchor-ad.hidden {
