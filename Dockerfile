@@ -4,6 +4,7 @@ WORKDIR /usr/src/srnet
 
 COPY package.json /usr/src/srnet/
 RUN npm i
+RUN npm i -g forever
 
 COPY . /usr/src/srnet
 
