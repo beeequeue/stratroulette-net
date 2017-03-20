@@ -1,16 +1,16 @@
 //Created by bq on 2016-04-08.
 "use strict";
 
-var canGetStrat       = true,
-    currentStrat      = {},
-    lastStrats        = [],
-    lastStratsAmount  = 6,
+var canGetStrat = true,
+    currentStrat = {},
+    lastStrats = [],
+    lastStratsAmount = 6,
     gamemodesToSearch = [],
-    domain            = 'stratroulette.net';
+    domain = 'stratroulette.net';
 
 var settingCookieConfig = {
     expires: 30,
-    domain:  "." + domain
+    domain: "." + domain
 };
 
 $(document).ready(function () {
@@ -27,10 +27,10 @@ $(document).ready(function () {
     $('.tooltip').tooltipster();
     $('.d-textinput, .d-textarea')
         .tooltipster({
-            delay:         0,
-            speed:         175,
-            trigger:       'none',
-            position:      'right',
+            delay: 0,
+            speed: 175,
+            trigger: 'none',
+            position: 'right',
             contentAsHTML: true
         })
         .on('focus click', function () {
@@ -68,10 +68,10 @@ $(document).ready(function () {
 
     $('#submission-submit').click(function () {
         var data = {
-            author:    $('#submission-author').val(),
-            name:      $('#submission-stratname').val(),
-            desc:      $('#submission-msg').val(),
-            team:      $('#submission-team').val(),
+            author: $('#submission-author').val(),
+            name: $('#submission-stratname').val(),
+            desc: $('#submission-msg').val(),
+            team: $('#submission-team').val(),
             gamemodes: []
         };
 
@@ -161,7 +161,7 @@ $(document).ready(function () {
 
         Cookies.set("gamemodes", gamemodesToSearch, {
             expires: 7,
-            domain:  "." + domain
+            domain: "." + domain
         });
     });
 
@@ -281,8 +281,8 @@ var resetPage = function (speed) {
     setLikeCounter(0, speed);
 
     if (mobile && !$('#anchor-ad').hasClass('hidden')) {
-		fixContentHeight(110);
-		$('#anchor-ad').addClass('hidden');
+        fixContentHeight(110);
+        $('#anchor-ad').addClass('hidden');
         $('#action-bar').css({bottom: parseInt($('#action-bar').css('bottom'), 10)});
     }
 };
@@ -295,7 +295,7 @@ var getStratData = function (type, next) {
             case 'def':
             case 'atk':
                 data = {
-                    not:       lastStrats,
+                    not: lastStrats,
                     gamemodes: gamemodesToSearch
                 };
                 break;
@@ -309,26 +309,26 @@ var getStratData = function (type, next) {
     }
 
     $.post({
-        url:         '/get/' + type.toLowerCase(),
-        data:        JSON.stringify(data),
-        dataType:    'json',
+        url: '/get/' + type.toLowerCase(),
+        data: JSON.stringify(data),
+        dataType: 'json',
         contentType: 'application/json',
-        success:     function (data) {
+        success: function (data) {
             currentStrat = data;
             updateLatestStrats(data.uid);
             ga('send', {
-                hitType:       'event',
+                hitType: 'event',
                 eventCategory: 'StratGet',
-                eventAction:   'success'
+                eventAction: 'success'
             });
 
             next(null, data);
         },
-        error:       function (err) {
+        error: function (err) {
             ga('send', {
-                hitType:       'event',
+                hitType: 'event',
                 eventCategory: 'StratGet',
-                eventAction:   'fail'
+                eventAction: 'fail'
             });
 
             next(err);
@@ -341,8 +341,8 @@ var fillPage = function (strat) {
         horizontalAlign: "center",
         maximumFontSize: 50
     });
-	
-	$('.hidden:not(#anchor-ad, #author>img)').removeClass('hidden');
+
+    $('.hidden:not(#anchor-ad, #author>img)').removeClass('hidden');
 
     $('#names')
         .stop()
@@ -395,10 +395,10 @@ var setStrat = function (type) {
             }
             else {
                 var errorStrat = {
-                    desc:   err.statusText + "<br>" + err.responseJSON.message,
+                    desc: err.statusText + "<br>" + err.responseJSON.message,
                     author: "Error",
-                    votes:  0,
-                    name:   err.status.toString()
+                    votes: 0,
+                    name: err.status.toString()
                 };
 
                 setTimeout(function () {
@@ -466,7 +466,7 @@ var setLikedStatus = function (val) {
 
     $({deg: getRotationDegrees($elem)}).stop().animate({deg: 10 * val}, {
         duration: 250,
-        step:     function (now) {
+        step: function (now) {
             $elem.css({
                 transform: 'rotate(' + now + 'deg)'
             });
@@ -494,16 +494,16 @@ var setLikedStatus = function (val) {
 };
 
 var giveOpinion = function (uid, toLike, next) {
-    var url  = toLike ? 'like' : 'unlike', // To like or not to like, that is the question.
+    var url = toLike ? 'like' : 'unlike', // To like or not to like, that is the question.
         data = {uid: uid};
 
     $.post({
-        url:         '/' + url,
-        data:        JSON.stringify(data),
+        url: '/' + url,
+        data: JSON.stringify(data),
         contentType: "application/json",
-        success:     function (data) {
+        success: function (data) {
             next(null, data);
-        }, error:    function (err) {
+        }, error: function (err) {
             next(err);
         }
     });
@@ -511,18 +511,18 @@ var giveOpinion = function (uid, toLike, next) {
 
 var feedbackStrat = function (uid, message, next) {
     var data = {
-        uid:     uid,
+        uid: uid,
         message: message,
-        ip:      clientIP
+        ip: clientIP
     };
 
     $.post({
-        url:         '/report',
-        data:        JSON.stringify(data),
+        url: '/report',
+        data: JSON.stringify(data),
         contentType: 'application/json',
-        success:     function (data) {
+        success: function (data) {
             next(null, data);
-        }, error:    function (err) {
+        }, error: function (err) {
             next(err);
         }
     });
@@ -563,11 +563,11 @@ var flashGameModeButtons = function () {
 };
 
 var fixContentHeight = function (height) {
-	$('#content').animate({"bottom": height || $('#bottom').height()}, 700);
+    $('#content').animate({"bottom": height || $('#bottom').height()}, 700);
 };
 
 var toggleHolidayAnimation = function () {
-    var overlay     = $('#holiday-overlay'),
+    var overlay = $('#holiday-overlay'),
         pauseButton = $('#pause-button');
 
     if (overlay.hasClass('paused')) {
@@ -582,12 +582,12 @@ var toggleHolidayAnimation = function () {
 
 var submitStrat = function (data, next) {
     $.post({
-        url:         '/submit',
-        data:        JSON.stringify(data),
+        url: '/submit',
+        data: JSON.stringify(data),
         contentType: "application/json",
-        success:     function (data) {
+        success: function (data) {
             next(null, data);
-        }, error:    function (err) {
+        }, error: function (err) {
             next(err);
         }
     });

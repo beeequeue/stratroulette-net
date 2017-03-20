@@ -6,17 +6,17 @@ const stratDB = global.db['siege'].strats;
 const submDB = global.db['siege'].submissions;
 
 const settingsMeta = [{
-    id:   'disableHoliday',
+    id: 'disableHoliday',
     desc: 'Disable holiday themes'
 }, {
-    id:   'preferDesktop',
+    id: 'preferDesktop',
     desc: 'Prefer desktop website'
 }, {
-    id:   "disableAds",
+    id: "disableAds",
     desc: "Disable ads :("
 }];
 
-var router  = express.Router(),
+var router = express.Router(),
     holiday = "normal";
 
 /* GET home page. */
@@ -24,16 +24,16 @@ router.get('/', function (req, res) {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
     var locals = {
-        ip:           ip,
-        holiday:      "normal",
-        settings:     {},
+        ip: ip,
+        holiday: "normal",
+        settings: {},
         settingsMeta: settingsMeta
     };
 
     var reqSettings = {
         disableHoliday: 0,
-        preferDesktop:  0,
-        disableAds:     0
+        preferDesktop: 0,
+        disableAds: 0
     };
 
     for (let setting of settingsMeta) {
@@ -41,7 +41,7 @@ router.get('/', function (req, res) {
         reqSettings[key] = req.cookies[key] || 0;
 
         res.cookie(key, reqSettings[key] || 0, {
-            domain:  process.env.DOMAIN || '.stratroulette.net',
+            domain: process.env.DOMAIN || '.stratroulette.net',
             expires: new Date(Date.now() + 1209600000)
         });
     }
@@ -60,7 +60,7 @@ router.get('/', function (req, res) {
 router.post('/like', function (req, res) {
     if (req.body.uid) {
         var findQ = {
-            uid:   req.body.uid,
+            uid: req.body.uid,
             votes: {
                 $nin: [req.session.id]
             }
@@ -69,7 +69,7 @@ router.post('/like', function (req, res) {
             $push: {
                 votes: req.session.id
             },
-            $inc:  {
+            $inc: {
                 voteCount: 1
             }
         };
@@ -92,7 +92,7 @@ router.post('/like', function (req, res) {
 router.post('/unlike', function (req, res) {
     if (req.body.uid) {
         var findQ = {
-            uid:   req.body.uid,
+            uid: req.body.uid,
             votes: {
                 $in: [req.session.id]
             }
@@ -101,7 +101,7 @@ router.post('/unlike', function (req, res) {
             $pull: {
                 votes: req.session.id
             },
-            $inc:  {
+            $inc: {
                 voteCount: -1
             }
         };
@@ -131,9 +131,9 @@ router.post('/report', function (req, res) {
             var updateQ = {
                 $push: {
                     reports: {
-                        ip:        req.body.ip,
+                        ip: req.body.ip,
                         sessionID: req.session.id,
-                        message:   req.body.message
+                        message: req.body.message
                     }
                 }
             };
@@ -159,11 +159,11 @@ router.post('/report', function (req, res) {
 });
 
 router.post('/submit', function (req, res) {
-    var data           = req.body,
-        regexp         = /^[a-zA-Z0-9_ \/\-]+$/, // Alphanumerical, '-', and '_'
-        valuesToCheck  = ['author', 'name'],
+    var data = req.body,
+        regexp = /^[a-zA-Z0-9_ \/\-]+$/, // Alphanumerical, '-', and '_'
+        valuesToCheck = ['author', 'name'],
         validGamemodes = ['bombs', 'hostage', 'capturesite'],
-        validTeams     = ['atk', 'def', 'both'];
+        validTeams = ['atk', 'def', 'both'];
 
     data.sessionID = req.session.id;
 

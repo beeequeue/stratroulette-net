@@ -3,9 +3,9 @@ const stratDB = global.db['siege'].strats;
 
 var router = express.Router();
 var fieldFilter = {
-    _id:       false,
-    reports:   false,
-    original:  false,
+    _id: false,
+    reports: false,
+    original: false,
     moderator: false
 };
 
@@ -19,17 +19,17 @@ router.get('/:type', function (req, res, next) {
 });
 
 var handleRequest = function (req, res, next) {
-    var team          = req.params.type,
-        gamemodes     = req.body.gamemodes,
-        notWanted     = req.body.not,
-        query         = {},
-        strat         = {},
+    var team = req.params.type,
+        gamemodes = req.body.gamemodes,
+        notWanted = req.body.not,
+        query = {},
+        strat = {},
         removedStrats = [];
 
     switch (team) {
-        /* 
+        /*
          * If request is for a team return a random one
-         * If it is a post request it can also include an array 
+         * If it is a post request it can also include an array
          * with strats it does not want, as well as the gamemodes it wants
          */
         case 'def':
@@ -39,7 +39,7 @@ var handleRequest = function (req, res, next) {
             }
 
             query = {
-                team:      team,
+                team: team,
                 gamemodes: {
                     $in: gamemodes
                 }

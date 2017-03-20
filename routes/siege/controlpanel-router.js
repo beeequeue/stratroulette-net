@@ -4,9 +4,9 @@ const stratDB = global.db['siege'].strats;
 const submDB = global.db['siege'].submissions;
 const modDB = global.db.moderators;
 
-var express  = require('express'),
+var express = require('express'),
     ObjectID = require('mongodb').ObjectID,
-    router   = express.Router();
+    router = express.Router();
 
 router.get('/', function (req, res) {
     var modID = req.cookies.moderatorID;
@@ -68,7 +68,7 @@ var acceptSubmission = function (acceptedSub, moderatorID, res) {
     }
 
     submDB.find(searchQ, {
-        ip:        false,
+        ip: false,
         sessionID: false
     }).toArray(function (err, originalSub) {
         if (!err) {
@@ -149,7 +149,7 @@ var rejectSubmission = function (submissionID, moderatorID, message, res) {
                 else if (docs.deletedCount === 0) {
                     res.status(400).json({
                         message: 'Submission has already been processed!',
-                        action:  'remove'
+                        action: 'remove'
                     });
                 }
                 else {
@@ -183,14 +183,14 @@ var removeFromSubmissions = function (subID) {
 var addToModLog = function (modID, subID, action, data) {
     var logObj = {
         submission: typeof(subID) == 'object' ? subID : new ObjectID(subID),
-        action:     action,
-        datetime:   (new Date()).toString()
+        action: action,
+        datetime: (new Date()).toString()
     };
 
     if (data)
         logObj.data = data;
 
-    var findQ   = {'moderatorID': modID},
+    var findQ = {'moderatorID': modID},
         updateQ = {
             $push: {
                 'log': logObj

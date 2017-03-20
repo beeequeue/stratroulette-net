@@ -1,19 +1,19 @@
 "use strict";
 
 // Requires
-const express      = require('express'),
-      path         = require('path'),
-      logger       = require('morgan'),
-      cookieParser = require('cookie-parser'),
-      bodyParser   = require('body-parser'),
-      session      = require('express-session'),
-      minify       = require('express-minify'),
-      subdomain    = require('express-subdomain'),
-      device       = require('express-device'),
-      compress     = require('compression'),
-      MongoStore   = require('connect-mongo')(session),
-      fs           = require('fs'),
-      app          = express();
+const express = require('express'),
+    path = require('path'),
+    logger = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    session = require('express-session'),
+    minify = require('express-minify'),
+    subdomain = require('express-subdomain'),
+    device = require('express-device'),
+    compress = require('compression'),
+    MongoStore = require('connect-mongo')(session),
+    fs = require('fs'),
+    app = express();
 
 var routes = require('./routes/siege/index-router.js');
 var getPage = require('./routes/siege/get-router.js');
@@ -34,11 +34,11 @@ else {
 app.use(express.static('./public'));                                            // Serve files
 app.use(session({                                                               // Enable sessions
     secret: process.env.SECRET,
-    store:  new MongoStore({
+    store: new MongoStore({
         db: app.get('env') === 'production' ? global.db : global.db['siege']    // Powered by our MongoDB database
     }),
     cookie: {
-        secure:  false,
+        secure: false,
         expires: 3600000 * 24 * 356 * 5 // 5 years
     }
 }));
@@ -113,7 +113,7 @@ if (app.get('env') === 'development') {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
-            error:   err
+            error: err
         });
     });
 }
@@ -124,7 +124,7 @@ app.use(function (err, req, res) {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
-        error:   {}
+        error: {}
     });
 });
 //endregion

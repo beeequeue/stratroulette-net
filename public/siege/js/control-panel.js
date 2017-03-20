@@ -7,10 +7,10 @@ var template = {},
 
 $(document).ready(function () {
     $.fn.tooltipster('setDefaults', {
-        delay:         0,
-        speed:         175,
-        trigger:       'none',
-        position:      'right',
+        delay: 0,
+        speed: 175,
+        trigger: 'none',
+        position: 'right',
         contentAsHTML: true
     });
 
@@ -32,7 +32,7 @@ $(document).ready(function () {
 // Fills out an accordion with gotten submissions
 var fillList = function () {
     for (var i = 0; i < submissions.length; i++) {
-        var sub       = submissions[i],
+        var sub = submissions[i],
             $newStrat = template.clone();
 
         sub.author = validateAuthor(sub.author);
@@ -63,18 +63,18 @@ var fillList = function () {
             $(this).toggleClass('disabled');
         });
     }
-    
-    
+
+
     //-- Add functionality
     $('#accordion').accordion({
         heightStyle: 'content'
     });
     $('.tooltip')
         .tooltipster({
-            delay:         0,
-            speed:         175,
-            trigger:       'none',
-            position:      'top',
+            delay: 0,
+            speed: 175,
+            trigger: 'none',
+            position: 'top',
             contentAsHTML: true
         })
         .on('focus click', function () {
@@ -83,15 +83,15 @@ var fillList = function () {
         .on('focusout', function () {
             $(this).tooltipster('hide');
         });
-    
+
     autosize($('textarea'));
-    
+
     updateSelecting();
-    
+
     $('.gamemode-container').click(function () {
         $(this).find("input").click();
     });
-    
+
     $('.gamemode-button label').click(function (e) {
         e.stopPropagation();
     });
@@ -103,10 +103,10 @@ var fillList = function () {
 
 // Gets all the info from the selected submission and sends it to be accepted
 var acceptSubmission = function () {
-    var subID      = selected,
+    var subID = selected,
         submission = $('.strat-container.' + subID).clone(),
-        data       = {};
-    
+        data = {};
+
     if (selected == undefined || selected == "" || submission == undefined) {
         feedbackTooltip('.accept', 'Please re-select the submission!');
         return;
@@ -125,7 +125,7 @@ var acceptSubmission = function () {
 
 
     //-- Gamemodes
-    var gms     = ['bombs', 'hostage', 'capturesite'],
+    var gms = ['bombs', 'hostage', 'capturesite'],
         checked = [];
 
     for (var i = 0; i < gms.length; i++) {
@@ -161,16 +161,16 @@ var acceptSubmission = function () {
 
 
     $.post({
-        url:         '/controlpanel/accept',
-        data:        JSON.stringify(data),
+        url: '/controlpanel/accept',
+        data: JSON.stringify(data),
         contentType: "application/json",
-        success:     function (data) {
+        success: function (data) {
             feedbackTooltip('.accept', data.message);
             $('.reject-message').val('');
 
             $('.' + subID).remove();
             selected = null;
-        }, error:    function (err) {
+        }, error: function (err) {
             feedbackTooltip('.accept', "Error:<br>" + err.responseJSON.message || err.message || "An error occurred");
             $('.reject-message').val('');
 
@@ -192,21 +192,21 @@ var rejectSubmission = function (message) {
     var subID = selected;
 
     var data = {
-        subID:   subID,
+        subID: subID,
         message: message
     };
 
     $.post({
-        url:         '/controlpanel/reject',
-        data:        JSON.stringify(data),
+        url: '/controlpanel/reject',
+        data: JSON.stringify(data),
         contentType: "application/json",
-        success:     function (data) {
+        success: function (data) {
             feedbackTooltip('.reject', data.message);
             $('.reject-message').val('');
 
             $('.' + subID).remove();
             selected = null;
-        }, error:    function (err) {
+        }, error: function (err) {
             feedbackTooltip('.reject', "Error:<br>" + err.responseJSON.message || err.message || "An error occurred");
             $('.reject-message').val('');
 

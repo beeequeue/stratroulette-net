@@ -8,7 +8,7 @@ block title
 block content
     div(id="center")
         h1=error.status
-        
+
         if error.status != 404
             p="Something went wrong!"
             a(href="/")
@@ -18,6 +18,6 @@ block content
             p Unfortunately, there isn't much more to this site than the main page...
             a(href="/")
                 p You should probably head back there.
-                
+
         div.code-box
             code=error
