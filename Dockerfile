@@ -1,4 +1,5 @@
 FROM node:7
+RUN mkdir -p /var/log/sr-net
 RUN mkdir -p /usr/src/srnet
 WORKDIR /usr/src/srnet
 
@@ -10,4 +11,4 @@ COPY . /usr/src/srnet
 
 EXPOSE 3000
 
-CMD ["forever", "bin/www"]
+CMD ["forever", "-l", "/var/log/srnet/logs.log", "bin/www"]
