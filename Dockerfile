@@ -1,5 +1,5 @@
 FROM node:7
-RUN mkdir -p /var/log/sr-net
+RUN mkdir -p /var/log/srnet
 RUN mkdir -p /usr/src/srnet
 WORKDIR /usr/src/srnet
 
