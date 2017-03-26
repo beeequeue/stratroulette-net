@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 
-const debug = require('debug')('R6S Stratroulette:server'),
+const debug = require('debug')('startup'),
       http  = require('http'),
       mongo = require('mongodb').MongoClient;
 
