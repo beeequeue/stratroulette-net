@@ -19,13 +19,16 @@ html(lang="en-US")
             link(rel="stylesheet" href="/season-themes/" + holiday + "/style.css")
 
         block head
-            script.
+            script#tempscript1.
                 var _settings = !{JSON.stringify(settings)};
                 var _settingsMeta = !{JSON.stringify(settingsMeta)};
                 var clientIP = "!{ip}";
                 var mobile = false;
                 var device = "!{device_type}";
                 var deviceIsMobile = !{is_mobile};
+                var el = document.getElementById('tempscript1');
+                el.outerHTML = "";
+                delete el;
 
             script(src="/dist/js/autosize.min.js")
             script(src="/dist/js/jquery-bigtext.js")
@@ -124,7 +127,6 @@ html(lang="en-US")
         if(settings.disableAds == 0)
             #footer
                 #ad-container
-                    script(type="text/javascript" src="//ubercpm.com/show.php?z=26&pl=79094&j=1")
 
                 #desperate-plead.
                     This is where an ad would appear if it didn't fail to load!<br>
