@@ -19,13 +19,18 @@ html(lang="en-US")
             link(rel="stylesheet" href="/season-themes/" + holiday + "/style.css")
 
         block head
-            script.
+            script#tempscript1.
                 var _settings = !{JSON.stringify(settings)};
                 var _settingsMeta = !{JSON.stringify(settingsMeta)};
                 var clientIP = "!{ip}";
                 var mobile = true;
                 var device = "!{device_type}";
                 var deviceIsMobile = !{is_mobile};
+                postscribe('#ad-container', '<h1>Hello PostScribe</h1>');
+
+                var el = document.getElementById('tempscript1');
+                el.outerHTML = "";
+                delete el;
 
             script(src="/dist/js/jquery-bigtext.js")
             script(src="/siege/js/stratpage.js")
@@ -96,7 +101,6 @@ html(lang="en-US")
                         This is where an ad would appear if it didn't fail to load!<br>
                         You can completely disable all ads in the settings.
                     #ad-container
-                        script(type="text/javascript" src="//ubercpm.com/show.php?z=27&pl=79125&j=1")
 
         #dialogue-container(onclick="closeAllDialogues()")
             #settings-window.m-dialogue(style="display:none;")
