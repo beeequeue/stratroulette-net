@@ -82,7 +82,7 @@ $(document).ready(function () {
         for (var i = 0; i < 2; i++) {
             var value = data[Object.keys(data)[i]];
 
-            if (!regexp.test(value) || value.length < 3 || value.length > 16) {
+            if (!regexp.test(value) || value.length < 3 || value.length > 20) {
                 giveErrorMessage('submission', 'Invalid ' + Object.keys(data)[i] + '!');
                 return;
             }
