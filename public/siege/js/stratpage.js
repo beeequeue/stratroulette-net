@@ -190,9 +190,6 @@ $(document).ready(function () {
         fixContentHeight();
     }
 
-    var ad = deviceIsMobile ? 'https://ubercpm.com/show.php?z=27&pl=79125&j=1' : 'https://ubercpm.com/show.php?z=26&pl=79094&j=1'
-    postscribe('#ad-container', '<script type="text/javascript" src=' + ad + '></script>');
-
     //region Specific strat getting
 
     $(window).bind('hashchange', function (e) {
