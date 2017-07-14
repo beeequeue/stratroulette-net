@@ -467,6 +467,10 @@ table {
     height: 90px;
 }
 
+#ad-container > a  > * {
+    background: gray;
+}
+
 #desperate-plead {
     font-size: 0.8em;
 
