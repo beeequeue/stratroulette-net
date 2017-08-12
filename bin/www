@@ -89,7 +89,7 @@ var startApp = function () {
 };
 
 function getDBAddress(database) {
-    return "mongodb://{user}:{password}@{host}:{port}/{database}?authSource=global"
+    return "mongodb://{user}:{password}@{host}:{port}/{database}?authSource=admin"
         .replace("{host}", process.env.DBHOST)
         .replace("{port}", process.env.DBPORT)
         .replace("{user}", process.env.DBUSER)
