@@ -180,6 +180,16 @@ $(document).ready(function () {
         Cookies.set(setting, _settings[setting], settingCookieConfig);
     });
 
+    $('#anchor-ad').click(function () {
+        Cookies.set('disableAds', 1, {
+            expires: 30,
+            domain: '.' + domain
+        });
+
+        fixContentHeight(110);
+        $('#anchor-ad').stop().animate({ height: 0, padding: 0 }, 500);
+    });
+
     if (!mobile) {
         autosize($('.d-textarea'));
 
@@ -282,8 +292,8 @@ var resetPage = function (speed) {
 
     if (mobile && !$('#anchor-ad').hasClass('hidden')) {
         fixContentHeight(110);
-        $('#anchor-ad').addClass('hidden');
-        $('#action-bar').css({bottom: parseInt($('#action-bar').css('bottom'), 10)});
+        $('#anchor-ad').stop().animate({ height: 0, padding: 0 }, 500);
+        $('#action-bar').css({ bottom: parseInt($('#action-bar').css('bottom'), 10) });
     }
 };
 
