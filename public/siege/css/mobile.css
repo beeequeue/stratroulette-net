@@ -574,30 +574,16 @@ span {
     position: relative;
 
     width: 100%;
-    padding: 10px 0 0 0;
-    box-sizing: border-box;
+    height: 250px;
 
-    background: #969696;
-    text-decoration: underline;
+    background: gray;
 
-    transition: height 0.7s, padding 0.7s, opacity 0.7s;
-}
-
-#anchor-ad > button {
-    margin-top: 10px;
-    padding: 8px;
-    border: none;
-    outline: none;
-    background: #b3b3b3;
-    width: 100%;
-    font-weight: bold;
-
+    transition: height 0.75s ease;
 }
 
 #anchor-ad.hidden {
     opacity: 1;
     height: 0;
-    padding: 0;
 }
 
 #ad-container {
