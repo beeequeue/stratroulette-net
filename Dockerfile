@@ -1,4 +1,4 @@
-FROM node:7
+FROM node:8
 RUN mkdir -p /var/log/srnet
 RUN mkdir -p /usr/src/srnet
 WORKDIR /usr/src/srnet
