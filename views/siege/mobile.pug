@@ -95,14 +95,12 @@ html(lang="en-US")
                 span.team-button ATK
                 span.team-button DEF
 
-            if(settings.disableAds == 0)
+            if(false && settings.disableAds == 0)
                 #anchor-ad
                     #desperate-plead.
                         This is where an ad would appear if it didn't fail to load!<br>
                         You can completely disable all ads in the settings.
                     #ad-container
-                        script(data-cfasync='false', src='https://s.ato.mx/p.js#id=530280&size=300x250')
-
 
         #dialogue-container(onclick="closeAllDialogues()")
             #settings-window.m-dialogue(style="display:none;")
