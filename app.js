@@ -88,8 +88,6 @@ app.use("/get*", function (req, res, next) {
 
 // Routes
 
-app.use(subdomain('beta', require('./routes/siege/beta-router.js')));
-
 app.use('/', routes);
 app.use('/get', getPage);
 app.use('/controlpanel', controlPanel);
