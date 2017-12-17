@@ -37,10 +37,10 @@ app.use(session({                                                               
     store: new MongoStore({
         db: app.get('env') === 'production' ? global.db : global.db['siege']    // Powered by our MongoDB database
     }),
-saveUninitialized: false,
-resave: false,
+    saveUninitialized: false,
+    resave: false,
     cookie: {
-        secure: false,
+        secure: process.env.NODE_ENV === 'production',
         expires: 3600000 * 24 * 356 * 5 // 5 years
     }
 }));

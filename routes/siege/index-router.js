@@ -27,7 +27,8 @@ router.get('/', function (req, res) {
         ip: ip,
         holiday: "normal",
         settings: {},
-        settingsMeta: settingsMeta
+        settingsMeta: settingsMeta,
+        sessionID: req.cookies['connect.sid']
     };
 
     var reqSettings = {
