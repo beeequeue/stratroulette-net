@@ -11,9 +11,9 @@ const settingsMeta = [{
 }, {
     id: 'preferDesktop',
     desc: 'Prefer desktop website'
-}, {
-    id: "disableAds",
-    desc: "Disable ads :("
+// }, {
+//     id: "disableAds",
+//     desc: "Disable ads :("
 }];
 
 var router = express.Router(),
