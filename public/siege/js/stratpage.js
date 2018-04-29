@@ -316,21 +316,10 @@ var getStratData = function (type, next) {
         success: function (data) {
             currentStrat = data;
             updateLatestStrats(data.uid);
-            ga('send', {
-                hitType: 'event',
-                eventCategory: 'StratGet',
-                eventAction: 'success'
-            });
 
             next(null, data);
         },
         error: function (err) {
-            ga('send', {
-                hitType: 'event',
-                eventCategory: 'StratGet',
-                eventAction: 'fail'
-            });
-
             next(err);
         }
     });
