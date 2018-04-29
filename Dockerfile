@@ -9,6 +9,4 @@ RUN npm i -g forever
 
 COPY . /usr/src/srnet
 
-EXPOSE 3000
-
 CMD ["forever", "-l", "/var/log/srnet/logs.log", "bin/www"]
