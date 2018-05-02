@@ -101,9 +101,6 @@ $(document).ready(function () {
             return;
         }
 
-        data.ip = clientIP;
-
-
         submitStrat(data, function (err) {
             if (!err) {
                 giveSuccess('submission');

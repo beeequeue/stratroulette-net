@@ -21,8 +21,6 @@ var router = express.Router(),
 
 /* GET home page. */
 router.get('/', function (req, res) {
-    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-
     var locals = {
         ip: ip,
         holiday: "normal",
@@ -125,14 +123,12 @@ router.post('/unlike', function (req, res) {
 router.post('/report', function (req, res) {
     if (req.body.message != null) {
         if (req.body.message.length < 35) {
-            var ip = req.ip;
             var findQ = {
                 uid: req.body.uid
             };
             var updateQ = {
                 $push: {
                     reports: {
-                        ip: req.body.ip,
                         sessionID: req.session.id,
                         message: req.body.message
                     }
