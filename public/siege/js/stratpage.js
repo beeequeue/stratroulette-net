@@ -499,7 +499,6 @@ var feedbackStrat = function (uid, message, next) {
     var data = {
         uid: uid,
         message: message,
-        ip: clientIP
     };
 
     $.post({

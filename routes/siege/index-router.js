@@ -22,7 +22,6 @@ var router = express.Router(),
 /* GET home page. */
 router.get('/', function (req, res) {
     var locals = {
-        ip: ip,
         holiday: "normal",
         settings: {},
         settingsMeta: settingsMeta,

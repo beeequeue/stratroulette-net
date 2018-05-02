@@ -68,7 +68,6 @@ var acceptSubmission = function (acceptedSub, moderatorID, res) {
     }
 
     submDB.find(searchQ, {
-        ip: false,
         sessionID: false
     }).toArray(function (err, originalSub) {
         if (!err) {
