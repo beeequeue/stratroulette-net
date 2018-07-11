@@ -233,7 +233,7 @@ router.post('/submit', function (req, res) {
 
 router.get('/beta', function (req, res) {
     res.cookie('beta', 'true', {
-        maxAxe: 1000 * 60 * 60 * 24 * 30,
+        maxAge: 1000 * 60 * 60 * 24 * 30,
         domain: '.stratroulette.net',
         httpOnly: false,
     });
