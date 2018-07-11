@@ -66,11 +66,14 @@ html(lang="en-US")
 
                 #center
                     block center
-                        #desc.text-center.
-                            Rules<br><hr>
-                            Get a fun strat to play in Rainbow Six Siege!<br>
-                            Get a new strat every round.<br>
-                            Try to win while following the strat to the letter!<br>
+                        #desc.text-center
+                            a(href="/beta") Try out the new beta site!
+
+                            div.
+                                Rules<br><hr>
+                                Get a fun strat to play in Rainbow Six Siege!<br>
+                                Get a new strat every round.<br>
+                                Try to win while following the strat to the letter!<br>
 
                         if(holiday !== "normal")
                             #pause-button(onclick="toggleHolidayAnimation()")

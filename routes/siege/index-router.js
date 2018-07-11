@@ -16,11 +16,16 @@ const settingsMeta = [{
 //     desc: "Disable ads :("
 }];
 
+const BETA_URL = 'https://beta.stratroulette.net/';
 var router = express.Router(),
     holiday = "normal";
 
 /* GET home page. */
 router.get('/', function (req, res) {
+    if (req.cookies.beta === 'true') {
+        return res.redirect(BETA_URL)
+    }
+
     var locals = {
         holiday: "normal",
         settings: {},
@@ -224,6 +229,16 @@ router.post('/submit', function (req, res) {
             res.status(504).json({message: 'Server error. Try again later'});
         }
     });
+});
+
+router.get('/beta', function (req, res) {
+    res.cookie('beta', 'true', {
+        maxAxe: 1000 * 60 * 60 * 24 * 30,
+        domain: '.stratroulette.net',
+        httpOnly: false,
+    });
+
+    res.redirect(BETA_URL);
 });
 
 
