@@ -26,7 +26,6 @@ html(lang="en-US")
                 var mobile = true;
                 var device = "!{device_type}";
                 var deviceIsMobile = !{is_mobile};
-                postscribe('#ad-container', '<h1>Hello PostScribe</h1>');
 
                 var el = document.getElementById('tempscript1');
                 el.outerHTML = "";
@@ -51,6 +50,7 @@ html(lang="en-US")
                     img.hidden.strat-button.settings-button(src="/siege/img/icons/settings.png" onclick="openSettings()")
 
                     #desc
+                        a#beta-link(href="/beta") Try out the new beta site!
 
         #bottom
             a.hidden#author-container(href="javascript:" target="_blank")

@@ -610,3 +610,13 @@ span {
     align-items: center;
     justify-content: center;
 }
+
+#beta-link {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 50%;
+    text-align: center;
+    transform: translateY(90px);
+    z-index: 100;
+}
