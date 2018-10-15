@@ -45,7 +45,7 @@ $(document).ready(function () {
     $('.team-button').click(function () {
         setStrat($(this).html());
 
-        ga('send', 'get.strat');
+        ga('send', 'event', 'strat', 'get');
     });
 
     $('.like').click(function () {
@@ -57,7 +57,7 @@ $(document).ready(function () {
                     setLikeCounter(currentStrat.voteCount, 150);
                     setLikedStatus(currentStrat.liked);
 
-                    ga('send', currentStrat.liked ? 'like' : 'unlike');
+                    ga('send', 'event', 'like', currentStrat.liked ? 'add' : 'remove')
                 }
                 else {
                     console.error(err);
@@ -69,7 +69,7 @@ $(document).ready(function () {
     $('.submit').click(function () {
         openDialogue('#submission-window');
 
-        ga('send', 'open.submission');
+        ga('send', 'event', 'submission', 'open')
     });
 
     $('#submission-submit').click(function () {
@@ -111,7 +111,7 @@ $(document).ready(function () {
             if (!err) {
                 giveSuccess('submission');
 
-                ga('send', 'send.submission');
+                ga('send', 'event', 'submission', 'send');
             }
             else {
                 giveErrorMessage('submission', err.responseJSON.message);
@@ -124,7 +124,7 @@ $(document).ready(function () {
         if (!$(this).hasClass("disabled")) {
             openDialogue('#feedback-window');
 
-            ga('send', 'open.feedback');
+            ga('send', 'event', 'feedback', 'open');
         }
     });
 
@@ -145,7 +145,7 @@ $(document).ready(function () {
                         $(selec + ' .d-success').fadeOut(250);
                     }, 1125);
 
-                    ga('send', 'send.feedback');
+                    ga('send', 'event', 'feedback', 'send');
                 }
                 else {
                     giveErrorMessage('feedback', err.responseJSON.message);
@@ -263,7 +263,7 @@ var closeAllDialogues = function () {
 var openSettings = function () {
     openDialogue($('#settings-window'));
 
-    ga('send', 'open.settings');
+    ga('send', 'event', 'settings', 'open');
 };
 
 var resetPage = function (speed) {
