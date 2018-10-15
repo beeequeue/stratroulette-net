@@ -2,7 +2,7 @@
 "use strict";
 
 const http  = require('http'),
-      mongo = require('mongodb').MongoClient;
+      MongoClient = require('mongodb').MongoClient;
 
 var server;
 
@@ -10,13 +10,13 @@ var server;
  * Database connection
  */
 
-mongo.connect(getDBAddress("global"), function (err, db) {
+MongoClient.connect(getDBAddress("global"), function (err, client) {
     if (!err) {
         console.log('Connected to global db');
 
-        global.db = db;
-        global.db.stats = db.collection('stats');
-        global.db.moderators = db.collection('moderators');
+        global.db = client.db();
+        global.db.stats = global.db.collection('stats')
+        global.db.moderators = global.db.collection('moderators')
 
         databaseConnected();
         connectGameDBs();
@@ -32,13 +32,13 @@ var connectGameDBs = function () {
     var dbName = process.env.NODE_ENV === 'development' ? game + 'Dev' : game;
     var dbAddr = getDBAddress(dbName)
 
-    mongo.connect(dbAddr, function (err, db) {
+    MongoClient.connect(dbAddr, function (err, client) {
         if (!err) {
             console.log('Connected to ' + dbName)
 
-            global.db[game] = db;
-            global.db[game].strats = db.collection('strats');
-            global.db[game].submissions = db.collection('submissions');
+            global.db[game] = client.db();
+            global.db[game].strats = global.db[game].collection('strats')
+            global.db[game].submissions = global.db[game].collection('submissions')
 
             databaseConnected();
         }

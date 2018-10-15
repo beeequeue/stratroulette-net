@@ -46,8 +46,10 @@ var handleRequest = function (req, res, next) {
             };
 
             console.log(query)
-            stratDB.find(query, fieldFilter)
-                .toArray(function (err, strats) {
+            stratDB
+                .find(query)
+                .project(fieldFilter)
+                .toArray(function(err, strats) {
                     console.log(strats)
                     if (!err && strats.length > 0) {
                         // If the array of not wanted strats isn't there
@@ -95,8 +97,10 @@ var handleRequest = function (req, res, next) {
         case 'all':
             var allStrats = [];
 
-            stratDB.find({}, fieldFilter)
-                .toArray(function (err, docs) {
+            stratDB
+                .find({})
+                .project(fieldFilter)
+                .toArray(function(err, docs) {
                     if (!err) {
                         for (var i = 0; i < docs.length; i++) {
                             docs[i].liked = docs[i].votes.indexOf(req.session.id) > -1;
@@ -119,7 +123,9 @@ var handleRequest = function (req, res, next) {
                     uid: Number(team)
                 };
 
-                stratDB.find(query, fieldFilter)
+                stratDB
+                    .find(query)
+                    .project(fieldFilter)
                     .toArray(function (err, doc) {
                         if (!err) {
                             if (doc.length > 0) {
