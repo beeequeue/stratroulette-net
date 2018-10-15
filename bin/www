@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 
-const debug = require('debug')('startup'),
-      http  = require('http'),
+const http  = require('http'),
       mongo = require('mongodb').MongoClient;
 
 var server;
@@ -29,12 +28,13 @@ mongo.connect(getDBAddress("global"), function (err, db) {
 });
 
 var connectGameDBs = function () {
-    var game = "siege";
-    var dbAddr = getDBAddress(process.env.NODE_ENV === "development" ? game + "Dev" : game);
+    var game = 'siege';
+    var dbName = process.env.NODE_ENV === 'development' ? game + 'Dev' : game;
+    var dbAddr = getDBAddress(dbName)
 
     mongo.connect(dbAddr, function (err, db) {
         if (!err) {
-            console.log('Connected to ' + game);
+            console.log('Connected to ' + dbName)
 
             global.db[game] = db;
             global.db[game].strats = db.collection('strats');
@@ -43,7 +43,7 @@ var connectGameDBs = function () {
             databaseConnected();
         }
         else {
-            console.error("Could not connect to database: " + game);
+            console.error('Could not connect to database: ' + dbName)
             throw new Error("DatabaseConnectionException");
         }
     });
@@ -154,5 +154,5 @@ function onListening() {
     var bind = typeof addr === 'string'
         ? 'pipe ' + addr
         : 'port ' + addr.port;
-    debug('Listening on ' + bind);
+    console.log('Listening on ' + bind);
 }
