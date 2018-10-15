@@ -44,6 +44,8 @@ $(document).ready(function () {
 
     $('.team-button').click(function () {
         setStrat($(this).html());
+
+        ga('send', 'get.strat');
     });
 
     $('.like').click(function () {
@@ -54,6 +56,8 @@ $(document).ready(function () {
                     currentStrat.liked ? currentStrat.voteCount++ : currentStrat.voteCount--;
                     setLikeCounter(currentStrat.voteCount, 150);
                     setLikedStatus(currentStrat.liked);
+
+                    ga('send', currentStrat.liked ? 'like' : 'unlike');
                 }
                 else {
                     console.error(err);
@@ -64,6 +68,8 @@ $(document).ready(function () {
 
     $('.submit').click(function () {
         openDialogue('#submission-window');
+
+        ga('send', 'open.submission');
     });
 
     $('#submission-submit').click(function () {
@@ -104,6 +110,8 @@ $(document).ready(function () {
         submitStrat(data, function (err) {
             if (!err) {
                 giveSuccess('submission');
+
+                ga('send', 'send.submission');
             }
             else {
                 giveErrorMessage('submission', err.responseJSON.message);
@@ -115,6 +123,8 @@ $(document).ready(function () {
     $('.feedback').click(function () {
         if (!$(this).hasClass("disabled")) {
             openDialogue('#feedback-window');
+
+            ga('send', 'open.feedback');
         }
     });
 
@@ -134,6 +144,8 @@ $(document).ready(function () {
                         $('#feedback-msg').val('');
                         $(selec + ' .d-success').fadeOut(250);
                     }, 1125);
+
+                    ga('send', 'send.feedback');
                 }
                 else {
                     giveErrorMessage('feedback', err.responseJSON.message);
@@ -250,6 +262,8 @@ var closeAllDialogues = function () {
 
 var openSettings = function () {
     openDialogue($('#settings-window'));
+
+    ga('send', 'open.settings');
 };
 
 var resetPage = function (speed) {
