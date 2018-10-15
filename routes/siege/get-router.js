@@ -45,12 +45,10 @@ var handleRequest = function (req, res, next) {
                 }
             };
 
-            console.log(query)
             stratDB
                 .find(query)
                 .project(fieldFilter)
                 .toArray(function(err, strats) {
-                    console.log(strats)
                     if (!err && strats.length > 0) {
                         // If the array of not wanted strats isn't there
                         if (notWanted == null || !Array.isArray(notWanted) || notWanted.length < 1) {
