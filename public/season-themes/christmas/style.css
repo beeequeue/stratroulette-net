@@ -51,4 +51,5 @@
     background-image: url(icicle.png);
     background-repeat: no-repeat;
     background-size: contain;
+    pointer-events: none;
 }

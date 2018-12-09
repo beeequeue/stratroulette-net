@@ -572,38 +572,57 @@ span {
 
 #anchor-ad {
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    width: 100%;
-    height: 200px;
+    width: 100% !important;
+    height: 80px;
 
     background: gray;
+    overflow: hidden;
 
     transition: height 0.75s ease;
 }
 
+@media(max-width: 467px) {
+    #anchor-ad,
+    .example_responsive_1 {
+        width: 320px;
+        height: 50px;
+    }
+}
+
+@media(min-width: 468px) {
+    #anchor-ad,
+    .example_responsive_1 {
+        width: 468px;
+        height: 60px;
+    }
+}
+
+@media(min-width: 728px) {
+    #anchor-ad,
+    .example_responsive_1 {
+        width: 728px;
+        height: 90px;
+    }
+}
+
 #anchor-ad.hidden {
-    opacity: 1;
     height: 0;
 }
 
 #ad-container {
-    position: relative;
-    height: 250px;
-    z-index: 1;
+    position: absolute;
     top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
 
 #desperate-plead {
-    font-size: 0.8em;
-
-    position: absolute;
-    top: 0;
-
-    display: flex;
-    overflow: hidden;
-
-    width: 100%;
-    height: 100%;
+    font-size: 0.75em;
 
     color: white;
 

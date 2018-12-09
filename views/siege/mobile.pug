@@ -95,12 +95,21 @@ html(lang="en-US")
                 span.team-button ATK
                 span.team-button DEF
 
-            //- if(settings.disableAds == 0)
-            //-     #anchor-ad
-            //-         #ad-container
-            //-             #desperate-plead.
-            //-                 This is where an ad would appear if it didn't fail to load!<br>
-            //-                 You can completely disable all ads in the settings.
+            if(settings.disableAds == 0)
+                #anchor-ad
+                    #desperate-plead.
+                        This is where an ad would appear if it didn't fail to load!<br>
+                        You can completely disable all ads in the settings.
+                    #ad-container
+                        script(async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
+                        // s-net - Responsive Bottom
+                        ins.adsbygoogle.example_responsive_1(
+                            style="display:inline-block"
+                            data-ad-client="ca-pub-2760086516112871"
+                            data-ad-slot="3859200341"
+                        )
+                        script.
+                            (adsbygoogle = window.adsbygoogle || []).push({});
 
         #dialogue-container(onclick="closeAllDialogues()")
             #settings-window.m-dialogue(style="display:none;")

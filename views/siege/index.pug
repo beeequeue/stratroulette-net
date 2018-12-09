@@ -125,12 +125,18 @@ html(lang="en-US")
                             img(src="/siege/img/github-logo.png")
                         p &#9830; Contact: contact@stratroulette.net
 
-        //- if(settings.disableAds == 0)
-        //-     #footer
-        //-         #desperate-plead.
-        //-             This is where an ad would appear if it didn't fail to load!<br>
-        //-             You can completely disable all ads in the settings.
-        //-         #ad-container
+        if(settings.disableAds == 0)
+            #footer
+                #desperate-plead.
+                    This is where an ad would appear if it didn't fail to load!<br>
+                    You can completely disable all ads in the settings.
+                #ad-container
+                    script(async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
+                    // s-net - Responsive Bottom
+                    ins.adsbygoogle(style="display:block" data-ad-client="ca-pub-2760086516112871" data-ad-slot="3859200341" data-ad-format="auto" data-full-width-responsive="true")
+                    script.
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+
 
         #dialogue-container(onclick="closeAllDialogues();$('body').unbind('touchmove');")
             #feedback-window.c-dialogue(style="display:none")
