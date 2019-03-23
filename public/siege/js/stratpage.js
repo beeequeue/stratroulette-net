@@ -44,8 +44,6 @@ $(document).ready(function () {
 
     $('.team-button').click(function () {
         setStrat($(this).html());
-
-        ga('send', 'event', 'strat', 'get');
     });
 
     $('.like').click(function () {
@@ -56,8 +54,6 @@ $(document).ready(function () {
                     currentStrat.liked ? currentStrat.voteCount++ : currentStrat.voteCount--;
                     setLikeCounter(currentStrat.voteCount, 150);
                     setLikedStatus(currentStrat.liked);
-
-                    ga('send', 'event', 'like', currentStrat.liked ? 'add' : 'remove')
                 }
                 else {
                     console.error(err);
@@ -68,8 +64,6 @@ $(document).ready(function () {
 
     $('.submit').click(function () {
         openDialogue('#submission-window');
-
-        ga('send', 'event', 'submission', 'open')
     });
 
     $('#submission-submit').click(function () {
@@ -110,8 +104,6 @@ $(document).ready(function () {
         submitStrat(data, function (err) {
             if (!err) {
                 giveSuccess('submission');
-
-                ga('send', 'event', 'submission', 'send');
             }
             else {
                 giveErrorMessage('submission', err.responseJSON.message);
@@ -123,8 +115,6 @@ $(document).ready(function () {
     $('.feedback').click(function () {
         if (!$(this).hasClass("disabled")) {
             openDialogue('#feedback-window');
-
-            ga('send', 'event', 'feedback', 'open');
         }
     });
 
@@ -144,8 +134,6 @@ $(document).ready(function () {
                         $('#feedback-msg').val('');
                         $(selec + ' .d-success').fadeOut(250);
                     }, 1125);
-
-                    ga('send', 'event', 'feedback', 'send');
                 }
                 else {
                     giveErrorMessage('feedback', err.responseJSON.message);
@@ -262,8 +250,6 @@ var closeAllDialogues = function () {
 
 var openSettings = function () {
     openDialogue($('#settings-window'));
-
-    ga('send', 'event', 'settings', 'open');
 };
 
 var resetPage = function (speed) {
