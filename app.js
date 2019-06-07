@@ -92,6 +92,10 @@ app.use('/', routes);
 app.use('/get', getPage);
 app.use('/controlpanel', controlPanel);
 
+app.get('/ads.txt', function(req, res) {
+    res.send('google.com, pub-2760086516112871, DIRECT, f08c47fec0942fa0');
+});
+
 
 //region Error catching
 
