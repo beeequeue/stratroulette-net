@@ -19,7 +19,7 @@
     "express-subdomain": "^1.0.5",
     "mongodb": "^3.1.8",
     "morgan": "^1.9.1",
-    "pug": "^2.0.0"
+    "pug": "^2.0.4"
   },
   "license": "MIT",
   "private": true,
